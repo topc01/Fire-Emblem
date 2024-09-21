@@ -3,22 +3,13 @@ namespace Fire_Emblem;
 public class Character : ICloneable
 {
     public required string Name { get; set; }
+    public required string Weapon
+    {
+        set => _armament = Armament.GetArmamentFromName(value);
+        get => _armament.Name;
+        
+    }
     private Armament _armament;
-
-    public Armament Armament
-    {
-        get => _armament;
-    }
-    private string? _weapon;
-    public string? Weapon
-    {
-        get => _weapon;
-        set
-        {
-            _weapon = value;
-            _armament = Armament.GetArmamentFromName(value);
-        }
-    }
     public required string Gender { get; set; }
     public required string DeathQuote { get; set; }
     private int MaxHp { get; set; }
@@ -46,9 +37,7 @@ public class Character : ICloneable
     public required int Spd { get; set; }
     public required int Def { get; set; }
     public required int Res { get; set; }
-    
-    public readonly List<Skill> Skills = new List<Skill>();
-
+    private readonly List<Skill> Skills = new List<Skill>();
     public string Attack(Character defender)
     {
         int damage = Damage(defender);

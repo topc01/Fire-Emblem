@@ -1,7 +1,8 @@
 namespace Fire_Emblem;
 
-public readonly struct Armament
+public class Armament
 {
+    // para agregar armas solo se agregan en este enum
     private enum ArmamentType
     {
         Sword,
@@ -10,12 +11,14 @@ public readonly struct Armament
         Bow,
         Magic
     }
-    
+    public string Name;
     private readonly ArmamentType _armamentType;
     private Armament(ArmamentType armamentType)
     {
         _armamentType = armamentType;
+        Name = armamentType.ToString();
     }
+
     private static readonly Dictionary<ArmamentType, Armament> Armaments = Enum.GetValues(typeof(ArmamentType))
         .Cast<ArmamentType>()
         .ToDictionary(armamentType => armamentType, armamentType => new Armament(armamentType));
@@ -48,7 +51,7 @@ public readonly struct Armament
         }
     }
 
-    public static Armament GetArmamentFromName(string? armamentName) =>
+    public static Armament GetArmamentFromName(string armamentName) =>
         Enum.TryParse(armamentName, true, out ArmamentType armamentType)
             ? Armaments[armamentType]
             : throw new ArgumentException($"El arma {armamentName} no es válida");

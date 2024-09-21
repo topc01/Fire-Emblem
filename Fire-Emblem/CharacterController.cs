@@ -25,7 +25,7 @@ public class CharacterController
     private int Def => _character.Def;
     private int Spd => _character.Spd;
     private int Health => _character.Health;
-    private string WeaponName => _character.WeaponName;
+    private string WeaponName => _character.Weapon;
     private string Name => _character.Name;
     public bool IsAlive => _character.Health > 0;
     public bool CanFollowUp(CharacterController opponent) => Spd - opponent.Spd >= 5;
