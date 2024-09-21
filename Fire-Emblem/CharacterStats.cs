@@ -32,6 +32,19 @@ public class CharacterStats : ICloneable
         get => _health;
     }
     private int _health;
+    // hasta acá es una EDA
+    
+    public bool IsAlive() => Health > 0;
+    public void AddSkills(Skill[] skills)
+    {
+        foreach (var skill in skills)
+        {
+            Skills.Add(skill);
+        }
+    }
+    public bool IsValidCharacter() => !HasRepeatedSkills() && !HasMoreThan2Skills();
+    private bool HasRepeatedSkills() => Skills.Count != Skills.Distinct().Count();
+    private bool HasMoreThan2Skills() => Skills.Count > 2;
     public object Clone() => this.MemberwiseClone();
     public CharacterStats New() => (CharacterStats)Clone();
 }
