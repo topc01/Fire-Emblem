@@ -20,11 +20,11 @@ public readonly struct Armament
         .Cast<ArmamentType>()
         .ToDictionary(armamentType => armamentType, armamentType => new Armament(armamentType));
     
-    public static Armament Sword => Armaments[ArmamentType.Sword];
-    public static Armament Axe => Armaments[ArmamentType.Axe];
-    public static Armament Lance => Armaments[ArmamentType.Lance];
-    public static Armament Bow => Armaments[ArmamentType.Bow];
-    public static Armament Magic => Armaments[ArmamentType.Magic];
+    // public static Armament Sword => Armaments[ArmamentType.Sword];
+    // public static Armament Axe => Armaments[ArmamentType.Axe];
+    // public static Armament Lance => Armaments[ArmamentType.Lance];
+    // public static Armament Bow => Armaments[ArmamentType.Bow];
+    // public static Armament Magic => Armaments[ArmamentType.Magic];
 
     public bool IsMagic() => _armamentType == ArmamentType.Magic;
 
@@ -49,7 +49,7 @@ public readonly struct Armament
     }
 
     public static Armament GetArmamentFromName(string? armamentName) =>
-        Enum.TryParse(armamentName, true, out Armament.ArmamentType armamentType)
+        Enum.TryParse(armamentName, true, out ArmamentType armamentType)
             ? Armaments[armamentType]
             : throw new ArgumentException($"El arma {armamentName} no es válida");
 }
