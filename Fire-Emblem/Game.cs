@@ -38,7 +38,7 @@ public class Game
 
     public void Play()
     {
-        ChooseFile();
+        ChooseTeamFile();
         if (!(_player1Team.IsValidTeam() && _player2Team.IsValidTeam()))
         {
             _view.WriteLine("Archivo de equipos no válido");
@@ -107,7 +107,7 @@ public class Game
                || !liveCharacters[choice].IsAlive()) ;
         return liveCharacters[choice];
     }
-    private void ChooseFile()
+    private void ChooseTeamFile()
     {
         _view.WriteLine("Elige un archivo para cargar los equipos");
         ShowAvailableTeams();
