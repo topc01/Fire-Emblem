@@ -4,6 +4,11 @@ public class Character : ICloneable
 {
     public required string Name { get; set; }
     private Armament _armament;
+
+    public Armament Armament
+    {
+        get => _armament;
+    }
     private string? _weapon;
     public string? Weapon
     {
