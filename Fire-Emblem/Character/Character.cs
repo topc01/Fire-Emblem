@@ -3,10 +3,10 @@ namespace Fire_Emblem;
 public class Character
 {
     private readonly CharacterStats _character;
-    private readonly List<Skill> Skills = new ();
+    public readonly List<Skill> Skills = new();
     public Character(CharacterStats characterStats)
     {
-        _character = characterStats;
+        _character = characterStats.New();
     }
     public CharacterStats GetStats => _character;
     public bool IsAlive() => _character.Health > 0;

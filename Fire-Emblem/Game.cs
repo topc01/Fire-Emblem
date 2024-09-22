@@ -129,7 +129,7 @@ public class Game
         if (!(match.Success)) return null;
             
         string characterName = match.Groups[1].Value;
-        CharacterStats characterStats = FindCharacterStatsByName(characterName).New();
+        CharacterStats characterStats = FindCharacterStatsByName(characterName);
         Character character = new Character(characterStats);
         if (match.Groups[2].Success)
         {
