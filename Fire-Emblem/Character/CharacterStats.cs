@@ -23,7 +23,6 @@ public class CharacterStats : ICloneable
     public required int Def { get; set; }
     public required int Res { get; set; }
     
-    public readonly List<Skill> Skills = new ();
     public readonly Armament Armament;
     private readonly int _maxHp;
     public int Health
@@ -34,17 +33,17 @@ public class CharacterStats : ICloneable
     private int _health;
     // hasta acá es una EDA
     
-    public bool IsAlive() => Health > 0;
-    public void AddSkills(Skill[] skills)
-    {
-        foreach (var skill in skills)
-        {
-            Skills.Add(skill);
-        }
-    }
-    public bool IsValidCharacter() => !HasRepeatedSkills() && !HasMoreThan2Skills();
-    private bool HasRepeatedSkills() => Skills.Count != Skills.Distinct().Count();
-    private bool HasMoreThan2Skills() => Skills.Count > 2;
+    //public bool IsAlive() => Health > 0;
+    //public void AddSkills(Skill[] skills)
+    //{
+    //    foreach (var skill in skills)
+    //    {
+    //        Skills.Add(skill);
+    //    }
+    //}
+    //public bool IsValidCharacter() => !HasRepeatedSkills() && !HasMoreThan2Skills();
+    //private bool HasRepeatedSkills() => Skills.Count != Skills.Distinct().Count();
+    //private bool HasMoreThan2Skills() => Skills.Count > 2;
     public object Clone() => this.MemberwiseClone();
     public CharacterStats New() => (CharacterStats)Clone();
 }

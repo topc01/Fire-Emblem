@@ -27,7 +27,7 @@ public class CharacterController
     //private int Spd => _character.Spd;
     //private int Health => _character.Health;
     private string WeaponName => Character.Weapon;
-    private string Name => Character.Name;
+    public string Name => Character.Name;
     public bool IsAlive() => Character.Health > 0;
     public bool CanFollowUp(CharacterController opponent) => Character.Spd - opponent.Character.Spd >= 5;
     private void ReceiveDamage(int damage) => Character.Health -= damage;
@@ -39,16 +39,6 @@ public class CharacterController
         return Name == other.Name;
     }
     public override int GetHashCode() => HashCode.Combine(Name);
-    public void AddSkills(Skill[] skills)
-    {
-        foreach (var skill in skills)
-        {
-            Character.Skills.Add(skill);
-        }
-    }
-    private bool HasRepeatedSkills() => Character.Skills.Count != Character.Skills.Distinct().Count();
-    private bool HasMoreThan2Skills() => Character.Skills.Count > 2;
-    public bool IsValidCharacter() => !HasRepeatedSkills() && !HasMoreThan2Skills();
     public string CheckAdvantages(CharacterController opponent)
     {
         Armament armament = Character.Armament;
