@@ -18,7 +18,7 @@ public class Game
     private Player attackingPlayer;
     private Player defendingPlayer;
     private int _round = 1;
-    private readonly JsonSerializerOptions _options = new JsonSerializerOptions()
+    private readonly JsonSerializerOptions _options = new()
     {
         NumberHandling = JsonNumberHandling.AllowReadingFromString | 
                          JsonNumberHandling.WriteAsString,
