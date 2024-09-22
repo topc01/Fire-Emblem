@@ -23,7 +23,7 @@ public class CharacterStats : ICloneable
     public required int Def { get; set; }
     public required int Res { get; set; }
     
-    public readonly Armament Armament;
+    public readonly Armament Armament = null!;
     private readonly int _maxHp;
     public int Health
     {
@@ -31,7 +31,7 @@ public class CharacterStats : ICloneable
         get => _health;
     }
     private int _health;
-    // hasta acá es una EDA
+    // hasta acá es una EDD
     
     //public bool IsAlive() => Health > 0;
     //public void AddSkills(Skill[] skills)
