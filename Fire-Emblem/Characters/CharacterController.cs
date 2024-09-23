@@ -1,12 +1,20 @@
+using Fire_Emblem.Skills;
+
 namespace Fire_Emblem.Characters;
 
 public class CharacterController
 {
     private CharacterStats? _character;
+    private List<Skill>? _skills;
     public CharacterStats Character
     {
         set => _character = value;
         get => _character ?? throw new InvalidOperationException("Character is not initialized.");
+    }
+    public void SetCharacter(Character character)
+    {
+        Character = character.CharacterS;
+        _skills = character.Skills;
     }
     public string Attack(CharacterController defender)
     {
@@ -19,13 +27,9 @@ public class CharacterController
         int atk = Character.Atk;
         Armament armament = Character.Armament;
         double advantage = armament.GetAdvantage(opponent.Character.Armament);
-        double defense = armament.IsMagic() ? opponent.Character.Res : opponent.Character.Def;
-        return int.Max((int)(atk * advantage - defense), 0);
+        double rivalDefense = armament.IsMagic() ? opponent.Character.Res : opponent.Character.Def;
+        return int.Max((int)(atk * advantage - rivalDefense), 0);
     }
-    //private int Res => _character.Res;
-    //private int Def => _character.Def;
-    //private int Spd => _character.Spd;
-    //private int Health => _character.Health;
     private string WeaponName => Character.Weapon;
     public string Name => Character.Name;
     public bool IsAlive() => Character.Health > 0;
