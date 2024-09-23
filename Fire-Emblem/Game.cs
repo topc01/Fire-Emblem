@@ -83,7 +83,6 @@ public class Game
             if (character != null)
             {
                 currentPlayer.AddCharacter(character);
-                _charactersInGame.Add(character.Character);
             }
             
         }
