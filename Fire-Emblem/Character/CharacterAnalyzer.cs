@@ -8,7 +8,7 @@ public class CharacterAnalyzer
     {
         _character = characterStats.New();
     }
-    public CharacterStats Stats => _character;
+    public CharacterStats Character => _character;
     public string Name => _character.Name;
     public bool IsAlive() => _character.Health > 0;
     public void AddSkills(Skill[] skills)
