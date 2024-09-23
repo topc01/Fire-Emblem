@@ -16,10 +16,6 @@ public class Game
     private const string SkillsFile = "skills.json";
     private readonly Skill[] _allSkills;
     
-    private readonly Player _player1;
-    private readonly Player _player2;
-
-    private readonly Combat _combat;
     private readonly DataParser _dataParser = new();
     private readonly TeamReader _teamReader;
     public Game(View view, string teamsFolder)
@@ -28,9 +24,6 @@ public class Game
         _teamFiles = _dataParser.RetrieveTeamFilesFromFolder(teamsFolder);
         _allCharacters = _dataParser.SetUpCharacters(CharactersFile);
         _allSkills = _dataParser.SetUpSkills(SkillsFile);
-        _player1 = new Player(1);
-        _player2 = new Player(2);
-        _combat = new Combat(_player1, _player2, _view);
         _teamReader = new TeamReader(_teamFiles, _view);
     }
 
@@ -39,20 +32,24 @@ public class Game
         _teamReader.ChooseTeamFile();
         _teamReader.SetCharacterFinder(FindCharacterStatsByName);
         _teamReader.SetSkillFinder(FindSkillByName);
-        _teamReader.SetUpTeams(_player1, _player2);
-        if (!(_player1.IsValidTeam() && _player2.IsValidTeam()))
+        _teamReader.SetUpTeams();
+        if (!(_teamReader.AreValidTeams()))
         {
             _view.WriteLine("Archivo de equipos no válido");
             return;
         }
+
+        (Player player1, Player player2) = _teamReader.GetTeams();
         
-        while (_combat.Continues())
+        Combat combat = new(player1, player2, _view);
+        
+        while (combat.Continues())
         {
-            _combat.Battle();
-            _combat.SetNextRound();
+            combat.Battle();
+            combat.SetNextRound();
         }
 
-        Player winner = _player1.HasLost() ? _player2 : _player1;
+        Player winner = player1.HasLost() ? player2 : player1;
         _view.WriteLine($"Player {winner.PlayerNumber} ganó");
     }
     private CharacterStats FindCharacterStatsByName(string characterName)

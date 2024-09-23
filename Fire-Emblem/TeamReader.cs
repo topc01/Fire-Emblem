@@ -9,17 +9,15 @@ namespace Fire_Emblem;
 public class TeamReader
 {
     private readonly View _view;
-    private readonly JsonSerializerOptions _options = new()
-    {
-        NumberHandling = JsonNumberHandling.AllowReadingFromString | 
-                         JsonNumberHandling.WriteAsString,
-        IncludeFields = true
-    };
     
     private string _selectedFile;
     private readonly string[] _teamFiles;
+    
     private Func<string, CharacterStats> _characterLookUp;
     private Func<string, Skill> _skillLookUp;
+
+    private readonly Player _player1 = new(1);
+    private readonly Player _player2 = new(2);
     public TeamReader(string[] teamFiles, View view)
     {
         _view = view;
@@ -44,16 +42,16 @@ public class TeamReader
             _view.WriteLine($"{i}: {teamFile}");
         }
     }
-    public void SetUpTeams(Player player1, Player player2)
+    public void SetUpTeams()
     {
         if (!File.Exists(_selectedFile)) throw new Exception("No existe el archivo de equipo");
         string[] lines = File.ReadAllLines(_selectedFile);
         
-        Player currentPlayer = player1;
+        Player currentPlayer = _player1;
         foreach (var line in lines)
         {
-            if (line == "Player 1 Team") currentPlayer = player1;
-            else if (line == "Player 2 Team") currentPlayer = player2;
+            if (line == "Player 1 Team") currentPlayer = _player1;
+            else if (line == "Player 2 Team") currentPlayer = _player2;
             CharacterAnalyzer? character = ParseLine(line);
             if (character != null)
                 currentPlayer.AddCharacter(character);
@@ -82,5 +80,11 @@ public class TeamReader
         => _characterLookUp = function;
     public void SetSkillFinder(Func<string, Skill> function)
         => _skillLookUp = function;
-    
+
+    public bool AreValidTeams()
+        => _player1.IsValidTeam() && _player2.IsValidTeam();
+
+    public (Player, Player) GetTeams()
+        => (_player1, _player2);
+
 }
