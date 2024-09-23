@@ -29,7 +29,7 @@ public class Player
                || choice < 0 
                || choice >= characters.Length
                || !characters[choice].IsAlive()) ;
-        Controller.Character = characters[choice].CharacterS;
+        Controller.SetCharacter(characters[choice]);
     }
     public void SelectValidCharacter(View view)
     {
