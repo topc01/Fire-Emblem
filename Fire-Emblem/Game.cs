@@ -46,7 +46,7 @@ public class Game
             combat.SetNextRound();
         }
 
-        Player winner = player1.HasLost() ? player2 : player1;
+        Player winner = combat.Winner();
         _view.WriteLine($"Player {winner.PlayerNumber} ganó");
     }
     private CharacterStats FindCharacterStatsByName(string characterName)
