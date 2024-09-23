@@ -31,14 +31,6 @@ public class CharacterController
     public bool IsAlive() => Character.Health > 0;
     public bool CanFollowUp(CharacterController opponent) => Character.Spd - opponent.Character.Spd >= 5;
     private void ReceiveDamage(int damage) => Character.Health -= damage;
-    public override bool Equals(object? obj)
-    {
-        if (obj == null || GetType() != obj.GetType())
-            return false;
-        CharacterStats other = (CharacterStats)obj;
-        return Name == other.Name;
-    }
-    public override int GetHashCode() => HashCode.Combine(Name);
     public string CheckAdvantages(CharacterController opponent)
     {
         Armament armament = Character.Armament;

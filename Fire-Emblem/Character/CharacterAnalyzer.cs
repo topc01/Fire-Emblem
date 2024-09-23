@@ -1,14 +1,15 @@
 namespace Fire_Emblem;
 
-public class Character
+public class CharacterAnalyzer
 {
     private readonly CharacterStats _character;
     public readonly List<Skill> Skills = new();
-    public Character(CharacterStats characterStats)
+    public CharacterAnalyzer(CharacterStats characterStats)
     {
         _character = characterStats.New();
     }
-    public CharacterStats GetStats => _character;
+    public CharacterStats Stats => _character;
+    public string Name => _character.Name;
     public bool IsAlive() => _character.Health > 0;
     public void AddSkills(Skill[] skills)
     {
@@ -26,9 +27,8 @@ public class Character
         if (obj == null || GetType() != obj.GetType())
             return false;
         
-        Character other = (Character)obj;
+        CharacterAnalyzer other = (CharacterAnalyzer)obj;
         return _character.Name == other._character.Name;
     }
-    public string Name => _character.Name;
     public override int GetHashCode() => HashCode.Combine(_character.Name);
 }
