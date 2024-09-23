@@ -1,4 +1,4 @@
-namespace Fire_Emblem.Character;
+namespace Fire_Emblem.Characters;
 
 public class CharacterController
 {
