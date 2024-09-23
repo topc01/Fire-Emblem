@@ -17,7 +17,7 @@ public class Game
     };
     
     private const string CharactersFile = "characters.json";
-    private CharacterStats[] _characters;
+    private CharacterStats[] _allCharacters;
     
     private const string SkillsFile = "skills.json";
     private Skill[] _skills;
@@ -26,6 +26,8 @@ public class Game
     private readonly Player _player2;
     private Player _attackingPlayer;
     private Player _defendingPlayer;
+
+    private List<CharacterStats> _charactersInGame = new();
     
     private int _round = 1;
     
@@ -119,7 +121,7 @@ public class Game
             if (character != null)
             {
                 currentPlayer.AddCharacter(character);
-                
+                _charactersInGame.Add(character.Character);
             }
             
         }
@@ -144,7 +146,7 @@ public class Game
         return characterAnalyzer;
     }
     private CharacterStats FindCharacterStatsByName(string characterName)
-        => Array.Find(_characters, character => character.Name == characterName) ?? 
+        => Array.Find(_allCharacters, character => character.Name == characterName) ?? 
             throw new Exception("No se encontro el personaje");
     private Skill FindSkillByName(string skillName) 
         => Array.Find(_skills, skill => skill.Name == skillName) ?? 
@@ -158,7 +160,7 @@ public class Game
     {
         if (!File.Exists(CharactersFile)) throw new Exception("No existe el archivo de personajes");
         string charactersJson = File.ReadAllText(CharactersFile);
-        _characters = JsonSerializer.Deserialize<CharacterStats[]>(charactersJson, _options)
+        _allCharacters = JsonSerializer.Deserialize<CharacterStats[]>(charactersJson, _options)
                                  ?? throw new Exception("No fue posible obtener los datos de los personajes");
     }
     private void SetUpSkills()
