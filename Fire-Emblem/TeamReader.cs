@@ -1,7 +1,7 @@
 
 using System.Text.RegularExpressions;
 using Fire_Emblem_View;
-using Fire_Emblem.Character;
+using Fire_Emblem.Characters;
 using Fire_Emblem.Skills;
 
 namespace Fire_Emblem;
@@ -52,12 +52,12 @@ public class TeamReader
         {
             if (line == "Player 1 Team") currentPlayer = _player1;
             else if (line == "Player 2 Team") currentPlayer = _player2;
-            CharacterAnalyzer? character = ParseLine(line);
+            Character? character = ParseLine(line);
             if (character != null)
                 currentPlayer.AddCharacter(character);
         }
     }
-    private CharacterAnalyzer? ParseLine(string line)
+    private Character? ParseLine(string line)
     {
         string pattern = @"^(\w+)(?:\s*\(([^)]+)\))?$";
         Match match = Regex.Match(line, pattern);
@@ -66,15 +66,15 @@ public class TeamReader
             
         string characterName = match.Groups[1].Value;
         CharacterStats characterStats = _characterLookUp(characterName);
-        CharacterAnalyzer characterAnalyzer = new CharacterAnalyzer(characterStats);
+        Character character = new Character(characterStats);
         if (match.Groups[2].Success)
         {
             string[] skillNames = match.Groups[2].Value.Split(',');
             Skill[] skills = skillNames.Select(_skillLookUp).ToArray();
-            characterAnalyzer.AddSkills(skills);
+            character.AddSkills(skills);
         }
 
-        return characterAnalyzer;
+        return character;
     }
     public void SetCharacterFinder(Func<string, CharacterStats> function)
         => _characterLookUp = function;

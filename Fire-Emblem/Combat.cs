@@ -1,13 +1,13 @@
 using Fire_Emblem_View;
-using Fire_Emblem.Character;
+using Fire_Emblem.Characters;
 
 namespace Fire_Emblem;
 
 public class Combat
 {
+    private readonly View _view;
     private Player _attackingPlayer;
     private Player _defendingPlayer;
-    private readonly View _view;
     
     private List<CharacterStats> _charactersInGame = new();
     

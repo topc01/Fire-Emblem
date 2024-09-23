@@ -1,5 +1,5 @@
 ﻿using Fire_Emblem_View;
-using Fire_Emblem.Character;
+using Fire_Emblem.Characters;
 using Fire_Emblem.Skills;
 
 namespace Fire_Emblem;
