@@ -28,9 +28,7 @@ public class Game
     private Player _attackingPlayer;
     private Player _defendingPlayer;
 
-    private List<CharacterStats> _charactersInGame = new();
-    
-    private int _round = 1;
+    private Combat _combat;
     
     public Game(View view, string teamsFolder)
     {
@@ -41,8 +39,7 @@ public class Game
         SetUpSkills();
         _player1 = new Player(1);
         _player2 = new Player(2);
-        _attackingPlayer = _player1;
-        _defendingPlayer = _player2;
+        _combat = new Combat(_player1, _player2, _view);
     }
 
     public void Play()
@@ -54,17 +51,10 @@ public class Game
             return;
         }
         
-        while (!_player1.HasLost() && !_player2.HasLost())
+        while (_combat.Continues())
         {
-            _attackingPlayer.SelectValidCharacter(_view);
-            _defendingPlayer.SelectValidCharacter(_view);
-
-            PrintRoundMessage();
-            PrintAdvantageMessage();
-            ApplyEffectsAndPrintMessage();
-            Fight();
-            PrintFinalState();
-            NextRound();
+            _combat.Battle();
+            _combat.SetNextRound();
         }
 
         Player winner = _player1.HasLost() ? _player2 : _player1;
