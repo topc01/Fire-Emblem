@@ -57,10 +57,11 @@ public class TeamReader
                 currentPlayer.AddCharacter(character);
         }
     }
-    private Character? ParseLine(string line)
+    private Character? ParseLine(string inputLine)
     {
+        // RegEx for a word followed by something inside parenthesis
         string pattern = @"^(\w+)(?:\s*\(([^)]+)\))?$";
-        Match match = Regex.Match(line, pattern);
+        Match match = Regex.Match(inputLine, pattern);
 
         if (!(match.Success)) return null;
             
