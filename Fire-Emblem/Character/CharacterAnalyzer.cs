@@ -1,3 +1,5 @@
+using Fire_Emblem.Skills;
+
 namespace Fire_Emblem.Character;
 
 public class CharacterAnalyzer

@@ -3,6 +3,7 @@ using Fire_Emblem_View;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using Fire_Emblem.Character;
+using Fire_Emblem.Skills;
 
 namespace Fire_Emblem;
 public class Game

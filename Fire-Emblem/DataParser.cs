@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Fire_Emblem.Character;
+using Fire_Emblem.Skills;
 
 namespace Fire_Emblem;
 
