@@ -1,7 +1,4 @@
-﻿using System.Text.Json;
-using Fire_Emblem_View;
-using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
+﻿using Fire_Emblem_View;
 using Fire_Emblem.Character;
 using Fire_Emblem.Skills;
 
@@ -9,7 +6,6 @@ namespace Fire_Emblem;
 public class Game
 {
     private readonly View _view;
-    private readonly string[] _teamFiles;
     
     private const string CharactersFile = "characters.json";
     private readonly CharacterStats[] _allCharacters;
@@ -22,10 +18,10 @@ public class Game
     public Game(View view, string teamsFolder)
     {
         _view = view;
-        _teamFiles = _dataParser.RetrieveTeamFilesFromFolder(teamsFolder);
+        string[] teamFiles = _dataParser.RetrieveTeamFilesFromFolder(teamsFolder);
         _allCharacters = _dataParser.SetUpCharacters(CharactersFile);
         _allSkills = _dataParser.SetUpSkills(SkillsFile);
-        _teamReader = new TeamReader(_teamFiles, _view);
+        _teamReader = new TeamReader(teamFiles, _view);
     }
 
     public void Play()

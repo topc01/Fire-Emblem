@@ -1,5 +1,4 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+
 using System.Text.RegularExpressions;
 using Fire_Emblem_View;
 using Fire_Emblem.Character;
