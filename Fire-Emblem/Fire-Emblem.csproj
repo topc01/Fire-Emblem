@@ -13,7 +13,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Conditions\" />
+      <Folder Include="Conditions\ConditionImplementations\" />
+      <Folder Include="Conditions\LogicalConditions\" />
       <Folder Include="Effects\" />
     </ItemGroup>
 
