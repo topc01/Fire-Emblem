@@ -14,8 +14,8 @@ public class CharacterStats : ICloneable
     {
         init
         {
-            _maxHp = Convert.ToInt32(value);
-            _health = _maxHp;
+            MaxHp = Convert.ToInt32(value);
+            _health = MaxHp;
         }
     }
     public required int Atk { get; set; }
@@ -24,10 +24,10 @@ public class CharacterStats : ICloneable
     public required int Res { get; set; }
     
     public readonly Armament Armament = null!;
-    private readonly int _maxHp;
+    public int MaxHp { get; set; }
     public int Health
     {
-        set => _health = int.Max(0, int.Min(_maxHp, value));
+        set => _health = int.Max(0, int.Min(MaxHp, value));
         get => _health;
     }
     private int _health;
