@@ -12,11 +12,6 @@ public class DataParser
                          JsonNumberHandling.WriteAsString,
         IncludeFields = true
     };
-
-    public DataParser()
-    {
-    }
-    
     public string[] RetrieveTeamFilesFromFolder(string teamsFolder)
     {
         if (!Directory.Exists(teamsFolder)) throw new Exception("No existe la carpeta de equipos");
