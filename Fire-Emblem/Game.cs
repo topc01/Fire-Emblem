@@ -25,8 +25,6 @@ public class Game
     
     private readonly Player _player1;
     private readonly Player _player2;
-    private Player _attackingPlayer;
-    private Player _defendingPlayer;
 
     private Combat _combat;
     
@@ -60,39 +58,6 @@ public class Game
         Player winner = _player1.HasLost() ? _player2 : _player1;
         _view.WriteLine($"Player {winner.PlayerNumber} ganó");
     }
-
-    private void ApplyEffectsAndPrintMessage()
-    {
-        return;
-    }
-    private void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");
-    private void PrintAdvantageMessage() =>_view.WriteLine(_attackingPlayer.AdvantageMessage(_defendingPlayer));
-    private void PrintFinalState()
-        => _view.WriteLine($"{_attackingPlayer.CharacterFinalStatus} : {_defendingPlayer.CharacterFinalStatus}");
-
-    private void NextRound()
-    {
-        _round++;
-        (_attackingPlayer, _defendingPlayer) = (_defendingPlayer, _attackingPlayer);
-    }
-
-    private void Fight()
-    {
-        CharacterController attacker = _attackingPlayer.Controller;
-        CharacterController defender = _defendingPlayer.Controller;
-        Attack(attacker, defender);
-        if (!defender.IsAlive()) return;
-        Attack(defender,attacker);
-        if (!attacker.IsAlive()) return;
-        if (attacker.CanFollowUp(defender))
-            Attack(attacker, defender);
-        else if (defender.CanFollowUp(attacker))
-            Attack(defender,attacker);
-        else _view.WriteLine("Ninguna unidad puede hacer un follow up");
-    }
-
-    private void Attack(CharacterController attacker, CharacterController defender)
-        => _view.WriteLine(attacker.Attack(defender));
         
     private void ChooseTeamFile()
     {
