@@ -2,6 +2,7 @@
 using Fire_Emblem_View;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using Fire_Emblem.Character;
 
 namespace Fire_Emblem;
 public class Game
@@ -52,7 +53,7 @@ public class Game
             _view.WriteLine("Archivo de equipos no válido");
             return;
         }
-
+        
         while (!_player1.HasLost() && !_player2.HasLost())
         {
             _attackingPlayer.SelectValidCharacter(_view);
@@ -60,6 +61,7 @@ public class Game
 
             PrintRoundMessage();
             PrintAdvantageMessage();
+            ApplyEffectsAndPrintMessage();
             Fight();
             PrintFinalState();
             NextRound();
@@ -67,6 +69,11 @@ public class Game
 
         Player winner = _player1.HasLost() ? _player2 : _player1;
         _view.WriteLine($"Player {winner.PlayerNumber} ganó");
+    }
+
+    private void ApplyEffectsAndPrintMessage()
+    {
+        return;
     }
     private void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");
     private void PrintAdvantageMessage() =>_view.WriteLine(_attackingPlayer.AdvantageMessage(_defendingPlayer));

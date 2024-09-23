@@ -1,4 +1,4 @@
-namespace Fire_Emblem;
+namespace Fire_Emblem.Character;
 
 public class CharacterStats : ICloneable
 {

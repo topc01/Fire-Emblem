@@ -1,4 +1,5 @@
 using Fire_Emblem_View;
+using Fire_Emblem.Character;
 
 namespace Fire_Emblem;
 
