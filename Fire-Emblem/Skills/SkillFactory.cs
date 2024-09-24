@@ -34,8 +34,13 @@ public class SkillFactory
             "Wrath" => null,
             "Resolve" => null,
             "Resistance +5" => null,
-            "" => null,
-            
+            "Atk/Def +5" => null,
+            "Atk/Res +5" => null,
+            "Spd/Res +5" => null,
+            "Deadly Blade" => null,
+            "Death Blow" => null,
+            "Armored Blow" => null,
+            "Darting Blow" => null,
             _ => null
         };
         
