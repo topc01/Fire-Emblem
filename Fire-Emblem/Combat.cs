@@ -56,7 +56,7 @@ public class Combat
         else _view.WriteLine("Ninguna unidad puede hacer un follow up");
     }
     private void Attack(CharacterController attacker, CharacterController defender)
-        => _view.WriteLine(attacker.Attack(defender));
+        => _view.WriteLine(attacker.Fight(defender));
     private void PrintFinalState()
         => _view.WriteLine($"{_attackingPlayer.CharacterFinalStatus} : {_defendingPlayer.CharacterFinalStatus}");
     public void SetNextRound()
