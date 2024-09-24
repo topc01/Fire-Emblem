@@ -1,5 +1,6 @@
 using Fire_Emblem.Characters;
 using Fire_Emblem.Conditions;
+using Fire_Emblem.Conditions.LogicalConditions;
 using Fire_Emblem.Effects;
 
 namespace Fire_Emblem.Skills;
@@ -16,6 +17,12 @@ public class Skill
     {
         _condition = condition;
         _effect = effect;
+    }
+
+    public Skill(Effect effect)
+    {
+        _effect = effect;
+        _condition = new TrueCondition();
     }
 
     public Skill()
