@@ -18,6 +18,10 @@ public class Skill
         _effect = effect;
     }
 
+    public Skill()
+    {
+    }
+
     public void CheckApplicable(CombatSummary combatSummary)
         => _isApplicable = _condition.DoesHold(combatSummary);
     
@@ -25,5 +29,17 @@ public class Skill
     {
         if (_isApplicable)
             _effect.Apply(stats);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+        var other = (Skill)obj;
+        return Name == other.Name;
+    }
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Name);
     }
 }
