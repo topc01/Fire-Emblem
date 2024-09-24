@@ -20,7 +20,7 @@ public class Game
         _view = view;
         string[] teamFiles = _dataParser.RetrieveTeamFilesFromFolder(teamsFolder);
         _allCharacters = _dataParser.SetUpCharacters(CharactersFile);
-        _allSkills = _dataParser.SetUpSkills(SkillsFile);
+        //_allSkills = _dataParser.SetUpSkills(SkillsFile);
         _teamReader = new TeamReader(teamFiles, _view);
     }
 

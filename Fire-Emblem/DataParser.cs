@@ -26,12 +26,12 @@ public class DataParser
         return JsonSerializer.Deserialize<CharacterStats[]>(charactersJson, _options)
                          ?? throw new Exception("No fue posible obtener los datos de los personajes");
     }
-    public Skill[] SetUpSkills(string skillsFile)
-    {
-        if (!File.Exists(skillsFile)) throw new Exception("No existe el archivo de skills");
-        string skillsJson = File.ReadAllText(skillsFile);
-        return JsonSerializer.Deserialize<Skill[]>(skillsJson, _options)
-                     ?? throw new Exception("No fue posible obtener los datos de los skills");
-    }
+    //public Skill[] SetUpSkills(string skillsFile)
+    //{
+    //    if (!File.Exists(skillsFile)) throw new Exception("No existe el archivo de skills");
+    //    string skillsJson = File.ReadAllText(skillsFile);
+    //    return JsonSerializer.Deserialize<Skill[]>(skillsJson, _options)
+    //                 ?? throw new Exception("No fue posible obtener los datos de los skills");
+    //}
     
 }

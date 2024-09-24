@@ -1,7 +1,29 @@
+using Fire_Emblem.Characters;
+using Fire_Emblem.Conditions;
+using Fire_Emblem.Effects;
+
 namespace Fire_Emblem.Skills;
 
 public class Skill
 {
-    public required string Name { get; set; }
-    public required string Description { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    private readonly Condition _condition;
+    private readonly Effect _effect;
+    private bool _isApplicable = true;
+
+    public Skill(Condition condition, Effect effect)
+    {
+        _condition = condition;
+        _effect = effect;
+    }
+
+    public void CheckApplicable(CombatSummary combatSummary)
+        => _isApplicable = _condition.DoesHold(combatSummary);
+    
+    public void ApplyIfApplicable(CharacterStats stats)
+    {
+        if (_isApplicable)
+            _effect.Apply(stats);
+    }
 }

@@ -71,7 +71,7 @@ public class TeamReader
         if (match.Groups[2].Success)
         {
             string[] skillNames = match.Groups[2].Value.Split(',');
-            Skill[] skills = skillNames.Select(_skillLookUp).ToArray();
+            Skill?[] skills = skillNames.Select(SkillFactory.Create).ToArray();
             character.AddSkills(skills);
         }
 
