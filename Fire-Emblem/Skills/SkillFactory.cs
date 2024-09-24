@@ -5,12 +5,31 @@ namespace Fire_Emblem.Skills;
 
 public class SkillFactory
 {
-    public static Skill? Create(string name)
+    public Skill Create(string name)
     {
-        if (name == "Attack +6")
-            return new Skill(
+        Skill? createdSkill = CreateSkill(name);
+        if (createdSkill == null)
+            createdSkill = new Skill();
+        createdSkill.Name = name;
+        return createdSkill;
+    }
+
+    private Skill? CreateSkill(string name)
+    {
+        return name switch
+        {
+            "HP +15" => null,
+            "Attack +6" => new Skill(
                 new TrueCondition(),
-                new BonusEffect(StatType.Atk, 6));
-        return null;
+                new BonusEffect(StatType.Atk, 6)),
+            "Speed +5" => new Skill(
+                new TrueCondition(),
+                new BonusEffect(StatType.Spd, 5)),
+            "Defense +5" => new Skill(
+                new TrueCondition(),
+                new BonusEffect(StatType.Def, 5)),
+            _ => null
+        };
+        
     }
 }
