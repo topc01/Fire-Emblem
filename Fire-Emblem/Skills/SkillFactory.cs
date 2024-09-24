@@ -19,6 +19,12 @@ public class SkillFactory
         return name switch
         {
             "HP +15" => null,
+            "Fair Fight" => null,
+            "Will to win" => null,
+            "Single-Minded" => null,
+            "Ignis" => null,
+            "Perceptive" => null,
+            "Tome Precision" => null,
             "Attack +6" => new Skill(
                 new TrueCondition(),
                 new BonusEffect(StatType.Atk, 6)),
@@ -28,6 +34,11 @@ public class SkillFactory
             "Defense +5" => new Skill(
                 new TrueCondition(),
                 new BonusEffect(StatType.Def, 5)),
+            "Wrath" => null,
+            "Resolve" => null,
+            "Resistance +5" => null,
+            "" => null,
+            
             _ => null
         };
         
