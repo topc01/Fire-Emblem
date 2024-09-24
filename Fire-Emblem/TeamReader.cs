@@ -15,6 +15,7 @@ public class TeamReader
     
     private Func<string, CharacterStats> _characterLookUp;
     private Func<string, Skill> _skillLookUp;
+    private readonly SkillFactory _skillFactory = new();
 
     private readonly Player _player1 = new(1);
     private readonly Player _player2 = new(2);
@@ -71,7 +72,7 @@ public class TeamReader
         if (match.Groups[2].Success)
         {
             string[] skillNames = match.Groups[2].Value.Split(',');
-            Skill?[] skills = skillNames.Select(SkillFactory.Create).ToArray();
+            Skill[] skills = skillNames.Select(_skillFactory.Create).ToArray();
             character.AddSkills(skills);
         }
 
