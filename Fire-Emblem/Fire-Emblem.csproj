@@ -14,7 +14,6 @@
 
     <ItemGroup>
       <Folder Include="Conditions\ConditionImplementations\" />
-      <Folder Include="Conditions\LogicalConditions\" />
     </ItemGroup>
 
 </Project>
