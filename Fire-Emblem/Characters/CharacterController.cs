@@ -24,16 +24,16 @@ public class CharacterController
     }
     private int DamageAgainst(CharacterController opponent)
     {
-        int atk = Character.Atk;
+        int atk = Attack;
         Armament armament = Character.Armament;
         double advantage = armament.GetAdvantage(opponent.Character.Armament);
-        double rivalDefense = armament.IsMagic() ? opponent.Character.Res : opponent.Character.Def;
+        double rivalDefense = armament.IsMagic() ? opponent.Resistance : opponent.Defense;
         return int.Max((int)(atk * advantage - rivalDefense), 0);
     }
     private string WeaponName => Character.Weapon;
     public string Name => Character.Name;
     public bool IsAlive() => Character.Health > 0;
-    public bool CanFollowUp(CharacterController opponent) => Character.Spd - opponent.Character.Spd >= 5;
+    public bool CanFollowUp(CharacterController opponent) => Speed - opponent.Speed >= 5;
     private void ReceiveDamage(int damage) => Character.Health -= damage;
     public string CheckAdvantages(CharacterController opponent)
     {
@@ -48,4 +48,45 @@ public class CharacterController
         };
     }
     public override string ToString() => $"{Name} ({Character.Health})";
+
+    public int Attack
+    {
+        get => Character.Attack.Value;
+        set
+        {
+            if (value > 0)
+                Character.Attack.Bonus = value;
+            else Character.Attack.Penalty = value;
+        }
+    }
+    public int Speed
+    {
+        get => Character.Speed.Value;
+        set
+        {
+            if (value > 0)
+                Character.Speed.Bonus = value;
+            else Character.Speed.Penalty = value;
+        }
+    }
+    public int Defense
+    {
+        get => Character.Defense.Value;
+        set
+        {
+            if (value > 0)
+                Character.Defense.Bonus = value;
+            else Character.Defense.Penalty = value;
+        }
+    }
+    public int Resistance
+    {
+        get => Character.Resistance.Value;
+        set
+        {
+            if (value > 0)
+                Character.Resistance.Bonus = value;
+            else Character.Resistance.Penalty = value;
+        }
+    }
 }

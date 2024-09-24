@@ -32,10 +32,10 @@ public class Skill
     public void CheckApplicable(CombatSummary combatSummary)
         => _isApplicable = _condition.DoesHold(combatSummary);
     
-    public void ApplyIfApplicable(CharacterStats stats)
+    public void ApplyIfApplicable(CharacterController character)
     {
         if (_isApplicable)
-            _effect.Apply(stats);
+            _effect.Apply(character);
     }
 
     public override bool Equals(object? obj)

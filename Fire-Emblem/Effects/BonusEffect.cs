@@ -13,21 +13,21 @@ public class BonusEffect : Effect
         _bonus = bonus;
     }
 
-    public override void Apply(CharacterStats characterStats)
+    public override void Apply(CharacterController character)
     {
         switch (_targetStat)
         {
             case StatType.Atk:
-                characterStats.Atk += _bonus;
+                character.Attack += _bonus;
                 break;
             case StatType.Def:
-                characterStats.Def += _bonus;
+                character.Defense += _bonus;
                 break;
             case StatType.Res:
-                characterStats.Res += _bonus;
+                character.Resistance += _bonus;
                 break;
             case StatType.Spd:
-                characterStats.Spd += _bonus;
+                character.Speed += _bonus;
                 break;
         }
     }

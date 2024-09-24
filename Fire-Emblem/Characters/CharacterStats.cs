@@ -18,13 +18,32 @@ public class CharacterStats : ICloneable
             _health = MaxHp;
         }
     }
-    public required int Atk { get; set; }
-    public required int Spd { get; set; }
-    public required int Def { get; set; }
-    public required int Res { get; set; }
+
+    public required int Atk
+    {
+        init => Attack.Value = value;
+    }
+    public readonly ModifiableStat Attack = new();
+    public required int Spd
+    {
+        init => Speed.Value = value;
+    }
+    public readonly ModifiableStat Speed = new();
+
+    public required int Def
+    {
+        init => Defense.Value = value;
+    }
+    public readonly ModifiableStat Defense = new();
+
+    public required int Res
+    {
+        init => Resistance.Value = value;
+    }
+    public readonly ModifiableStat Resistance = new();
+    public int MaxHp { get; set; }
     
     public readonly Armament Armament = null!;
-    public int MaxHp { get; set; }
     public int Health
     {
         set => _health = int.Max(0, int.Min(MaxHp, value));
