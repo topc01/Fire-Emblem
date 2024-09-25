@@ -30,7 +30,7 @@ public class Skill
     public void ApplyIfDoesHold(CharacterController character, CharacterController rival)
     {
         if (_condition.DoesHold(character, rival))
-            _effect.Apply(character);
+            _effect.Apply(character, rival);
     }
 
     public override bool Equals(object? obj)

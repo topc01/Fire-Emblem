@@ -9,11 +9,11 @@ public class MultiEffect : Effect
     public MultiEffect(params Effect[] effects)
         => _effects = effects;
 
-    public override void Apply(CharacterController character)
+    public override void Apply(CharacterController character, CharacterController rival)
     {
         foreach (var effect in _effects)
         {
-            effect.Apply(character);
+            effect.Apply(character, rival);
         }
     }
 }
