@@ -2,10 +2,10 @@ namespace Fire_Emblem;
 
 public class ModifiedStats
 {
-    private (int value, bool isNeutralized) _atk;
-    private (int value, bool isNeutralized) _def;
-    private (int value, bool isNeutralized) _res;
-    private (int value, bool isNeutralized) _spd;
+    private (int value, bool isNeutralized) _atk = (0, false);
+    private (int value, bool isNeutralized) _def = (0, false);
+    private (int value, bool isNeutralized) _res = (0, false);
+    private (int value, bool isNeutralized) _spd = (0, false);
 
     public int Atk
     {
