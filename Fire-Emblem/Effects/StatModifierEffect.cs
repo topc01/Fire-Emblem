@@ -5,25 +5,11 @@ namespace Fire_Emblem.Effects;
 public abstract class StatModifierEffect : Effect
 {
     protected readonly StatType TargetStat;
-    protected readonly double LinearFactor;
-    protected readonly int ConstantFactor;
-    public StatModifierEffect(StatType targetStat, int constantFactor)
+    protected readonly int Bonus;
+    public StatModifierEffect(StatType targetStat, int bonus)
     {
         TargetStat = targetStat;
-        ConstantFactor = constantFactor;
-        LinearFactor = 1.0;
-    }
-    public StatModifierEffect(StatType targetStat, double linearFactor)
-    {
-        TargetStat = targetStat;
-        ConstantFactor = 0;
-        LinearFactor = linearFactor;
-    }
-    public StatModifierEffect(StatType targetStat, double linearFactor, int constantFactor)
-    {
-        TargetStat = targetStat;
-        ConstantFactor = constantFactor;
-        LinearFactor = linearFactor;
+        Bonus = bonus;
     }
     public override void Apply(CharacterController character, CharacterController rival)
         => Apply(character);

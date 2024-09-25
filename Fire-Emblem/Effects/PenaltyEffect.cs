@@ -5,25 +5,21 @@ namespace Fire_Emblem.Effects;
 public class PenaltyEffect : StatModifierEffect
 {
     public PenaltyEffect(StatType targetStat, int penalty) : base(targetStat, penalty){}
-    public PenaltyEffect(StatType targetStat, double linearFactor) : base(targetStat, linearFactor){}
-    public PenaltyEffect(StatType targetStat, double linearFactor, int constantFactor) : base(targetStat, linearFactor, constantFactor){}
-    public override void Apply(CharacterController controller)
+    public override void Apply(CharacterController character)
     {
-        CharacterStats baseStats = controller.Character;
-        AttackOrientedModifiedStats stats = controller.Penalty;
         switch (TargetStat)
         {
             case StatType.Atk:
-                stats.Atk = Round(baseStats.Atk * LinearFactor + ConstantFactor);
+                character.Bonus.Atk = -Bonus;
                 break;
             case StatType.Def:
-                stats.Def = Round(baseStats.Def * LinearFactor + ConstantFactor);
+                character.Bonus.Def = -Bonus;
                 break;
             case StatType.Res:
-                stats.Res = Round(baseStats.Res * LinearFactor + ConstantFactor);
+                character.Bonus.Res = -Bonus;
                 break;
             case StatType.Spd:
-                stats.Spd = Round(baseStats.Spd * LinearFactor + ConstantFactor);
+                character.Bonus.Spd = -Bonus;
                 break;
         }
     }
