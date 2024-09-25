@@ -2,19 +2,41 @@ namespace Fire_Emblem;
 
 public class ModifiedStats
 {
-    public (int value, bool isNeutralized) Atk;
-    public (int value, bool isNeutralized) Def;
-    public (int value, bool isNeutralized) Res;
-    public (int value, bool isNeutralized) Spd;
+    private (int value, bool isNeutralized) _atk;
+    private (int value, bool isNeutralized) _def;
+    private (int value, bool isNeutralized) _res;
+    private (int value, bool isNeutralized) _spd;
+
+    public int Atk
+    {
+        get => _atk.value;
+        set => _atk.value = value;
+    }
+
+    public int Def
+    {
+        get => _def.value;
+        set => _def.value = value;
+    }
+    public int Spd
+    {
+        get => _spd.value;
+        set => _spd.value = value;
+    }
+    public int Res
+    {
+        get => _res.value;
+        set => _res.value = value;
+    }
 
     private (int, bool) GetStat(StatType statType)
     {
         return statType switch
         {
-            StatType.Atk => Atk,
-            StatType.Def => Def,
-            StatType.Res => Res,
-            StatType.Spd => Spd,
+            StatType.Atk => _atk,
+            StatType.Def => _def,
+            StatType.Res => _res,
+            StatType.Spd => _spd,
             _ => throw new ApplicationException()
         };
     }
@@ -23,16 +45,16 @@ public class ModifiedStats
         switch (statType)
         {
             case StatType.Atk:
-                Atk.value = value;
+                _atk.value = value;
                 break;
             case StatType.Def:
-                Def.value = value;
+                _def.value = value;
                 break;
             case StatType.Res:
-                Res.value = value;
+                _res.value = value;
                 break;
             case StatType.Spd:
-                Spd.value = value;
+                _spd.value = value;
                 break;
         }
     }
@@ -41,16 +63,16 @@ public class ModifiedStats
         switch (statType)
         {
             case StatType.Atk:
-                Atk.isNeutralized = true;
+                _atk.isNeutralized = true;
                 break;
             case StatType.Def:
-                Def.isNeutralized = true;
+                _def.isNeutralized = true;
                 break;
             case StatType.Res:
-                Res.isNeutralized = true;
+                _res.isNeutralized = true;
                 break;
             case StatType.Spd:
-                Spd.isNeutralized = true;
+                _spd.isNeutralized = true;
                 break;
         }
     }
