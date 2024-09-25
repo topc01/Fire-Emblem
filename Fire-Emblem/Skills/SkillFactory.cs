@@ -120,11 +120,11 @@ public class SkillFactory
                     new OrCondition(
                         new AndCondition(
                             new NotCondition(new WeaponCondition(Armament.Magic)),
-                            new Rival(new WeaponCondition(Armament.Magic))
+                            new RivalCondition(new WeaponCondition(Armament.Magic))
                             ),
                         new AndCondition(
                             (new WeaponCondition(Armament.Magic)),
-                            new NotCondition(new Rival(new WeaponCondition(Armament.Magic)))
+                            new NotCondition(new RivalCondition(new WeaponCondition(Armament.Magic)))
                         )
                         ),
                     new BonusEffect(Spd, 3)),
