@@ -11,8 +11,6 @@ public class Skill
     public string Description { get; set; }
     private readonly Condition _condition;
     private readonly Effect _effect;
-    private bool _isApplicable = true;
-
     public Skill(Condition condition, Effect effect)
     {
         _condition = condition;
@@ -28,13 +26,10 @@ public class Skill
     public Skill()
     {
     }
-
-    public void CheckApplicable(CombatSummary combatSummary)
-        => _isApplicable = _condition.DoesHold(combatSummary);
     
-    public void ApplyIfApplicable(CharacterController character)
+    public void ApplyIfDoesHold(CharacterController character, CharacterController rival)
     {
-        if (_isApplicable)
+        if (_condition.DoesHold(character, rival))
             _effect.Apply(character);
     }
 
