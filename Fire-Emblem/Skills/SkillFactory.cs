@@ -2,6 +2,7 @@ using Fire_Emblem.Conditions;
 using Fire_Emblem.Conditions.CharacterConditions;
 using Fire_Emblem.Conditions.LogicalConditions;
 using Fire_Emblem.Effects;
+using Fire_Emblem.Effects.EffectImplementations;
 
 namespace Fire_Emblem.Skills;
 
@@ -154,6 +155,8 @@ public class SkillFactory
                     new MultiEffect(
                         new RivalEffect(new PenaltyEffect(Atk, 3)), 
                         new RivalEffect(new PenaltyEffect(Spd, 3)))),
+            "Luna"
+                => new Skill(new LunaEffect()),
             _ => null
         };
         
