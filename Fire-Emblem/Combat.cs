@@ -33,6 +33,7 @@ public class Combat
         ApplyEffectsAndPrintMessage();
         Fight();
         PrintFinalState();
+        SetLastRivals();
     }
     private void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");
     private void PrintAdvantageMessage() =>_view.WriteLine(_attackingPlayer.AdvantageMessage(_defendingPlayer));
@@ -69,5 +70,11 @@ public class Combat
 
     public Player Winner()
         => _attackingPlayer.HasLost() ? _defendingPlayer : _attackingPlayer;
+
+    private void SetLastRivals()
+    {
+        _attackingPlayer.Controller.Character.LastRival = _defendingPlayer.Controller.Character;
+        _defendingPlayer.Controller.Character.LastRival = _attackingPlayer.Controller.Character;
+    }
     
 }

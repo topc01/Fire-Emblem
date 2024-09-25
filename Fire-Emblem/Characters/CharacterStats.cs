@@ -31,6 +31,8 @@ public class CharacterStats : ICloneable
         get => _health;
     }
     private int _health;
+
+    public CharacterStats LastRival;
     // hasta acá es una EDD
     
     //public bool IsAlive() => Health > 0;

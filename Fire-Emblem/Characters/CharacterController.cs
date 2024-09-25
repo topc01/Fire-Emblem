@@ -85,4 +85,6 @@ public class CharacterController
 
     public bool IsAttacker;
 
+    public bool IsLastRival(CharacterController opponent)
+        => Character.LastRival == opponent.Character;
 }
