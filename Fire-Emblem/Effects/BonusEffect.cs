@@ -18,16 +18,16 @@ public class BonusEffect : Effect
         switch (_targetStat)
         {
             case StatType.Atk:
-                character.Attack += _bonus;
+                character.Bonus.Atk = _bonus;
                 break;
             case StatType.Def:
-                character.Defense += _bonus;
+                character.Bonus.Def = _bonus;
                 break;
             case StatType.Res:
-                character.Resistance += _bonus;
+                character.Bonus.Res = _bonus;
                 break;
             case StatType.Spd:
-                character.Speed += _bonus;
+                character.Bonus.Spd = _bonus;
                 break;
         }
     }
