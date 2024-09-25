@@ -63,8 +63,11 @@ public class Combat
     {
         _round++;
         (_attackingPlayer, _defendingPlayer) = (_defendingPlayer, _attackingPlayer);
+        _attackingPlayer.Controller.IsAttacker = true;
+        _defendingPlayer.Controller.IsAttacker = false;
     }
 
     public Player Winner()
         => _attackingPlayer.HasLost() ? _defendingPlayer : _attackingPlayer;
+    
 }
