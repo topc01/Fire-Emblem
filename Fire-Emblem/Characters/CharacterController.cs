@@ -5,7 +5,9 @@ namespace Fire_Emblem.Characters;
 public class CharacterController
 {
     private CharacterStats? _character;
-    private List<Skill>? _skills;
+    //private List<Skill>? _skills;
+    public readonly AttackOrientedModifiedStats Bonus = new();
+    public readonly AttackOrientedModifiedStats Penalty = new();
     
     public CharacterStats Character
     {
