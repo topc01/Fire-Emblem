@@ -4,30 +4,22 @@ namespace Fire_Emblem.Effects;
 
 public class BonusEffect : StatModifierEffect
 {
-    private readonly StatType _targetStat;
-    private readonly int _bonus;
-
-    public BonusEffect(StatType targetStat, int bonus)
-    {
-        _targetStat = targetStat;
-        _bonus = bonus;
-    }
-
+    public BonusEffect(StatType targetStat, int bonus) : base(targetStat, bonus){}
     public override void Apply(CharacterController character)
     {
-        switch (_targetStat)
+        switch (TargetStat)
         {
             case StatType.Atk:
-                character.Bonus.Atk = _bonus;
+                character.Bonus.Atk = Bonus;
                 break;
             case StatType.Def:
-                character.Bonus.Def = _bonus;
+                character.Bonus.Def = Bonus;
                 break;
             case StatType.Res:
-                character.Bonus.Res = _bonus;
+                character.Bonus.Res = Bonus;
                 break;
             case StatType.Spd:
-                character.Bonus.Spd = _bonus;
+                character.Bonus.Spd = Bonus;
                 break;
         }
     }
