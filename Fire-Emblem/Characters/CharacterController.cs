@@ -6,6 +6,7 @@ public class CharacterController
 {
     private CharacterStats? _character;
     private List<Skill>? _skills;
+    
     public CharacterStats Character
     {
         set => _character = value;
@@ -129,4 +130,7 @@ public class CharacterController
             _ => 0
         };
     }
+
+    public bool IsAttacker;
+
 }
