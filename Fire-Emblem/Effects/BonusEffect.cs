@@ -2,7 +2,7 @@ using Fire_Emblem.Characters;
 
 namespace Fire_Emblem.Effects;
 
-public class BonusEffect : Effect
+public class BonusEffect : StatModifierEffect
 {
     private readonly StatType _targetStat;
     private readonly int _bonus;
