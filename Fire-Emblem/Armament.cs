@@ -3,7 +3,7 @@ namespace Fire_Emblem;
 public class Armament
 {
     // para agregar armas solo se agregan en este enum
-    private enum ArmamentType
+    public enum ArmamentType
     {
         Sword,
         Axe,
@@ -12,25 +12,20 @@ public class Armament
         Magic
     }
     public string Name;
-    private readonly ArmamentType _armamentType;
+    
+    public ArmamentType Type { get; init; }
     private Armament(ArmamentType armamentType)
     {
-        _armamentType = armamentType;
+        Type = armamentType;
         Name = armamentType.ToString();
     }
+    public static ArmamentType Sword => ArmamentType.Sword;
+    public static ArmamentType Axe => ArmamentType.Axe;
+    public static ArmamentType Lance => ArmamentType.Lance;
+    public static ArmamentType Bow => ArmamentType.Bow;
+    public static ArmamentType Magic => ArmamentType.Magic;
 
-    private static readonly Dictionary<ArmamentType, Armament> Armaments = Enum.GetValues(typeof(ArmamentType))
-        .Cast<ArmamentType>()
-        .ToDictionary(armamentType => armamentType, armamentType => new Armament(armamentType));
-    
-    // public static Armament Sword => Armaments[ArmamentType.Sword];
-    // public static Armament Axe => Armaments[ArmamentType.Axe];
-    // public static Armament Lance => Armaments[ArmamentType.Lance];
-    // public static Armament Bow => Armaments[ArmamentType.Bow];
-    // public static Armament Magic => Armaments[ArmamentType.Magic];
-
-    public bool IsMagic() => _armamentType == ArmamentType.Magic;
-
+    public bool IsMagic() => Type == ArmamentType.Magic;
     private static readonly double[,] ResultMatrix = new double[,]
     {
         // Sword, Axe, Lance
@@ -43,7 +38,7 @@ public class Armament
     {
         try
         {
-            return ResultMatrix[(int)_armamentType, (int)opponentArmament._armamentType];
+            return ResultMatrix[(int)Type, (int)opponentArmament.Type];
         }
         catch (IndexOutOfRangeException)
         {
@@ -53,6 +48,6 @@ public class Armament
 
     public static Armament GetArmamentFromName(string armamentName) =>
         Enum.TryParse(armamentName, true, out ArmamentType armamentType)
-            ? Armaments[armamentType]
+            ? new Armament(armamentType)
             : throw new ArgumentException($"El arma {armamentName} no es válida");
 }
