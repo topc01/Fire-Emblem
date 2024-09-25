@@ -12,4 +12,10 @@ public class CombatSummary
         _defendingCharacter = defendingCharacter;
         _battleStep = battleStep;
     }
+
+    public bool IsAttacker(CharacterController characterController)
+        => _attackingCharacter.CharacterS == characterController.Character;
+
+    public Character GetRival(CharacterController character)
+        => IsAttacker(character) ? _attackingCharacter : _defendingCharacter;
 }
