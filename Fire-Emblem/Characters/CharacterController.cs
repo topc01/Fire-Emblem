@@ -1,4 +1,4 @@
-using Fire_Emblem.Skills;
+
 
 namespace Fire_Emblem.Characters;
 
@@ -29,16 +29,16 @@ public class CharacterController
     }
     private int DamageAgainst(CharacterController opponent)
     {
-        int atk = Attack;
+        int atk = Character.Atk;
         Armament armament = Character.Armament;
         double advantage = armament.GetAdvantage(opponent.Character.Armament);
-        double rivalDefense = armament.IsMagic() ? opponent.Resistance : opponent.Defense;
+        double rivalDefense = armament.IsMagic() ? opponent.Character.Res : opponent.Character.Def;
         return int.Max((int)(atk * advantage - rivalDefense), 0);
     }
     public bool IsAlive() => HP > 0;
     public bool CanFollowUp(CharacterController opponent)
         => (IsFaster(opponent) && !NegatedFollowUp) || GuaranteedFollowUp;
-    private bool IsFaster(CharacterController opponent) => Speed - opponent.Speed >= 5;
+    private bool IsFaster(CharacterController opponent) => Character.Spd - opponent.Character.Spd >= 5;
     private void ReceiveDamage(int damage) => HP -= damage;
     public string CheckAdvantages(CharacterController opponent)
     {
@@ -66,71 +66,19 @@ public class CharacterController
         set => Character.MaxHp = value;
     }
 
-    public int Attack
+    public void Reset()
     {
-        get => Character.Attack.Value;
-        set
-        {
-            if (value > 0)
-                Character.Attack.Bonus += value;
-            else Character.Attack.Penalty += value;
-        }
+        Bonus.Reset();
+        Penalty.Reset();
     }
-    public int Speed
-    {
-        get => Character.Speed.Value;
-        set
-        {
-            if (value > 0)
-                Character.Speed.Bonus += value;
-            else Character.Speed.Penalty += value;
-        }
-    }
-    public int Defense
-    {
-        get => Character.Defense.Value;
-        set
-        {
-            if (value > 0)
-                Character.Defense.Bonus += value;
-            else Character.Defense.Penalty += value;
-        }
-    }
-    public int Resistance
-    {
-        get => Character.Resistance.Value;
-        set
-        {
-            if (value > 0)
-                Character.Resistance.Bonus += value;
-            else Character.Resistance.Penalty += value;
-        }
-    }
-
-    public void ResetModifications()
-    {
-        ResetStat(Character.Attack);
-        ResetStat(Character.Speed);
-        ResetStat(Character.Defense);
-        ResetStat(Character.Resistance);
-    }
-
-    private void ResetStat(ModifiableStat stat)
-    {
-        stat.Bonus = 0;
-        stat.Penalty = 0;
-        stat.BonusNeutralized = false;
-        stat.PenaltyNeutralized = false;
-    }
-
     public int GetStat(StatType stat)
     {
         return stat switch
         {
-            StatType.Atk => Character.Attack.Total,
-            StatType.Def => Character.Defense.Total,
-            StatType.Res => Character.Resistance.Total,
-            StatType.Spd => Character.Speed.Total,
+            StatType.Atk => Character.Atk,
+            StatType.Def => Character.Def,
+            StatType.Res => Character.Res,
+            StatType.Spd => Character.Spd,
             _ => 0
         };
     }
