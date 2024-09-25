@@ -82,8 +82,8 @@ public class CharacterController
         set
         {
             if (value > 0)
-                Character.Speed.Bonus = value;
-            else Character.Speed.Penalty = value;
+                Character.Speed.Bonus += value;
+            else Character.Speed.Penalty += value;
         }
     }
     public int Defense
@@ -92,8 +92,8 @@ public class CharacterController
         set
         {
             if (value > 0)
-                Character.Defense.Bonus = value;
-            else Character.Defense.Penalty = value;
+                Character.Defense.Bonus += value;
+            else Character.Defense.Penalty += value;
         }
     }
     public int Resistance
@@ -102,8 +102,8 @@ public class CharacterController
         set
         {
             if (value > 0)
-                Character.Resistance.Bonus = value;
-            else Character.Resistance.Penalty = value;
+                Character.Resistance.Bonus += value;
+            else Character.Resistance.Penalty += value;
         }
     }
 
