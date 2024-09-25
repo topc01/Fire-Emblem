@@ -2,7 +2,7 @@ using Fire_Emblem.Characters;
 
 namespace Fire_Emblem.Conditions.CharacterConditions;
 
-public class LessCondition : BaseCondition
+public class LessCondition : SingleCondition
 {
     private readonly StatType _stat;
     private readonly int _threshold;

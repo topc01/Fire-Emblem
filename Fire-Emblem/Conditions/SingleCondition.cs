@@ -1,8 +1,8 @@
 using Fire_Emblem.Characters;
 
-namespace Fire_Emblem.Conditions.CharacterConditions;
+namespace Fire_Emblem.Conditions;
 
-public abstract class BaseCondition : Condition
+public abstract class SingleCondition : Condition
 {
     public override bool DoesHold(CharacterController character, CharacterController rival)
         => DoesHold(character);
