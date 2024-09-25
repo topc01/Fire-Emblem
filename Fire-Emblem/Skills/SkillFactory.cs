@@ -26,7 +26,11 @@ public class SkillFactory
         return name switch
         {
             "HP +15" => null,
-            "Fair Fight" => null,
+            "Fair Fight"
+                => new Skill(
+                    new IsAttacker(),
+                    new MultiEffect(
+                        new BonusEffect(Atk, 6), new RivalEffect(new BonusEffect(Atk, 6)))),
             "Will to win" => null,
             "Single-Minded" => null,
             "Ignis" => null,
@@ -128,6 +132,28 @@ public class SkillFactory
                         )
                         ),
                     new BonusEffect(Spd, 3)),
+            "Blinding Flash"
+                => new Skill(
+                    new IsAttacker(),
+                    new RivalEffect(new PenaltyEffect(Spd, 4))),
+            "Not *Quite*"
+                => new Skill(
+                    new RivalCondition(new IsAttacker()),
+                    new RivalEffect(new PenaltyEffect(Atk, 4))),
+            "Stunning Smile"
+                => new Skill(
+                    new RivalCondition(new IsMale()),
+                    new RivalEffect(new PenaltyEffect(Spd, 8))),
+            "Disarming Sigh"
+                => new Skill(
+                    new RivalCondition(new IsMale()),
+                    new RivalEffect(new PenaltyEffect(Atk, 8))),
+            "Charmer"
+                => new Skill(
+                    new IsLastRival(),
+                    new MultiEffect(
+                        new RivalEffect(new PenaltyEffect(Atk, 3)), 
+                        new RivalEffect(new PenaltyEffect(Spd, 3)))),
             _ => null
         };
         
