@@ -9,32 +9,32 @@ public class AttackOrientedModifiedStats
     {
         set
         {
-            FirstAttack.Atk = value;
-            FollowUp.Atk = value;
+            FirstAttack.Atk += value;
+            FollowUp.Atk += value;
         }
     }
     public int Def
     {
         set
         {
-            FirstAttack.Def = value;
-            FollowUp.Def = value;
+            FirstAttack.Def += value;
+            FollowUp.Def += value;
         }
     }
     public int Res
     {
         set
         {
-            FirstAttack.Res = value;
-            FollowUp.Res = value;
+            FirstAttack.Res += value;
+            FollowUp.Res += value;
         }
     }
     public int Spd
     {
         set
         {
-            FirstAttack.Spd = value;
-            FollowUp.Spd = value;
+            FirstAttack.Spd += value;
+            FollowUp.Spd += value;
         }
     }
 
