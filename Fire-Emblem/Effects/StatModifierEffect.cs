@@ -6,7 +6,7 @@ public abstract class StatModifierEffect : CharacterEffect
 {
     protected readonly StatType TargetStat;
     protected readonly int Bonus;
-    public StatModifierEffect(StatType targetStat, int bonus)
+    protected StatModifierEffect(StatType targetStat, int bonus)
     {
         TargetStat = targetStat;
         Bonus = bonus;
