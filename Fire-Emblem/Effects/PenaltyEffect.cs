@@ -4,22 +4,28 @@ namespace Fire_Emblem.Effects;
 
 public class PenaltyEffect : StatModifierEffect
 {
-    public PenaltyEffect(StatType targetStat, int penalty) : base(targetStat, penalty){}
+    private readonly StatType _targetStat;
+    private readonly int _bonus;
+    public PenaltyEffect(StatType targetStat, int bonus)
+    {
+        _targetStat = targetStat;
+        _bonus = bonus;
+    }
     public override void Apply(CharacterController character)
     {
-        switch (TargetStat)
+        switch (_targetStat)
         {
             case StatType.Atk:
-                character.Bonus.Atk = -Bonus;
+                character.Bonus.Atk = -_bonus;
                 break;
             case StatType.Def:
-                character.Bonus.Def = -Bonus;
+                character.Bonus.Def = -_bonus;
                 break;
             case StatType.Res:
-                character.Bonus.Res = -Bonus;
+                character.Bonus.Res = -_bonus;
                 break;
             case StatType.Spd:
-                character.Bonus.Spd = -Bonus;
+                character.Bonus.Spd = -_bonus;
                 break;
         }
     }
