@@ -38,7 +38,7 @@ public class Player
         Print(liveCharacters, view);
         Choose(liveCharacters, view);
     }
-    public override string ToString() => $"{Controller.Name} (Player {PlayerNumber}) comienza";
+    public override string ToString() => $"{Controller.Character.Name} (Player {PlayerNumber}) comienza";
     public string CharacterFinalStatus => $"{Controller}";
     public string AdvantageMessage(Player opponent) => Controller.CheckAdvantages(opponent.Controller);
 }

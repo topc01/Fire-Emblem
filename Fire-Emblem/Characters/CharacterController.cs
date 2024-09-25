@@ -25,7 +25,7 @@ public class CharacterController
     {
         int damage = DamageAgainst(defender);
         defender.ReceiveDamage(damage);
-        return $"{Name} ataca a {defender.Name} con {damage} de daño";
+        return $"{Character.Name} ataca a {defender.Character.Name} con {damage} de daño";
     }
     private int DamageAgainst(CharacterController opponent)
     {
@@ -35,8 +35,6 @@ public class CharacterController
         double rivalDefense = armament.IsMagic() ? opponent.Resistance : opponent.Defense;
         return int.Max((int)(atk * advantage - rivalDefense), 0);
     }
-    private string WeaponName => Character.Weapon;
-    public string Name => Character.Name;
     public bool IsAlive() => HP > 0;
     public bool CanFollowUp(CharacterController opponent)
         => (IsFaster(opponent) && !NegatedFollowUp) || GuaranteedFollowUp;
@@ -49,12 +47,12 @@ public class CharacterController
         return advantage switch
         {
             1.0 => "Ninguna unidad tiene ventaja con respecto a la otra",
-            > 1.0 => $"{Name} ({WeaponName}) tiene ventaja con respecto a {opponent.Name} ({opponent.WeaponName})",
-            < 1.0 => $"{opponent.Name} ({opponent.WeaponName}) tiene ventaja con respecto a {Name} ({WeaponName})",
-            _ => throw new Exception($"Unknown advantage for {WeaponName} and {opponent.WeaponName}")
+            > 1.0 => $"{Character.Name} ({Character.Weapon}) tiene ventaja con respecto a {opponent.Character.Name} ({opponent.Character.Weapon})",
+            < 1.0 => $"{opponent.Character.Name} ({opponent.Character.Weapon}) tiene ventaja con respecto a {Character.Name} ({Character.Weapon})",
+            _ => throw new Exception($"Unknown advantage for {Character.Weapon} and {opponent.Character.Weapon}")
         };
     }
-    public override string ToString() => $"{Name} ({HP})";
+    public override string ToString() => $"{Character.Name} ({HP})";
 
     public int HP
     {
