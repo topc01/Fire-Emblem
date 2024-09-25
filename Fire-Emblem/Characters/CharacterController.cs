@@ -8,6 +8,8 @@ public class CharacterController
     //private List<Skill>? _skills;
     public readonly AttackOrientedModifiedStats Bonus = new();
     public readonly AttackOrientedModifiedStats Penalty = new();
+    public bool GuaranteedFollowUp = false;
+    public bool NegatedFollowUp = false;
     
     public CharacterStats Character
     {
@@ -36,7 +38,9 @@ public class CharacterController
     private string WeaponName => Character.Weapon;
     public string Name => Character.Name;
     public bool IsAlive() => HP > 0;
-    public bool CanFollowUp(CharacterController opponent) => Speed - opponent.Speed >= 5;
+    public bool CanFollowUp(CharacterController opponent)
+        => (IsFaster(opponent) && !NegatedFollowUp) || GuaranteedFollowUp;
+    private bool IsFaster(CharacterController opponent) => Speed - opponent.Speed >= 5;
     private void ReceiveDamage(int damage) => HP -= damage;
     public string CheckAdvantages(CharacterController opponent)
     {
