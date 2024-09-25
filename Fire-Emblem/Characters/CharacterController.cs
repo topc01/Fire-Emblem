@@ -11,13 +11,13 @@ public class CharacterController
     
     public CharacterStats Character
     {
-        set => _character = value;
+        private set => _character = value;
         get => _character ?? throw new InvalidOperationException("Character is not initialized.");
     }
     public void SetCharacter(Character character)
     {
         Character = character.CharacterS;
-        _skills = character.Skills;
+        //_skills = character.Skills;
     }
     public string Fight(CharacterController defender)
     {
