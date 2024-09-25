@@ -43,4 +43,10 @@ public class AttackOrientedModifiedStats
         FirstAttack.Neutralize(statType);
         FollowUp.Neutralize(statType);
     }
+
+    public void Reset()
+    {
+        FirstAttack.Reset();
+        FollowUp.Reset();
+    }
 }

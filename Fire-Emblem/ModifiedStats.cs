@@ -29,6 +29,14 @@ public class ModifiedStats
         set => _res.value = value;
     }
 
+    public void Reset()
+    {
+        _atk = (0, false);
+        _def = (0, false);
+        _spd = (0, false);
+        _res = (0, false);
+    }
+
     private (int, bool) GetStat(StatType statType)
     {
         return statType switch
