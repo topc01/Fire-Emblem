@@ -2,7 +2,7 @@ using Fire_Emblem.Characters;
 
 namespace Fire_Emblem.Effects;
 
-public abstract class StatModifierEffect : Effect
+public abstract class StatModifierEffect : CharacterEffect
 {
     protected readonly StatType TargetStat;
     protected readonly int Bonus;
@@ -11,7 +11,7 @@ public abstract class StatModifierEffect : Effect
         TargetStat = targetStat;
         Bonus = bonus;
     }
-    public override void Apply(CharacterController character, CharacterController rival)
+    /*public override void Apply(CharacterController character, CharacterController rival)
         => Apply(character);
-    public abstract void Apply(CharacterController character);
+    public abstract void Apply(CharacterController character);*/
 }
