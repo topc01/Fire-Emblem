@@ -1,3 +1,5 @@
+using Fire_Emblem.Characters;
+
 namespace Fire_Emblem.Conditions.LogicalConditions;
 
 public class NotCondition : Condition
@@ -7,6 +9,6 @@ public class NotCondition : Condition
     public NotCondition(Condition condition)
         => _condition = condition;
 
-    public override bool DoesHold(CombatSummary combatSummary)
-        => !_condition.DoesHold(combatSummary);
+    public override bool DoesHold(CharacterController character, CharacterController rival)
+        => !_condition.DoesHold(character, rival);
 }
