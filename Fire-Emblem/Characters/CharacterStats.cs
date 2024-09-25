@@ -21,24 +21,24 @@ public class CharacterStats : ICloneable
 
     public required int Atk
     {
-        init => Attack.Value = value;
+        init => Attack.SetValue(value);
     }
     public readonly ModifiableStat Attack = new();
     public required int Spd
     {
-        init => Speed.Value = value;
+        init => Speed.SetValue(value);
     }
     public readonly ModifiableStat Speed = new();
 
     public required int Def
     {
-        init => Defense.Value = value;
+        init => Defense.SetValue(value);
     }
     public readonly ModifiableStat Defense = new();
 
     public required int Res
     {
-        init => Resistance.Value = value;
+        init => Resistance.SetValue(value);
     }
     public readonly ModifiableStat Resistance = new();
     public int MaxHp { get; set; }

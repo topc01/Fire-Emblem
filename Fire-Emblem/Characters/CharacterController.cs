@@ -32,9 +32,9 @@ public class CharacterController
     }
     private string WeaponName => Character.Weapon;
     public string Name => Character.Name;
-    public bool IsAlive() => Character.Health > 0;
+    public bool IsAlive() => HP > 0;
     public bool CanFollowUp(CharacterController opponent) => Speed - opponent.Speed >= 5;
-    private void ReceiveDamage(int damage) => Character.Health -= damage;
+    private void ReceiveDamage(int damage) => HP -= damage;
     public string CheckAdvantages(CharacterController opponent)
     {
         Armament armament = Character.Armament;
@@ -47,7 +47,19 @@ public class CharacterController
             _ => throw new Exception($"Unknown advantage for {WeaponName} and {opponent.WeaponName}")
         };
     }
-    public override string ToString() => $"{Name} ({Character.Health})";
+    public override string ToString() => $"{Name} ({HP})";
+
+    public int HP
+    {
+        get => Character.Health;
+        set => Character.Health = value;
+    }
+
+    public int BaseHp
+    {
+        get => Character.MaxHp;
+        set => Character.MaxHp = value;
+    }
 
     public int Attack
     {
@@ -55,8 +67,8 @@ public class CharacterController
         set
         {
             if (value > 0)
-                Character.Attack.Bonus = value;
-            else Character.Attack.Penalty = value;
+                Character.Attack.Bonus += value;
+            else Character.Attack.Penalty += value;
         }
     }
     public int Speed
@@ -88,5 +100,33 @@ public class CharacterController
                 Character.Resistance.Bonus = value;
             else Character.Resistance.Penalty = value;
         }
+    }
+
+    public void ResetModifications()
+    {
+        ResetStat(Character.Attack);
+        ResetStat(Character.Speed);
+        ResetStat(Character.Defense);
+        ResetStat(Character.Resistance);
+    }
+
+    private void ResetStat(ModifiableStat stat)
+    {
+        stat.Bonus = 0;
+        stat.Penalty = 0;
+        stat.BonusNeutralized = false;
+        stat.PenaltyNeutralized = false;
+    }
+
+    public int GetStat(StatType stat)
+    {
+        return stat switch
+        {
+            StatType.Atk => Character.Attack.Total,
+            StatType.Def => Character.Defense.Total,
+            StatType.Res => Character.Resistance.Total,
+            StatType.Spd => Character.Speed.Total,
+            _ => 0
+        };
     }
 }
