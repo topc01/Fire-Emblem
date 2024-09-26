@@ -9,9 +9,8 @@ public class Combat
     private readonly View _view;
     private Player _attackingPlayer;
     private Player _defendingPlayer;
-    
-    private List<CharacterStats> _charactersInGame = new();
-    
+
+    //private BattleStage _stage = BattleStage.Preparation;
     private int _round = 1;
     
     public Combat(Player player1, Player player2, View view)
@@ -28,6 +27,7 @@ public class Combat
     {
         _attackingPlayer.SelectValidCharacter(_view);
         _defendingPlayer.SelectValidCharacter(_view);
+        _attackingPlayer.Controller.IsAttacker = true;
 
         PrintRoundMessage();
         PrintAdvantageMessage();
@@ -36,6 +36,8 @@ public class Combat
         Fight();
         PrintFinalState();
         SetLastRivals();
+        _attackingPlayer.Controller.Reset();
+        _defendingPlayer.Controller.Reset();
     }
     private void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");
     private void PrintAdvantageMessage() =>_view.WriteLine(_attackingPlayer.AdvantageMessage(_defendingPlayer));
@@ -66,18 +68,31 @@ public class Combat
     {
         CharacterController attacker = _attackingPlayer.Controller;
         CharacterController defender = _defendingPlayer.Controller;
+        //_stage = BattleStage.FirstAttack;
         FirstAttack(attacker, defender);
         if (!defender.IsAlive()) return;
         FirstAttack(defender,attacker);
         if (!attacker.IsAlive()) return;
         if (attacker.CanFollowUp(defender))
-            FirstAttack(attacker, defender);
+            FollowUp(attacker, defender);
         else if (defender.CanFollowUp(attacker))
-            FirstAttack(defender,attacker);
+            FollowUp(defender,attacker);
         else _view.WriteLine("Ninguna unidad puede hacer un follow up");
     }
+
     private void FirstAttack(CharacterController attacker, CharacterController defender)
-        => _view.WriteLine(attacker.FirstAttack(defender));
+    {
+        attacker.Stage = BattleStage.FirstAttack;
+        defender.Stage = BattleStage.FirstAttack;
+        _view.WriteLine(attacker.Attack(defender));
+    }
+
+    private void FollowUp(CharacterController attacker, CharacterController defender)
+    {
+        attacker.Stage = BattleStage.FollowUp;
+        defender.Stage = BattleStage.FollowUp;
+        _view.WriteLine(attacker.Attack(defender));
+    }
     private void PrintFinalState()
         => _view.WriteLine($"{_attackingPlayer.CharacterFinalStatus} : {_defendingPlayer.CharacterFinalStatus}");
     public void SetNextRound()
