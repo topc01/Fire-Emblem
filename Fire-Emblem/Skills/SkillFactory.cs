@@ -33,7 +33,7 @@ public class SkillFactory
                     new IsAttacker(),
                     new MultiEffect(
                         new BonusEffect(Atk, 6), new RivalEffect(new BonusEffect(Atk, 6)))),
-            "Will to win"
+            "Will to Win"
                 => new Skill(
                     new OrCondition(
                         new HealthPercentageLessThan(50), new HealthPercentageEquals(50)),
@@ -45,7 +45,9 @@ public class SkillFactory
             "Ignis" 
                 => new Skill(new IgnisEffect()),
             "Perceptive"
-                => new Skill(new PerceptiveEffect()),
+                => new Skill(
+                    new IsAttacker(),
+                    new PerceptiveEffect()),
             "Tome Precision"
                 => new Skill(
                     new WeaponCondition(Armament.Magic),
@@ -60,8 +62,14 @@ public class SkillFactory
             "Defense +5" 
                 => new Skill(
                 new BonusEffect(Def, 5)),
-            "Wrath" => null,
-            "Resolve" => null,
+            "Wrath"
+                => new Skill(new WrathEffect()),
+            "Resolve"
+                => new Skill(
+                    new OrCondition(
+                        new HealthPercentageEquals(75), new HealthPercentageLessThan(75)),
+                    new MultiEffect(
+                        new BonusEffect(Def, 7), new BonusEffect(Res, 7))),
             "Resistance +5"
                 => new Skill(
                     new BonusEffect(Res, 5)),
@@ -402,7 +410,7 @@ public class SkillFactory
                         new RivalEffect(new BonusNeutralizer())
                         )
                     ),
-            _ => null
+            _ => new Skill()
         };
         
     }
