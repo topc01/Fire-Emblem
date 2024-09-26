@@ -8,8 +8,8 @@ public class CharacterController
 {
     private CharacterStats? _character;
     public List<Skill> Skills = new();
-    public readonly AttackOrientedModifiedStats Bonus = new('+');
-    public readonly AttackOrientedModifiedStats Penalty = new('-');
+    public StatModificator Bonus = new('+');
+    public StatModificator Penalty = new('-');
     public bool GuaranteedFollowUp = false;
     public bool NegatedFollowUp = false;
     
@@ -70,8 +70,8 @@ public class CharacterController
 
     public void Reset()
     {
-        Bonus.Reset();
-        Penalty.Reset();
+        Bonus = new('+');
+        Penalty = new('-');
     }
     public int GetStat(StatType stat)
     {
@@ -90,15 +90,33 @@ public class CharacterController
     public bool IsLastRival(CharacterController opponent)
         => Character.LastRival == opponent.Character;
 
-    public string[] GetSkillsLog()
-    {
-        string[] bonusLogs = Bonus.GetAllLogs();
-        string[] penaltyLogs = Penalty.GetAllLogs();
+    private Func<string, string> Message(string message = "")
+        => (string value) => $"{Character.Name} obtiene {value}{message}";
 
-        string[] formattedLogs = bonusLogs
-            .Concat(penaltyLogs)
-            .Select(str => $"{Character.Name} {str}").ToArray();
+    public string[] Logs
+        => GetModifierLogs(Bonus)
+            .Concat(GetModifierLogs(Penalty))
+            .Concat(GetNeutralizedModifierLogs(Bonus))
+            .Select(str => $"Los bonus {str}")
+            .Concat(GetNeutralizedModifierLogs(Penalty))
+            .Select(str => $"Los penalty {str}")
+            .ToArray();
 
-        return formattedLogs;
-    }
+    public string[] GetModifierLogs(StatModificator modificator)
+        => modificator.CombatMsg
+            .Select(Message())
+            .Concat(Bonus.FirstAttackMsg
+                .Select(Message(" en su primer ataque")))
+            .Concat(Bonus.FollowUpMsg
+                .Select(Message(" en su Follow-Up")))
+            .ToArray();
+
+    public string[] GetNeutralizedModifierLogs(StatModificator modificator)
+        => new[]
+        {
+            modificator.Atk.IsNeutralized ? $"de Atk de {Character.Name} fueron neutralizados" : null,
+            modificator.Spd.IsNeutralized ? $"de Spd de {Character.Name} fueron neutralizados" : null,
+            modificator.Def.IsNeutralized ? $"de Def de {Character.Name} fueron neutralizados" : null,
+            modificator.Res.IsNeutralized ? $"de Res de {Character.Name} fueron neutralizados" : null,
+        }.Where(str => str != null).ToArray()!;
 }
