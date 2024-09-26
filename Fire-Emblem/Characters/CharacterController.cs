@@ -13,6 +13,8 @@ public class CharacterController
     public bool GuaranteedFollowUp = false;
     public bool NegatedFollowUp = false;
     public BattleStage Stage = BattleStage.Preparation;
+
+    private bool _baseEffectDone = false;
     
     public CharacterStats Character
     {
@@ -71,7 +73,16 @@ public class CharacterController
     public int BaseHp
     {
         get => Character.MaxHp;
-        set => Character.MaxHp = value;
+        set
+        {
+            if (_baseEffectDone)
+                return;
+            int currentMaxHp = BaseHp;
+            Character.MaxHp = value;
+            if (HP == currentMaxHp)
+                HP = value;
+            _baseEffectDone = true;
+        }
     }
 
     public void Reset()
