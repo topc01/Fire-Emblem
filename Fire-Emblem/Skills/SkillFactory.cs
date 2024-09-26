@@ -226,12 +226,12 @@ public class SkillFactory
                         new RivalEffect(new PenaltyEffect(Atk, 3)), 
                         new RivalEffect(new PenaltyEffect(Spd, 3)))),
             "Luna"
-                => new Skill(new LunaEffect()),
+                => new Skill(new RivalEffect(new LunaEffect())),
             "Belief in Love"
                 => new Skill(
                     new OrCondition(
                         new RivalCondition(new IsAttacker()),
-                        new HealthPercentageEquals(100)),
+                        new RivalCondition(new HealthPercentageEquals(100))),
                     new MultiEffect(
                         new RivalEffect(new PenaltyEffect(Atk, 5)),
                         new RivalEffect(new PenaltyEffect(Def, 5)))),
