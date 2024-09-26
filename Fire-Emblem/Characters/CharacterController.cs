@@ -71,7 +71,12 @@ public class CharacterController
     public int BaseHp
     {
         get => Character.MaxHp;
-        set => Character.MaxHp = value;
+        set
+        {
+            if (HP == Character.MaxHp)
+                HP = value;
+            Character.MaxHp = value;
+        }
     }
 
     public void Reset()
