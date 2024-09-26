@@ -39,23 +39,10 @@ public class CharacterController
         return int.Max((int)(atk * advantage - rivalDefense), 0);
     }
 
-    private int Atk => Character.Atk
-                       + Bonus.Atk.Combat - Penalty.Atk.Combat
-                       + (Stage == BattleStage.FirstAttack ? Bonus.Atk.FirstAttack - Penalty.Atk.FirstAttack : 0)
-                       + (Stage == BattleStage.FollowUp ? Bonus.Atk.FollowUp - Penalty.Atk.FollowUp : 0);
-    private int Spd => Character.Spd
-                       + Bonus.Spd.Combat - Penalty.Spd.Combat
-                       + (Stage == BattleStage.FirstAttack ? Bonus.Spd.FirstAttack - Penalty.Spd.FirstAttack : 0)
-                       + (Stage == BattleStage.FollowUp ? Bonus.Spd.FollowUp - Penalty.Spd.FollowUp : 0);
-    private int Def => Character.Def
-                       + Bonus.Def.Combat - Penalty.Def.Combat
-                       + (Stage == BattleStage.FirstAttack ? Bonus.Def.FirstAttack - Penalty.Def.FirstAttack : 0)
-                       + (Stage == BattleStage.FollowUp ? Bonus.Def.FollowUp - Penalty.Def.FollowUp : 0);
-    private int Res => Character.Res
-                       + Bonus.Res.Combat - Penalty.Res.Combat
-                       + (Stage == BattleStage.FirstAttack ? Bonus.Res.FirstAttack - Penalty.Res.FirstAttack : 0)
-                       + (Stage == BattleStage.FollowUp ? Bonus.Res.FollowUp - Penalty.Res.FollowUp : 0);
-    
+    private int Atk => Character.Atk + Bonus.Atk.Get(Stage) - Penalty.Atk.Get(Stage);
+    private int Spd => Character.Spd + Bonus.Spd.Get(Stage) - Penalty.Spd.Get(Stage);
+    private int Def => Character.Def + Bonus.Def.Get(Stage) - Penalty.Def.Get(Stage);
+    private int Res => Character.Res + Bonus.Res.Get(Stage) - Penalty.Res.Get(Stage);
     public bool IsAlive() => HP > 0;
     public bool CanFollowUp(CharacterController opponent)
         => (IsFaster(opponent) && !NegatedFollowUp) || GuaranteedFollowUp;
@@ -120,14 +107,15 @@ public class CharacterController
                 .Select(str => $"Los bonus {str}"))
             .Concat(GetNeutralizedModifierLogs(Penalty)
                 .Select(str => $"Los penalty {str}"))
+            .Distinct()
             .ToArray();
 
     public string[] GetModifierLogs(StatModificator modificator)
-        => modificator.CombatMsg
+        => modificator.CombatMsg// TODO: QUE PASA SI ESTA VACIO
             .Select(Message())
-            .Concat(Bonus.FirstAttackMsg
+            .Concat(modificator.FirstAttackMsg
                 .Select(Message(" en su primer ataque")))
-            .Concat(Bonus.FollowUpMsg
+            .Concat(modificator.FollowUpMsg
                 .Select(Message(" en su Follow-Up")))
             .ToArray();
 
