@@ -6,5 +6,5 @@ public abstract class CharacterEffect : Effect
 {
     public override void Apply(CharacterController character, CharacterController rival)
         => Apply(character);
-    public abstract void Apply(CharacterController character);
+    public abstract void Apply(CharacterController controller);
 }
