@@ -12,6 +12,7 @@ public class CharacterController
     public StatModificator Penalty = new('-');
     public bool GuaranteedFollowUp = false;
     public bool NegatedFollowUp = false;
+    public BattleStage Stage = BattleStage.Preparation;
     
     public CharacterStats Character
     {
@@ -23,7 +24,7 @@ public class CharacterController
         Character = character.CharacterS;
         Skills = character.Skills;
     }
-    public string FirstAttack(CharacterController defender)
+    public string Attack(CharacterController defender)
     {
         int damage = DamageAgainst(defender);
         defender.ReceiveDamage(damage);
@@ -31,16 +32,34 @@ public class CharacterController
     }
     private int DamageAgainst(CharacterController opponent)
     {
-        int atk = Character.Atk;
+        int atk = Atk;
         Armament armament = Character.Armament;
         double advantage = armament.GetAdvantage(opponent.Character.Armament);
-        double rivalDefense = armament.IsMagic() ? opponent.Character.Res : opponent.Character.Def;
+        double rivalDefense = armament.IsMagic() ? opponent.Res : opponent.Def;
         return int.Max((int)(atk * advantage - rivalDefense), 0);
     }
+
+    private int Atk => Character.Atk
+                       + Bonus.Atk.Combat - Penalty.Atk.Combat
+                       + (Stage == BattleStage.FirstAttack ? Bonus.Atk.FirstAttack - Penalty.Atk.FirstAttack : 0)
+                       + (Stage == BattleStage.FollowUp ? Bonus.Atk.FollowUp - Penalty.Atk.FollowUp : 0);
+    private int Spd => Character.Spd
+                       + Bonus.Spd.Combat - Penalty.Spd.Combat
+                       + (Stage == BattleStage.FirstAttack ? Bonus.Spd.FirstAttack - Penalty.Spd.FirstAttack : 0)
+                       + (Stage == BattleStage.FollowUp ? Bonus.Spd.FollowUp - Penalty.Spd.FollowUp : 0);
+    private int Def => Character.Def
+                       + Bonus.Def.Combat - Penalty.Def.Combat
+                       + (Stage == BattleStage.FirstAttack ? Bonus.Def.FirstAttack - Penalty.Def.FirstAttack : 0)
+                       + (Stage == BattleStage.FollowUp ? Bonus.Def.FollowUp - Penalty.Def.FollowUp : 0);
+    private int Res => Character.Res
+                       + Bonus.Res.Combat - Penalty.Res.Combat
+                       + (Stage == BattleStage.FirstAttack ? Bonus.Res.FirstAttack - Penalty.Res.FirstAttack : 0)
+                       + (Stage == BattleStage.FollowUp ? Bonus.Res.FollowUp - Penalty.Res.FollowUp : 0);
+    
     public bool IsAlive() => HP > 0;
     public bool CanFollowUp(CharacterController opponent)
         => (IsFaster(opponent) && !NegatedFollowUp) || GuaranteedFollowUp;
-    private bool IsFaster(CharacterController opponent) => Character.Spd - opponent.Character.Spd >= 5;
+    private bool IsFaster(CharacterController opponent) => Spd - opponent.Spd >= 5;
     private void ReceiveDamage(int damage) => HP -= damage;
     public string CheckAdvantages(CharacterController opponent)
     {
@@ -59,7 +78,7 @@ public class CharacterController
     public int HP
     {
         get => Character.Health;
-        set => Character.Health = value;
+        private set => Character.Health = value;
     }
 
     public int BaseHp
@@ -72,6 +91,7 @@ public class CharacterController
     {
         Bonus = new('+');
         Penalty = new('-');
+        IsAttacker = false;
     }
     public int GetStat(StatType stat)
     {
