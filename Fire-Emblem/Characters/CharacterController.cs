@@ -96,10 +96,10 @@ public class CharacterController
     public string[] Logs
         => GetModifierLogs(Bonus)
             .Concat(GetModifierLogs(Penalty))
-            .Concat(GetNeutralizedModifierLogs(Bonus))
-            .Select(str => $"Los bonus {str}")
-            .Concat(GetNeutralizedModifierLogs(Penalty))
-            .Select(str => $"Los penalty {str}")
+            .Concat(GetNeutralizedModifierLogs(Bonus)
+                .Select(str => $"Los bonus {str}"))
+            .Concat(GetNeutralizedModifierLogs(Penalty)
+                .Select(str => $"Los penalty {str}"))
             .ToArray();
 
     public string[] GetModifierLogs(StatModificator modificator)
