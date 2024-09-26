@@ -10,23 +10,23 @@ public class ModifiedStats
     public int Atk
     {
         get => _atk.value;
-        set => _atk.value = value;
+        set => _atk.value += value;
     }
 
     public int Def
     {
         get => _def.value;
-        set => _def.value = value;
+        set => _def.value += value;
     }
     public int Spd
     {
         get => _spd.value;
-        set => _spd.value = value;
+        set => _spd.value += value;
     }
     public int Res
     {
         get => _res.value;
-        set => _res.value = value;
+        set => _res.value += value;
     }
 
     public void Reset()
