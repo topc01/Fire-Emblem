@@ -66,18 +66,18 @@ public class Combat
     {
         CharacterController attacker = _attackingPlayer.Controller;
         CharacterController defender = _defendingPlayer.Controller;
-        Attack(attacker, defender);
+        FirstAttack(attacker, defender);
         if (!defender.IsAlive()) return;
-        Attack(defender,attacker);
+        FirstAttack(defender,attacker);
         if (!attacker.IsAlive()) return;
         if (attacker.CanFollowUp(defender))
-            Attack(attacker, defender);
+            FirstAttack(attacker, defender);
         else if (defender.CanFollowUp(attacker))
-            Attack(defender,attacker);
+            FirstAttack(defender,attacker);
         else _view.WriteLine("Ninguna unidad puede hacer un follow up");
     }
-    private void Attack(CharacterController attacker, CharacterController defender)
-        => _view.WriteLine(attacker.Fight(defender));
+    private void FirstAttack(CharacterController attacker, CharacterController defender)
+        => _view.WriteLine(attacker.FirstAttack(defender));
     private void PrintFinalState()
         => _view.WriteLine($"{_attackingPlayer.CharacterFinalStatus} : {_defendingPlayer.CharacterFinalStatus}");
     public void SetNextRound()

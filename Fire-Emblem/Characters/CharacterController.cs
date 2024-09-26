@@ -23,7 +23,7 @@ public class CharacterController
         Character = character.CharacterS;
         Skills = character.Skills;
     }
-    public string Fight(CharacterController defender)
+    public string FirstAttack(CharacterController defender)
     {
         int damage = DamageAgainst(defender);
         defender.ReceiveDamage(damage);
