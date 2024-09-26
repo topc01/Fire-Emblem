@@ -1,13 +1,15 @@
 
 
+using Fire_Emblem.Skills;
+
 namespace Fire_Emblem.Characters;
 
 public class CharacterController
 {
     private CharacterStats? _character;
-    //private List<Skill>? _skills;
-    public readonly AttackOrientedModifiedStats Bonus = new();
-    public readonly AttackOrientedModifiedStats Penalty = new();
+    public List<Skill> Skills = new();
+    public readonly AttackOrientedModifiedStats Bonus = new('+');
+    public readonly AttackOrientedModifiedStats Penalty = new('-');
     public bool GuaranteedFollowUp = false;
     public bool NegatedFollowUp = false;
     
@@ -19,7 +21,7 @@ public class CharacterController
     public void SetCharacter(Character character)
     {
         Character = character.CharacterS;
-        //_skills = character.Skills;
+        Skills = character.Skills;
     }
     public string Fight(CharacterController defender)
     {
@@ -87,4 +89,16 @@ public class CharacterController
 
     public bool IsLastRival(CharacterController opponent)
         => Character.LastRival == opponent.Character;
+
+    public string[] GetSkillsLog()
+    {
+        string[] bonusLogs = Bonus.GetAllLogs();
+        string[] penaltyLogs = Penalty.GetAllLogs();
+
+        string[] formattedLogs = bonusLogs
+            .Concat(penaltyLogs)
+            .Select(str => $"{Character.Name} {str}").ToArray();
+
+        return formattedLogs;
+    }
 }

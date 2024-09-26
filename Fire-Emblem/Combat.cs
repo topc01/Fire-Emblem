@@ -1,5 +1,6 @@
 using Fire_Emblem_View;
 using Fire_Emblem.Characters;
+using Fire_Emblem.Skills;
 
 namespace Fire_Emblem;
 
@@ -30,16 +31,23 @@ public class Combat
 
         PrintRoundMessage();
         PrintAdvantageMessage();
-        ApplyEffectsAndPrintMessage();
+        ApplyEffects();
         Fight();
         PrintFinalState();
         SetLastRivals();
     }
     private void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");
     private void PrintAdvantageMessage() =>_view.WriteLine(_attackingPlayer.AdvantageMessage(_defendingPlayer));
-    private void ApplyEffectsAndPrintMessage()
+    private void ApplyEffects()
     {
-        return;
+        foreach (Skill skill in _attackingPlayer.Controller.Skills)
+        {
+            skill.ApplyIfDoesHold(_attackingPlayer.Controller, _defendingPlayer.Controller);
+        }
+        foreach (Skill skill in _defendingPlayer.Controller.Skills)
+        {
+            skill.ApplyIfDoesHold(_defendingPlayer.Controller, _attackingPlayer.Controller);
+        }
     }
 
     private void Fight()
