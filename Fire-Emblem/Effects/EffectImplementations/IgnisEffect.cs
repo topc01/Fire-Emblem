@@ -5,5 +5,5 @@ namespace Fire_Emblem.Effects.EffectImplementations;
 public class IgnisEffect : CharacterEffect
 {
     public override void Apply(CharacterController controller)
-        => controller.Bonus.FirstAttack.Atk = controller.Character.Atk / 2;
+        => controller.Bonus.Atk.FirstAttack += controller.Character.Atk / 2;
 }

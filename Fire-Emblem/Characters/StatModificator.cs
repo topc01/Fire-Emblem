@@ -24,4 +24,23 @@ public class StatModificator(char sign)
     public string[] CombatMsg => AllValues[0];
     public string[] FirstAttackMsg => AllValues[1];
     public string[] FollowUpMsg => AllValues[2];
+
+    public void Neutralize(StatType stat)
+    {
+        switch (stat)
+        {
+            case StatType.Atk:
+                Atk.IsNeutralized = true;
+                break;
+            case StatType.Spd:
+                Spd.IsNeutralized = true;
+                break;
+            case StatType.Def:
+                Def.IsNeutralized = true;
+                break;
+            case StatType.Res:
+                Res.IsNeutralized = true;
+                break;
+        }
+    }
 }

@@ -15,6 +15,6 @@ public class PenaltyNeutralizer : CharacterEffect
     public override void Apply(CharacterController controller)
     {
         foreach (StatType stat in _stats)
-            controller.Bonus.Neutralize(stat);
+            controller.Penalty.Neutralize(stat);
     }
 }

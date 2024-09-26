@@ -10,16 +10,16 @@ public class BonusEffect : StatModifierEffect
         switch (TargetStat)
         {
             case StatType.Atk:
-                character.Bonus.Atk = Bonus;
+                character.Bonus.Atk.Combat += Bonus;
                 break;
             case StatType.Def:
-                character.Bonus.Def = Bonus;
+                character.Bonus.Def.Combat += Bonus;
                 break;
             case StatType.Res:
-                character.Bonus.Res = Bonus;
+                character.Bonus.Res.Combat += Bonus;
                 break;
             case StatType.Spd:
-                character.Bonus.Spd = Bonus;
+                character.Bonus.Spd.Combat += Bonus;
                 break;
         }
     }

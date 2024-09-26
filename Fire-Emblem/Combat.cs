@@ -31,14 +31,15 @@ public class Combat
 
         PrintRoundMessage();
         PrintAdvantageMessage();
-        ApplyEffects();
+        ApplySkillss();
+        PrintSkillsLogs();
         Fight();
         PrintFinalState();
         SetLastRivals();
     }
     private void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");
     private void PrintAdvantageMessage() =>_view.WriteLine(_attackingPlayer.AdvantageMessage(_defendingPlayer));
-    private void ApplyEffects()
+    private void ApplySkillss()
     {
         foreach (Skill skill in _attackingPlayer.Controller.Skills)
         {
@@ -50,6 +51,17 @@ public class Combat
         }
     }
 
+    private void PrintSkillsLogs()
+    {
+        foreach (string log in _attackingPlayer.Controller.Logs)
+        {
+            _view.WriteLine(log);
+        }
+        foreach (string log in _defendingPlayer.Controller.Logs)
+        {
+            _view.WriteLine(log);
+        }
+    }
     private void Fight()
     {
         CharacterController attacker = _attackingPlayer.Controller;

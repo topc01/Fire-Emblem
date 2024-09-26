@@ -8,6 +8,6 @@ public class SandstormEffect : CharacterEffect
     {
         double z = controller.Character.Def * 1.5;
         int x = Round(z - controller.Character.Atk);
-        BonusOrPenalty(controller, x).FollowUp.Atk = x;
+        BonusOrPenalty(controller, x).Atk.FollowUp += x;
     }
 }

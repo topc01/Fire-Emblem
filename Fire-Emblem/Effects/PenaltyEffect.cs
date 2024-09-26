@@ -10,16 +10,16 @@ public class PenaltyEffect : StatModifierEffect
         switch (TargetStat)
         {
             case StatType.Atk:
-                character.Bonus.Atk = -Bonus;
+                character.Penalty.Atk.Combat += Bonus;
                 break;
             case StatType.Def:
-                character.Bonus.Def = -Bonus;
+                character.Penalty.Def.Combat += Bonus;
                 break;
             case StatType.Res:
-                character.Bonus.Res = -Bonus;
+                character.Penalty.Res.Combat += Bonus;
                 break;
             case StatType.Spd:
-                character.Bonus.Spd = -Bonus;
+                character.Penalty.Spd.Combat += Bonus;
                 break;
         }
     }
