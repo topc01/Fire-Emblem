@@ -228,6 +228,179 @@ public class SkillFactory
                         new RivalEffect(new PenaltyEffect(Def, 5)))),
             "Beorc's Blessing"
                 => new Skill(new RivalEffect(new BonusNeutralizer())),
+            "Agnea's Arrow"
+                => new Skill(new PenaltyNeutralizer()),
+            "Soulblade"
+                => new Skill(
+                    new WeaponCondition(Armament.Sword),
+                    new RivalEffect(new SoulbladeEffect())),
+            "Sandstorm"
+                => new Skill(new SandstormEffect()),
+            "Sword Agility"
+                => new Skill(
+                    new WeaponCondition(Armament.Sword),
+                    new MultiEffect(
+                        new BonusEffect(Spd, 12), new PenaltyEffect(Atk, 6))),
+            "Lance Power"
+                => new Skill(
+                    new WeaponCondition(Armament.Lance),
+                    new MultiEffect(
+                        new BonusEffect(Atk, 10), new PenaltyEffect(Def, 10))),
+            "Sword Power"
+                => new Skill(
+                    new WeaponCondition(Armament.Sword),
+                    new MultiEffect(
+                        new BonusEffect(Atk, 10), new PenaltyEffect(Def, 10))),
+            "Bow Focus"
+                => new Skill(
+                    new WeaponCondition(Armament.Bow),
+                    new MultiEffect(
+                        new BonusEffect(Atk, 10), new PenaltyEffect(Res, 10))),
+            "Lance Agility"
+                => new Skill(
+                    new WeaponCondition(Armament.Lance),
+                    new MultiEffect(
+                        new BonusEffect(Spd, 12), new PenaltyEffect(Atk, 6))),
+            "Axe Power"
+                => new Skill(
+                    new WeaponCondition(Armament.Axe),
+                    new MultiEffect(
+                        new BonusEffect(Atk, 10), new PenaltyEffect(Def, 10))),
+            "Bow Agility"
+                => new Skill(
+                    new WeaponCondition(Armament.Bow),
+                    new MultiEffect(
+                        new BonusEffect(Spd, 12), new PenaltyEffect(Atk, 6))),
+            "Sword Focus"
+                => new Skill(
+                    new WeaponCondition(Armament.Sword),
+                    new MultiEffect(
+                        new BonusEffect(Atk, 10), new PenaltyEffect(Res, 10))),
+            "Close Def"
+                => new Skill(
+                    new AndCondition(
+                        new RivalCondition(new IsAttacker()),
+                        new OrCondition(
+                            new RivalCondition(new WeaponCondition(Armament.Sword)),
+                            new RivalCondition(new WeaponCondition(Armament.Lance)), 
+                            new RivalCondition (new WeaponCondition(Armament.Axe)))),
+                    new MultiEffect(
+                        new BonusEffect(Def, 8), new BonusEffect(Res, 8), new RivalEffect(new BonusNeutralizer()))),
+            "Distant Def"
+                => new Skill(
+                    new AndCondition(
+                        new RivalCondition(new IsAttacker()),
+                            new OrCondition(
+                                new RivalCondition(new WeaponCondition(Armament.Magic)),
+                                new RivalCondition(new WeaponCondition(Armament.Bow)))),
+                    new MultiEffect(
+                        new BonusEffect(Def, 8), new BonusEffect(Res, 8), new RivalEffect(new BonusNeutralizer()))),
+            "Lull Atk/Spd"
+                => new Skill(
+                    new MultiEffect(
+                        new RivalEffect(new PenaltyEffect(Atk, 3)),
+                        new RivalEffect(new PenaltyEffect(Spd, 3)),
+                        new RivalEffect(new BonusNeutralizer(Atk, Spd))
+                        )
+                    ),
+            "Lull Atk/Def"
+                => new Skill(
+                    new MultiEffect(
+                        new RivalEffect(new PenaltyEffect(Atk, 3)),
+                        new RivalEffect(new PenaltyEffect(Def, 3)),
+                        new RivalEffect(new BonusNeutralizer(Atk, Def))
+                    )
+                ),
+            "Lull Atk/Res"
+                => new Skill(
+                    new MultiEffect(
+                        new RivalEffect(new PenaltyEffect(Atk, 3)),
+                        new RivalEffect(new PenaltyEffect(Res, 3)),
+                        new RivalEffect(new BonusNeutralizer(Atk, Res))
+                    )
+                ),
+            "Lull Spd/Def"
+                => new Skill(
+                    new MultiEffect(
+                        new RivalEffect(new PenaltyEffect(Spd, 3)),
+                        new RivalEffect(new PenaltyEffect(Def, 3)),
+                        new RivalEffect(new BonusNeutralizer(Spd, Def))
+                    )
+                ),
+            "Lull Spd/Res"
+                => new Skill(
+                    new MultiEffect(
+                        new RivalEffect(new PenaltyEffect(Spd, 3)),
+                        new RivalEffect(new PenaltyEffect(Res, 3)),
+                        new RivalEffect(new BonusNeutralizer(Spd, Res))
+                    )
+                ),
+            "Lull Def/Res"
+                => new Skill(
+                    new MultiEffect(
+                        new RivalEffect(new PenaltyEffect(Def, 3)),
+                        new RivalEffect(new PenaltyEffect(Res, 3)),
+                        new RivalEffect(new BonusNeutralizer(Def, Res))
+                    )
+                ),
+            "Fort. Def/Res"
+                => new Skill(
+                    new MultiEffect(
+                        new BonusEffect(Def, 6),
+                        new BonusEffect(Res, 6),
+                        new PenaltyEffect(Atk, 2)
+                        )
+                    ),
+            "Life and Death"
+                => new Skill(
+                    new MultiEffect(
+                        new BonusEffect(Atk, 6),
+                        new BonusEffect(Spd, 6),
+                        new PenaltyEffect(Def, 5),
+                        new PenaltyEffect(Res, 5)
+                        )
+                    ),
+            "Solid Ground"
+                => new Skill(
+                    new MultiEffect(
+                        new BonusEffect(Atk, 6),
+                        new BonusEffect(Def, 6),
+                        new PenaltyEffect(Res, 5)
+                        )
+                    ),
+            "Still Water"
+                => new Skill(
+                    new MultiEffect(
+                        new BonusEffect(Atk, 6),
+                        new BonusEffect(Res, 6),
+                        new PenaltyEffect(Def, 5)
+                        )
+                    ),
+            "Dragonskin"
+                => new Skill(
+                    new OrCondition(
+                        new RivalCondition(new IsAttacker()),
+                        new NotCondition(new RivalCondition(new HealthPercentageLessThan(75)))
+                        ),
+                    new MultiEffect(
+                        new BonusEffect(Atk, 6),
+                        new BonusEffect(Spd, 6),
+                        new BonusEffect(Def, 6),
+                        new BonusEffect(Res, 6),
+                        new RivalEffect(new BonusNeutralizer())
+                        )
+                    ),
+            "Light and Dark"
+                => new Skill(
+                    new MultiEffect(
+                        new RivalEffect(new PenaltyEffect(Atk, 5)),
+                        new RivalEffect(new PenaltyEffect(Spd, 5)),
+                        new RivalEffect(new PenaltyEffect(Def, 5)),
+                        new RivalEffect(new PenaltyEffect(Res, 5)),
+                        new PenaltyNeutralizer(),
+                        new RivalEffect(new BonusNeutralizer())
+                        )
+                    ),
             _ => null
         };
         
