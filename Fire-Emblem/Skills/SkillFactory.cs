@@ -26,16 +26,26 @@ public class SkillFactory
     {
         return name switch
         {
-            "HP +15" => null,
+            "HP +15"
+                => new Skill(new BaseHpEffect()),
             "Fair Fight"
                 => new Skill(
                     new IsAttacker(),
                     new MultiEffect(
                         new BonusEffect(Atk, 6), new RivalEffect(new BonusEffect(Atk, 6)))),
-            "Will to win" => null,
-            "Single-Minded" => null,
-            "Ignis" => null,
-            "Perceptive" => null,
+            "Will to win"
+                => new Skill(
+                    new OrCondition(
+                        new HealthPercentageLessThan(50), new HealthPercentageEquals(50)),
+                    new BonusEffect(Atk, 8)),
+            "Single-Minded"
+                => new Skill(
+                    new IsLastRival(),
+                    new BonusEffect(Atk, 8)),
+            "Ignis" 
+                => new Skill(new IgnisEffect()),
+            "Perceptive"
+                => new Skill(new PerceptiveEffect()),
             "Tome Precision"
                 => new Skill(
                     new WeaponCondition(Armament.Magic),
@@ -119,7 +129,58 @@ public class SkillFactory
                     new IsAttacker(),
                     new MultiEffect(
                         new BonusEffect(Res, 6), new BonusEffect(Def, 6))),
-            "..." => null,
+            "Brazen Atk/Spd"
+                => new Skill(
+                    new OrCondition(
+                        new HealthPercentageEquals(80), new HealthPercentageLessThan(80)),
+                    new MultiEffect(
+                        new BonusEffect(Atk, 10), new BonusEffect(Spd, 10))),
+            "Brazen Atk/Def"
+                => new Skill(
+                    new OrCondition(
+                        new HealthPercentageEquals(80), new HealthPercentageLessThan(80)),
+                    new MultiEffect(
+                        new BonusEffect(Atk, 10), new BonusEffect(Def, 10))),
+            "Brazen Atk/Res"
+                => new Skill(
+                    new OrCondition(
+                        new HealthPercentageEquals(80), new HealthPercentageLessThan(80)),
+                    new MultiEffect(
+                        new BonusEffect(Atk, 10), new BonusEffect(Res, 10))),
+            "Brazen Spd/Def"
+                => new Skill(
+                    new OrCondition(
+                        new HealthPercentageEquals(80), new HealthPercentageLessThan(80)),
+                    new MultiEffect(
+                        new BonusEffect(Spd, 10), new BonusEffect(Def, 10))),
+            "Brazen Spd/Res"
+                => new Skill(
+                    new OrCondition(
+                        new HealthPercentageEquals(80), new HealthPercentageLessThan(80)),
+                    new MultiEffect(
+                        new BonusEffect(Spd, 10), new BonusEffect(Res, 10))),
+            "Brazen Def/Res"
+                => new Skill(
+                    new OrCondition(
+                        new HealthPercentageEquals(80), new HealthPercentageLessThan(80)),
+                    new MultiEffect(
+                        new BonusEffect(Def, 10), new BonusEffect(Res, 10))),
+            "Fire Boost"
+                => new Skill(
+                    new HealthGreaterOrEqualThanRivalBy(3),
+                    new BonusEffect(Atk, 6)),
+            "Wind Boost"
+                => new Skill(
+                    new HealthGreaterOrEqualThanRivalBy(3),
+                    new BonusEffect(Spd, 6)),
+            "Earth Boost"
+                => new Skill(
+                    new HealthGreaterOrEqualThanRivalBy(3),
+                    new BonusEffect(Def, 6)),
+            "Water Boost"
+                => new Skill(
+                    new HealthGreaterOrEqualThanRivalBy(3),
+                    new BonusEffect(Res, 6)),
             "Chaos Style"
                 => new Skill(
                     new OrCondition(
@@ -157,6 +218,16 @@ public class SkillFactory
                         new RivalEffect(new PenaltyEffect(Spd, 3)))),
             "Luna"
                 => new Skill(new LunaEffect()),
+            "Belief in Love"
+                => new Skill(
+                    new OrCondition(
+                        new RivalCondition(new IsAttacker()),
+                        new HealthPercentageEquals(100)),
+                    new MultiEffect(
+                        new RivalEffect(new PenaltyEffect(Atk, 5)),
+                        new RivalEffect(new PenaltyEffect(Def, 5)))),
+            "Beorc's Blessing"
+                => new Skill(new RivalEffect(new BonusNeutralizer())),
             _ => null
         };
         
