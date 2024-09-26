@@ -4,9 +4,9 @@ namespace Fire_Emblem.Effects;
 
 public class RivalEffect : Effect
 {
-    private readonly StatModifierEffect _effect;
+    private readonly CharacterEffect _effect;
 
-    public RivalEffect(StatModifierEffect effect)
+    public RivalEffect(CharacterEffect effect)
         => _effect = effect;
 
     public override void Apply(CharacterController character, CharacterController rival)
