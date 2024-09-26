@@ -182,7 +182,8 @@ public class SkillFactory
                     new HealthGreaterOrEqualThanRivalBy(3),
                     new BonusEffect(Res, 6)),
             "Chaos Style"
-                => new Skill(
+                => new Skill(new AndCondition(
+                        new IsAttacker(),
                     new OrCondition(
                         new AndCondition(
                             new NotCondition(new WeaponCondition(Armament.Magic)),
@@ -191,8 +192,8 @@ public class SkillFactory
                         new AndCondition(
                             (new WeaponCondition(Armament.Magic)),
                             new NotCondition(new RivalCondition(new WeaponCondition(Armament.Magic)))
-                        )
-                        ),
+                            )
+                        )),
                     new BonusEffect(Spd, 3)),
             "Blinding Flash"
                 => new Skill(
