@@ -50,8 +50,8 @@ public class CharacterStats : ICloneable
     }
     public int Health
     {
-        set => _health = int.Max(0, int.Min(MaxHp, value));
         get => _health;
+        set => _health = int.Max(0, int.Min(MaxHp, value));
     }
     private int _health;
     public CharacterStats? LastRival;
