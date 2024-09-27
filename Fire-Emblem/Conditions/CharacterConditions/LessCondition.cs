@@ -1,8 +1,9 @@
 using Fire_Emblem.Characters;
+using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Conditions.CharacterConditions;
 
-public class LessCondition : SingleCondition
+public class LessCondition : CharacterCondition
 {
     private readonly StatType _stat;
     private readonly int _threshold;

@@ -14,7 +14,6 @@ public class TeamReader
     private readonly string[] _teamFiles;
     
     private Func<string, CharacterStats> _characterLookUp;
-    private Func<string, Skill> _skillLookUp;
     private readonly SkillFactory _skillFactory = new();
 
     private readonly Player _player1 = new(1);
@@ -80,13 +79,8 @@ public class TeamReader
     }
     public void SetCharacterFinder(Func<string, CharacterStats> function)
         => _characterLookUp = function;
-    public void SetSkillFinder(Func<string, Skill> function)
-        => _skillLookUp = function;
-
     public bool AreValidTeams()
         => _player1.IsValidTeam() && _player2.IsValidTeam();
-
     public (Player, Player) GetTeams()
         => (_player1, _player2);
-
 }

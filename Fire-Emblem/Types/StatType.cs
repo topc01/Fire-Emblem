@@ -1,4 +1,4 @@
-namespace Fire_Emblem;
+namespace Fire_Emblem.Types;
 
 public enum StatType
 {

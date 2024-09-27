@@ -2,7 +2,7 @@ using Fire_Emblem.Characters;
 
 namespace Fire_Emblem.Conditions.CharacterConditions;
 
-public class HealthPercentageLessThan : SingleCondition
+public class HealthPercentageLessThan : CharacterCondition
 {
     private readonly int _percentage;
 

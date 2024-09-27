@@ -1,3 +1,5 @@
+using Fire_Emblem.Types;
+
 namespace Fire_Emblem.Characters;
 
 public class Stat
@@ -5,7 +7,6 @@ public class Stat
     private int _combat = 0;
     private int _firstAttack = 0;
     private int _followUp = 0;
-    
     public int Combat {
         get => _combat;
         set => _combat = int.Abs(value);
@@ -19,7 +20,7 @@ public class Stat
         set => _followUp = int.Abs(value);
     }
     public bool IsNeutralized = false;
-
+    
     public int[] Values
         => new[] { Combat, FirstAttack, FollowUp };
 

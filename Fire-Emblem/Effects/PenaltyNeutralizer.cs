@@ -1,4 +1,5 @@
 using Fire_Emblem.Characters;
+using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Effects;
 

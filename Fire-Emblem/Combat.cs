@@ -1,6 +1,7 @@
 using Fire_Emblem_View;
 using Fire_Emblem.Characters;
 using Fire_Emblem.Skills;
+using Fire_Emblem.Types;
 
 namespace Fire_Emblem;
 
@@ -10,7 +11,6 @@ public class Combat
     private Player _attackingPlayer;
     private Player _defendingPlayer;
 
-    //private BattleStage _stage = BattleStage.Preparation;
     private int _round = 1;
     
     public Combat(Player player1, Player player2, View view)
@@ -68,7 +68,6 @@ public class Combat
     {
         CharacterController attacker = _attackingPlayer.Controller;
         CharacterController defender = _defendingPlayer.Controller;
-        //_stage = BattleStage.FirstAttack;
         FirstAttack(attacker, defender);
         if (!defender.IsAlive()) return;
         FirstAttack(defender,attacker);
@@ -95,6 +94,11 @@ public class Combat
     }
     private void PrintFinalState()
         => _view.WriteLine($"{_attackingPlayer.CharacterFinalStatus} : {_defendingPlayer.CharacterFinalStatus}");
+    private void SetLastRivals()
+    {
+        _attackingPlayer.Controller.Character.LastRival = _defendingPlayer.Controller.Character;
+        _defendingPlayer.Controller.Character.LastRival = _attackingPlayer.Controller.Character;
+    }
     public void SetNextRound()
     {
         _round++;
@@ -105,11 +109,4 @@ public class Combat
 
     public Player Winner()
         => _attackingPlayer.HasLost() ? _defendingPlayer : _attackingPlayer;
-
-    private void SetLastRivals()
-    {
-        _attackingPlayer.Controller.Character.LastRival = _defendingPlayer.Controller.Character;
-        _defendingPlayer.Controller.Character.LastRival = _attackingPlayer.Controller.Character;
-    }
-    
 }

@@ -3,6 +3,7 @@ using Fire_Emblem.Conditions.CharacterConditions;
 using Fire_Emblem.Conditions.LogicalConditions;
 using Fire_Emblem.Effects;
 using Fire_Emblem.Effects.EffectImplementations;
+using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Skills;
 

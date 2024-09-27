@@ -2,7 +2,7 @@ using Fire_Emblem.Characters;
 
 namespace Fire_Emblem.Conditions.CharacterConditions;
 
-public class WeaponCondition : SingleCondition
+public class WeaponCondition : CharacterCondition
 {
     private readonly Armament.ArmamentType _armamentType;
     public WeaponCondition(Armament.ArmamentType armamentType)

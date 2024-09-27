@@ -6,8 +6,8 @@ public class SandstormEffect : CharacterEffect
 {
     public override void Apply(CharacterController controller)
     {
-        double z = controller.Character.Def * 1.5;
-        int x = Round(z - controller.Character.Atk);
-        BonusOrPenalty(controller, x).Atk.FollowUp += x;
+        double defenseWeightedBy150 = controller.Character.Def * 1.5;
+        int differenceWithWeightededDefense = Round(defenseWeightedBy150 - controller.Character.Atk);
+        ApplyToBonusOrPenalty(controller, differenceWithWeightededDefense).Atk.FollowUp += differenceWithWeightededDefense;
     }
 }

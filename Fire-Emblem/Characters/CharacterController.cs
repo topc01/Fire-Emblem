@@ -1,6 +1,7 @@
 
 
 using Fire_Emblem.Skills;
+using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Characters;
 

@@ -4,9 +4,9 @@ namespace Fire_Emblem.Conditions;
 
 public class RivalCondition : Condition
 {
-    private readonly SingleCondition _condition;
+    private readonly CharacterCondition _condition;
     
-    public RivalCondition(SingleCondition condition)
+    public RivalCondition(CharacterCondition condition)
         => _condition = condition;
     public override bool DoesHold(CharacterController character, CharacterController rival)
         => _condition.DoesHold(rival);
