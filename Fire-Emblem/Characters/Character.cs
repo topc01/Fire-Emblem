@@ -7,17 +7,16 @@ public class Character
     public readonly List<Skill> Skills = new();
 
     public Character(CharacterStats characterStats)
-    {
-        CharacterS = characterStats.New();
-    }
+        => Stats = characterStats.New();
+    
 
-    public CharacterStats CharacterS { get; }
+    public CharacterStats Stats { get; }
 
-    public string Name => CharacterS.Name;
+    public string Name => Stats.Name;
 
     public bool IsAlive()
     {
-        return CharacterS.Health > 0;
+        return Stats.Health > 0;
     }
 
     public void AddSkills(Skill[] skills)
@@ -42,7 +41,7 @@ public class Character
 
     public override string ToString()
     {
-        return $"{CharacterS.Name} ({CharacterS.Health})";
+        return $"{Stats.Name} ({Stats.Health})";
     }
 
     public override bool Equals(object? obj)
@@ -51,11 +50,11 @@ public class Character
             return false;
 
         var other = (Character)obj;
-        return CharacterS.Name == other.CharacterS.Name;
+        return Stats.Name == other.Stats.Name;
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(CharacterS.Name);
+        return HashCode.Combine(Stats.Name);
     }
 }

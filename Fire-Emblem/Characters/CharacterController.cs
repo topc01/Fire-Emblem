@@ -23,7 +23,7 @@ public class CharacterController
     }
     public void SetCharacter(Character character)
     {
-        Character = character.CharacterS;
+        Character = character.Stats;
         Skills = character.Skills;
     }
     public string Attack(CharacterController defender)
