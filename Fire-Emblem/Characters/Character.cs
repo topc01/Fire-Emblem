@@ -9,40 +9,30 @@ public class Character
     public Character(CharacterStats characterStats)
         => Stats = characterStats.New();
     
-
     public CharacterStats Stats { get; }
 
     public string Name => Stats.Name;
 
     public bool IsAlive()
-    {
-        return Stats.Health > 0;
-    }
+        => Stats.Health > 0;
 
     public void AddSkills(Skill[] skills)
     {
-        foreach (var skill in skills) Skills.Add(skill);
+        foreach (var skill in skills) 
+            Skills.Add(skill);
     }
 
     public bool IsValidCharacter()
-    {
-        return !HasRepeatedSkills() && !HasMoreThan2Skills();
-    }
+        => !HasRepeatedSkills() && !HasMoreThan2Skills();
 
     private bool HasRepeatedSkills()
-    {
-        return Skills.Count != Skills.Distinct().Count();
-    }
+        => Skills.Count != Skills.Distinct().Count();
 
     private bool HasMoreThan2Skills()
-    {
-        return Skills.Count > 2;
-    }
+        => Skills.Count > 2;
 
     public override string ToString()
-    {
-        return $"{Stats.Name} ({Stats.Health})";
-    }
+        => $"{Stats.Name} ({Stats.Health})";
 
     public override bool Equals(object? obj)
     {
