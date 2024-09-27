@@ -10,16 +10,31 @@ public class CharacterController
     public List<Skill> Skills = new();
     public StatModificator Bonus = new('+');
     public StatModificator Penalty = new('-');
-    public bool GuaranteedFollowUp = false;
-    public bool NegatedFollowUp = false;
     public BattleStage Stage = BattleStage.Preparation;
-
-    private bool _baseEffectDone = false;
-    
     public CharacterStats Character
     {
         private set => _character = value;
         get => _character ?? throw new InvalidOperationException("Character is not initialized.");
+    }
+    private int Atk => Character.Atk + Bonus.Atk.Get(Stage) - Penalty.Atk.Get(Stage);
+    private int Spd => Character.Spd + Bonus.Spd.Get(Stage) - Penalty.Spd.Get(Stage);
+    private int Def => Character.Def + Bonus.Def.Get(Stage) - Penalty.Def.Get(Stage);
+    private int Res => Character.Res + Bonus.Res.Get(Stage) - Penalty.Res.Get(Stage);
+    public int HP
+    {
+        get => Character.Health;
+        private set => Character.Health = value;
+    }
+    public int BaseHp
+    {
+        get => Character.MaxHp;
+        set
+        {
+            int currentMaxHp = BaseHp;
+            Character.MaxHp = value;
+            if (HP == currentMaxHp)
+                HP = value;
+        }
     }
     public void SetCharacter(Character character)
     {
@@ -40,17 +55,12 @@ public class CharacterController
         double rivalDefense = armament.IsMagic() ? opponent.Res : opponent.Def;
         return int.Max((int)(atk * advantage - rivalDefense), 0);
     }
-
-    private int Atk => Character.Atk + Bonus.Atk.Get(Stage) - Penalty.Atk.Get(Stage);
-    private int Spd => Character.Spd + Bonus.Spd.Get(Stage) - Penalty.Spd.Get(Stage);
-    private int Def => Character.Def + Bonus.Def.Get(Stage) - Penalty.Def.Get(Stage);
-    private int Res => Character.Res + Bonus.Res.Get(Stage) - Penalty.Res.Get(Stage);
+    private void ReceiveDamage(int damage) => HP -= damage;
     public bool IsAlive() => HP > 0;
     public bool CanFollowUp(CharacterController opponent)
-        => (IsFaster(opponent) && !NegatedFollowUp) || GuaranteedFollowUp;
+        => IsFaster(opponent);
     private bool IsFaster(CharacterController opponent) => Spd - opponent.Spd >= 5;
-    private void ReceiveDamage(int damage) => HP -= damage;
-    public string CheckAdvantages(CharacterController opponent)
+    public string AdvantageMessage(CharacterController opponent)
     {
         Armament armament = Character.Armament;
         double advantage = armament.GetAdvantage(opponent.Character.Armament);
@@ -64,26 +74,6 @@ public class CharacterController
     }
     public override string ToString() => $"{Character.Name} ({HP})";
 
-    public int HP
-    {
-        get => Character.Health;
-        private set => Character.Health = value;
-    }
-
-    public int BaseHp
-    {
-        get => Character.MaxHp;
-        set
-        {
-            if (_baseEffectDone)
-                return;
-            int currentMaxHp = BaseHp;
-            Character.MaxHp = value;
-            if (HP == currentMaxHp)
-                HP = value;
-            _baseEffectDone = true;
-        }
-    }
 
     public void Reset()
     {
