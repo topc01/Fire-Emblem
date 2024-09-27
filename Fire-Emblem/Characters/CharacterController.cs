@@ -36,6 +36,7 @@ public class CharacterController
                 HP = value;
         }
     }
+    public bool IsAttacker;
     public void SetCharacter(Character character)
     {
         Character = character.Stats;
@@ -73,8 +74,6 @@ public class CharacterController
         };
     }
     public override string ToString() => $"{Character.Name} ({HP})";
-
-
     public void Reset()
     {
         Bonus = new('+');
@@ -92,15 +91,8 @@ public class CharacterController
             _ => 0
         };
     }
-
-    public bool IsAttacker;
-
     public bool IsLastRival(CharacterController opponent)
         => Character.LastRival == opponent.Character;
-
-    private Func<string, string> Message(string message = "")
-        => (string value) => $"{Character.Name} obtiene {value}{message}";
-
     public string[] Logs
         => GetModifierLogs(Bonus)
             .Concat(GetModifierLogs(Penalty))
@@ -110,8 +102,7 @@ public class CharacterController
                 .Select(str => $"Los penalty {str}"))
             .Distinct()
             .ToArray();
-
-    public string[] GetModifierLogs(StatModificator modificator)
+    private string[] GetModifierLogs(StatModificator modificator)
         => modificator.CombatMsg// TODO: QUE PASA SI ESTA VACIO
             .Select(Message())
             .Concat(modificator.FirstAttackMsg
@@ -119,8 +110,9 @@ public class CharacterController
             .Concat(modificator.FollowUpMsg
                 .Select(Message(" en su Follow-Up")))
             .ToArray();
-
-    public string[] GetNeutralizedModifierLogs(StatModificator modificator)
+    private Func<string, string> Message(string message = "")
+        => (string value) => $"{Character.Name} obtiene {value}{message}";
+    private string[] GetNeutralizedModifierLogs(StatModificator modificator)
         => new[]
         {
             modificator.Atk.IsNeutralized ? $"de Atk de {Character.Name} fueron neutralizados" : null,
