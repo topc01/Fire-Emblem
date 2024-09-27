@@ -40,5 +40,5 @@ public class Player
     }
     public override string ToString() => $"{Controller.Character.Name} (Player {PlayerNumber}) comienza";
     public string CharacterFinalStatus => $"{Controller}";
-    public string AdvantageMessage(Player opponent) => Controller.CheckAdvantages(opponent.Controller);
+    public string AdvantageMessage(Player opponent) => Controller.AdvantageMessage(opponent.Controller);
 }
