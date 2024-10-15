@@ -64,14 +64,19 @@ public class TeamReader
         Match match = Regex.Match(inputLine, pattern);
 
         if (!(match.Success)) return null;
-            
-        string characterName = match.Groups[1].Value;
+
+        Group characterMatchGroup = match.Groups[1];
+        string characterName = characterMatchGroup.Value;
         CharacterStats characterStats = _characterLookUp(characterName);
         Character character = new Character(characterStats);
-        if (match.Groups[2].Success)
+
+        Group skillMatchGroup = match.Groups[2];
+        if (skillMatchGroup.Success)
         {
-            string[] skillNames = match.Groups[2].Value.Split(',');
-            Skill[] skills = skillNames.Select(_skillFactory.Create).ToArray();
+            string skillsValue = skillMatchGroup.Value;
+            string[] skillNames = skillsValue.Split(',');
+            IEnumerable<Skill> createdSkills = skillNames.Select(_skillFactory.Create);
+            Skill[] skills = createdSkills.ToArray();
             character.AddSkills(skills);
         }
 

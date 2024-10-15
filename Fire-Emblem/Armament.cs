@@ -2,6 +2,7 @@ namespace Fire_Emblem;
 
 public class Armament
 {
+    private const double AdvantageDifference = 0.2;
     private Armament(ArmamentType armamentType)
     {
         Type = armamentType;
@@ -26,15 +27,15 @@ public class Armament
     private static readonly double[,] ResultMatrix = new double[,]
     {
         // Sword, Axe, Lance
-        {  1.0,  1.2,  0.8 },  // Sword
-        {  0.8,  1.0,  1.2 },  // Axe
-        {  1.2,  0.8,  1.0 },  // Lance
+        {  .0,  AdvantageDifference,  -AdvantageDifference },  // Sword
+        {  -AdvantageDifference,  .0,  AdvantageDifference },  // Axe
+        {  AdvantageDifference,  -AdvantageDifference,  .0 },  // Lance
     };
     public double GetAdvantage(Armament opponentArmament)
     {
         try
         {
-            return ResultMatrix[(int)Type, (int)opponentArmament.Type];
+            return 1.0 + ResultMatrix[(int)Type, (int)opponentArmament.Type];
         }
         catch (IndexOutOfRangeException)
         {

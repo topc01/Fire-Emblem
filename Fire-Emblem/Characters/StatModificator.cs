@@ -27,8 +27,7 @@ public class StatModificator(char sign)
     private (string name, int value)[] FilterModifications((string name, int value)[] modifications)
         => modifications.Where(status => status.value != 0).ToArray();
     private string[] Format((string name, int value)[] modifications)
-        => modifications.Select((status) => $"{status.name}{sign}{status.value}")
-            .ToArray();
+        => modifications.Select((status) => $"{status.name}{sign}{status.value}").ToArray();
     public void Neutralize(StatType stat)
     {
         switch (stat)

@@ -35,9 +35,9 @@ public class Game
         
         Combat combat = new(player1, player2, _view);
         
-        while (combat.Continues())
+        while (!combat.IsThereAWinner())
         {
-            combat.Battle();
+            combat.ExecuteBattleRound();
             combat.SetNextRound();
         }
 

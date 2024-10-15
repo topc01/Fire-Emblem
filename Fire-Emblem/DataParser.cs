@@ -16,8 +16,10 @@ public class DataParser
     public string[] RetrieveTeamFilesFromFolder(string teamsFolder)
     {
         if (!Directory.Exists(teamsFolder)) throw new Exception("No existe la carpeta de equipos");
-        string[] teamFiles = Directory.GetFiles(teamsFolder, "*.txt").OrderBy(f => f).ToArray();
-        return teamFiles;
+        string[] teamFiles = Directory.GetFiles(teamsFolder, "*.txt");
+        IOrderedEnumerable<string> orderedFiles = teamFiles.OrderBy(fileName => fileName);
+        string[] orderedFilesArray = orderedFiles.ToArray();
+        return orderedFilesArray;
     }
     public CharacterStats[] SetUpCharacters(string charactersFile)
     {

@@ -12,6 +12,7 @@ public class CharacterController
     public StatModificator Bonus = new('+');
     public StatModificator Penalty = new('-');
     public BattleStage Stage = BattleStage.Preparation;
+    private const int SpeedDifferenceRequired = 5;
     public CharacterStats Character
     {
         private set => _character = value;
@@ -45,11 +46,11 @@ public class CharacterController
     }
     public string Attack(CharacterController defender)
     {
-        int damage = DamageAgainst(defender);
+        int damage = GetDamageAgainst(defender);
         defender.ReceiveDamage(damage);
         return $"{Character.Name} ataca a {defender.Character.Name} con {damage} de daño";
     }
-    private int DamageAgainst(CharacterController opponent)
+    private int GetDamageAgainst(CharacterController opponent)
     {
         int atk = Atk;
         Armament armament = Character.Armament;
@@ -61,8 +62,8 @@ public class CharacterController
     public bool IsAlive() => HP > 0;
     public bool CanFollowUp(CharacterController opponent)
         => IsFaster(opponent);
-    private bool IsFaster(CharacterController opponent) => Spd - opponent.Spd >= 5;
-    public string AdvantageMessage(CharacterController opponent)
+    private bool IsFaster(CharacterController opponent) => Spd - opponent.Spd >= SpeedDifferenceRequired;
+    public string GetAdvantageMessage(CharacterController opponent)
     {
         Armament armament = Character.Armament;
         double advantage = armament.GetAdvantage(opponent.Character.Armament);
@@ -94,23 +95,47 @@ public class CharacterController
     }
     public bool IsLastRival(CharacterController opponent)
         => Character.LastRival == opponent.Character;
-    public string[] Logs
-        => GetModifierLogs(Bonus)
-            .Concat(GetModifierLogs(Penalty))
-            .Concat(GetNeutralizedModifierLogs(Bonus)
-                .Select(str => $"Los bonus {str}"))
-            .Concat(GetNeutralizedModifierLogs(Penalty)
-                .Select(str => $"Los penalty {str}"))
-            .Distinct()
-            .ToArray();
+
+    public string[] GetLogs()
+    {
+        string[] bonusLogs = GetModifierLogs(Bonus);
+        string[] penaltyLogs = GetModifierLogs(Penalty);
+        IEnumerable<string> neutralizedBonusLogsFormatted =
+            GetNeutralizedModifierLogs(Bonus).Select(logMessage => $"Los bonus {logMessage}");
+        IEnumerable<string> neutralizedPenaltyLogsFormatted =
+            GetNeutralizedModifierLogs(Penalty).Select(logMessage => $"Los penalty {logMessage}");
+        IEnumerable<string> concatenatedLogs = bonusLogs
+            .Concat(penaltyLogs)
+            .Concat(neutralizedBonusLogsFormatted)
+            .Concat(neutralizedPenaltyLogsFormatted);
+        return concatenatedLogs.ToArray();
+    }
+
     private string[] GetModifierLogs(StatModificator modificator)
-        => modificator.CombatMsg// TODO: QUE PASA SI ESTA VACIO
-            .Select(Message())
-            .Concat(modificator.FirstAttackMsg
-                .Select(Message(" en su primer ataque")))
-            .Concat(modificator.FollowUpMsg
-                .Select(Message(" en su Follow-Up")))
-            .ToArray();
+    {
+        string[] combatMessages = modificator.CombatMsg;
+        IEnumerable<string> formattedCombatMessage = combatMessages.Select(Message());
+        
+        string[] firstAttackMessages = modificator.FirstAttackMsg;
+        IEnumerable<string> formattedFirstAttackMessages = firstAttackMessages.Select(Message(" en su primer ataque"));
+        
+        string[] followUpMessages = modificator.FollowUpMsg;
+        IEnumerable<string> formattedFollowUpMessages = followUpMessages.Select(Message(" en su Follow-Up"));
+        
+        IEnumerable<string> concatenatedMessages = formattedCombatMessage
+            .Concat(formattedFirstAttackMessages)
+            .Concat(formattedFollowUpMessages);
+        
+        return concatenatedMessages.ToArray();
+    }
+    //private string[] GetModifierLogs2(StatModificator modificator)
+    //    => modificator.CombatMsg // TODO: QUE PASA SI ESTA VACIO
+    //        .Select(Message())
+    //        .Concat(modificator.FirstAttackMsg
+    //            .Select(Message(" en su primer ataque")))
+    //        .Concat(modificator.FollowUpMsg
+    //            .Select(Message(" en su Follow-Up")))
+    //        .ToArray();
     private Func<string, string> Message(string message = "")
         => (string value) => $"{Character.Name} obtiene {value}{message}";
     private string[] GetNeutralizedModifierLogs(StatModificator modificator)
