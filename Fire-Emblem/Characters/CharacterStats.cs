@@ -46,8 +46,17 @@ public class CharacterStats : ICloneable
     public readonly Armament Armament = null!;
     public int MaxHp
     {
-        get; set;
+        get => _maxHp;
+        set
+        {
+            int currentMaxHp = MaxHp;
+            _maxHp = value;
+            if (Health == currentMaxHp)
+                Health = _maxHp;
+        }
     }
+
+    private int _maxHp;
     public int Health
     {
         get => _health;
