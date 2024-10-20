@@ -1,49 +1,83 @@
+using System.Collections;
 using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Characters;
 
 public class StatModificator(char sign)
 {
-    public readonly Stat Atk = new();
-    public readonly Stat Spd = new();
-    public readonly Stat Def = new();
-    public readonly Stat Res = new();
-    private (string name, int value)[][] AllValues
-        => Atk.Values
-            .Zip(Spd.Values, (atk, spd) => ( atk, spd ))
-            .Zip(Def.Values, (combined, def) => (combined.atk, combined.spd, def))
-            .Zip(Res.Values, (combined, res) => new []
-            {
-                ("Atk", combined.atk), 
-                ("Spd", combined.spd), 
-                ("Def", combined.def), 
-                ("Res", res)
-            })
-            .ToArray();
-    public string[] CombatMsg => Format(FilterModifications(AllValues[0]));
-    public string[] FirstAttackMsg => Format(FilterModifications(AllValues[1]));
-    public string[] FollowUpMsg => Format(FilterModifications(AllValues[2]));
+    public readonly Stats Combat = new();
+    public readonly Stats FirstAttack = new(" en su primer ataque");
+    public readonly Stats FollowUp = new(" en su Follow-Up");
+    public readonly StatsNeutralizer Neutralizer = new();
 
-    private (string name, int value)[] FilterModifications((string name, int value)[] modifications)
-        => modifications.Where(status => status.value != 0).ToArray();
-    private string[] Format((string name, int value)[] modifications)
-        => modifications.Select((status) => $"{status.name}{sign}{status.value}").ToArray();
     public void Neutralize(StatType stat)
     {
         switch (stat)
         {
             case StatType.Atk:
-                Atk.IsNeutralized = true;
+                Neutralizer.Atk = true;
                 break;
             case StatType.Spd:
-                Spd.IsNeutralized = true;
+                Neutralizer.Spd = true;
                 break;
             case StatType.Def:
-                Def.IsNeutralized = true;
+                Neutralizer.Def = true;
                 break;
             case StatType.Res:
-                Res.IsNeutralized = true;
+                Neutralizer.Res = true;
                 break;
         }
     }
+
+    public int Get(StatType stat, BattleStage stageType)
+    {
+        Stats stage = GetStage(stageType);
+        return stat switch
+        {
+            StatType.Atk => Neutralizer.Atk ? 0 : stage.Atk,
+            StatType.Spd => Neutralizer.Atk ? 0 : stage.Spd,
+            StatType.Def => Neutralizer.Atk ? 0 : stage.Def,
+            StatType.Res => Neutralizer.Atk ? 0 : stage.Res,
+            _ => throw new ArgumentException()
+        };
+    }
+
+    private Stats GetStage(BattleStage stage)
+    {
+        return stage switch
+        {
+            BattleStage.Preparation => Combat,
+            BattleStage.FirstAttack => FirstAttack,
+            BattleStage.FollowUp => FollowUp,
+            _ => throw new ApplicationException()
+        };
+    }
+
+    public string[] GetLogs()
+    {
+        string[] combatLogs = Combat.GetLogs();
+        string[] firsAttackLogs = FirstAttack.GetLogs();
+        string[] followUpLogs = FollowUp.GetLogs();
+
+        IEnumerable<string> concatenatedLogs = combatLogs.Concat(firsAttackLogs).Concat(followUpLogs);
+
+        IEnumerable<string> logsWithModificatorSign =
+            concatenatedLogs.Select((message) => message.Replace('$', sign));
+        
+        
+        return logsWithModificatorSign.ToArray();
+    }
+
+    public string[] GetNeutralizedLogs()
+    {
+        string modificatorName = sign == '+' ? "bonus" : "penalty";
+        string[] neutralizedModificatorLogs = Neutralizer.GetLogs();
+        IEnumerable<string> neutralizedLogsWithModificatorName =
+            neutralizedModificatorLogs.Select((message) => message.Replace("$", modificatorName));
+
+        return neutralizedLogsWithModificatorName.ToArray();
+    }
+
+    
+    
 }
