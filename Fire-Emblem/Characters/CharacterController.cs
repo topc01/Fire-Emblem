@@ -26,25 +26,25 @@ public class CharacterController
         Character = character.Stats;
         Skills = character.Skills;
     }
-    public string Attack(CharacterController defender)
+    public string Attack(CharacterController opponent)
     {
-        int damage = GetDamageAgainst(defender);
-        defender.ReceiveDamage(damage);
-        return $"{Character.Name} ataca a {defender.Character.Name} con {damage} de daño";
+        int damage = GetDamageAgainst(opponent.Character);
+        opponent.ReceiveDamage(damage);
+        return $"{Character.Name} ataca a {opponent.Character.Name} con {damage} de daño";
     }
-    private int GetDamageAgainst(CharacterController opponent)
+    private int GetDamageAgainst(CharacterStats opponent)
     {
-        int atk = Atk;
+        int atk = Character.Atk;
         Armament armament = Character.Armament;
-        double advantage = armament.GetAdvantage(opponent.Character.Armament);
+        double advantage = armament.GetAdvantage(opponent.Armament);
         double rivalDefense = armament.IsMagic() ? opponent.Res : opponent.Def;
         return int.Max((int)(atk * advantage - rivalDefense), 0);
     }
-    private void ReceiveDamage(int damage) => HP -= damage;
-    public bool IsAlive() => HP > 0;
+    private void ReceiveDamage(int damage) => Character.Health -= damage;
+    public bool IsAlive() => Character.Health > 0;
     public bool CanFollowUp(CharacterController opponent)
-        => IsFaster(opponent);
-    private bool IsFaster(CharacterController opponent) => Spd - opponent.Spd >= SpeedDifferenceRequired;
+        => IsFaster(opponent.Character);
+    private bool IsFaster(CharacterStats opponent) => Character.Spd - opponent.Spd >= SpeedDifferenceRequired;
     public string GetAdvantageMessage(CharacterController opponent)
     {
         Armament armament = Character.Armament;
@@ -57,7 +57,7 @@ public class CharacterController
             _ => throw new Exception($"Unknown advantage for {Character.Weapon} and {opponent.Character.Weapon}")
         };
     }
-    public override string ToString() => $"{Character.Name} ({HP})";
+    public override string ToString() => $"{Character.Name} ({Character.Health})";
     public void Reset()
     {
         Bonus = new('+');
