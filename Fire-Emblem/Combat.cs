@@ -36,7 +36,7 @@ public class Combat
     {
         _attackingPlayer.SelectValidCharacter(_view);
         _defendingPlayer.SelectValidCharacter(_view);
-        _attackingPlayer.Controller.IsAttacker = true;
+        _attackingPlayer.Controller.Character.IsAttacker = true;
         ApplySkills();
     }
     
@@ -114,8 +114,8 @@ public class Combat
         _attackingPlayer.Controller.Reset();
         _defendingPlayer.Controller.Reset();
         (_attackingPlayer, _defendingPlayer) = (_defendingPlayer, _attackingPlayer);
-        _attackingPlayer.Controller.IsAttacker = true;
-        _defendingPlayer.Controller.IsAttacker = false;
+        _attackingPlayer.Controller.Character.IsAttacker = true;
+        _defendingPlayer.Controller.Character.IsAttacker = false;
     }
 
     public Player Winner()
