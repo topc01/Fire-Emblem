@@ -1,6 +1,6 @@
 namespace Fire_Emblem.Characters;
 
-public class CharacterStats : ICloneable
+public class CharacterStats : Stats, ICloneable
 {
     public required string Name
     {
@@ -27,22 +27,7 @@ public class CharacterStats : ICloneable
             _health = MaxHp;
         }
     }
-    public required int Atk
-    {
-        get; set;
-    }
-    public required int Spd
-    {
-        get; set;
-    }
-    public required int Def
-    {
-        get; set;
-    }
-    public required int Res
-    {
-        get; set;
-    }
+    
     public readonly Armament Armament = null!;
     public int MaxHp
     {
@@ -64,6 +49,7 @@ public class CharacterStats : ICloneable
     }
     private int _health;
     public CharacterStats? LastRival;
+    public bool IsAttacker;
     public object Clone() => this.MemberwiseClone();
     public CharacterStats New() => (CharacterStats)Clone();
 }
