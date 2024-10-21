@@ -5,5 +5,5 @@ namespace Fire_Emblem.Conditions.CharacterConditions;
 public class IsAttacker : CharacterCondition
 {
     public override bool DoesHold(CharacterController character)
-        => character.IsAttacker;
+        => character.IsAttacker();
 }

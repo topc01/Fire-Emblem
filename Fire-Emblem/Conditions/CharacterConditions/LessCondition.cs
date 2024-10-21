@@ -14,6 +14,6 @@ public class LessCondition : CharacterCondition
         _threshold = threshold;
     }
     public override bool DoesHold(CharacterController character)
-        => character.GetStat(_stat) < _threshold;
+        => character.GetStatWithRegularBonusAndPenalty(_stat) < _threshold;
 
 }
