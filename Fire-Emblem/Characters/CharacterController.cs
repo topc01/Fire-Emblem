@@ -20,7 +20,10 @@ public class CharacterController
     }
     
     
-    public bool IsAttacker;
+    /*
+    public bool IsAttacker { get; set; }
+    */
+    public bool IsAttacker() => Character.IsAttacker;
     public void SetCharacter(Character character)
     {
         Character = character.Stats;
@@ -62,9 +65,10 @@ public class CharacterController
     {
         Bonus = new('+');
         Penalty = new('-');
-        IsAttacker = false;
+        Character.IsAttacker = false;
     }
-    public int GetStat(StatType stat)
+
+    private int GetCharacterStat(StatType stat)
     {
         return stat switch
         {
@@ -72,8 +76,28 @@ public class CharacterController
             StatType.Def => Character.Def,
             StatType.Res => Character.Res,
             StatType.Spd => Character.Spd,
-            _ => 0
+            _ => throw new ApplicationException("Stat unknown")
         };
+    }
+
+    public int GetStatWithRegularBonusAndPenalty(StatType stat)
+    {
+        int regularBonus = Bonus.Get(BattleStage.Combat, stat);
+        int regularPenalty = Penalty.Get(BattleStage.Combat, stat);
+        return GetCharacterStat(stat) + regularBonus - regularPenalty;
+    }
+    
+    public int GetStatOnFirstAttack(StatType stat)
+    {
+        int firstAttackBonus = Bonus.Get(BattleStage.FirstAttack, stat);
+        int firstAttackPenalty = Penalty.Get(BattleStage.FirstAttack, stat);
+        return GetStatWithRegularBonusAndPenalty(stat) + firstAttackBonus - firstAttackPenalty;
+    }
+    public int GetStatOnFollowUp(StatType stat)
+    {
+        int followUpBonus = Bonus.Get(BattleStage.FollowUp, stat);
+        int followUpPenalty = Penalty.Get(BattleStage.FollowUp, stat);
+        return GetStatWithRegularBonusAndPenalty(stat) + followUpBonus - followUpPenalty;
     }
     public bool IsLastRival(CharacterController opponent)
         => Character.LastRival == opponent.Character;
