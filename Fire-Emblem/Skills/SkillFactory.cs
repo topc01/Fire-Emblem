@@ -11,9 +11,7 @@ public class SkillFactory
 {
     public Skill Create(string name)
     {
-        Skill? createdSkill = CreateSkill(name);
-        if (createdSkill == null)
-            createdSkill = new Skill();
+        Skill createdSkill = CreateSkill(name);
         createdSkill.Name = name;
         return createdSkill;
     }
@@ -23,7 +21,7 @@ public class SkillFactory
     private readonly StatType Res = StatType.Res;
     private readonly StatType Spd = StatType.Spd;
 
-    private Skill? CreateSkill(string name)
+    private Skill CreateSkill(string name)
     {
         return name switch
         {
