@@ -29,7 +29,7 @@ public class StatModificator(char sign)
         }
     }
 
-    public int Get(StatType stat, BattleStage stageType)
+    public int Get(BattleStage stageType, StatType stat)
     {
         Stats stage = GetStage(stageType);
         return stat switch
@@ -46,7 +46,7 @@ public class StatModificator(char sign)
     {
         return stage switch
         {
-            BattleStage.Preparation => Combat,
+            BattleStage.Combat => Combat,
             BattleStage.FirstAttack => FirstAttack,
             BattleStage.FollowUp => FollowUp,
             _ => throw new ApplicationException()
@@ -61,9 +61,7 @@ public class StatModificator(char sign)
 
         IEnumerable<string> concatenatedLogs = combatLogs.Concat(firsAttackLogs).Concat(followUpLogs);
 
-        IEnumerable<string> logsWithModificatorSign =
-            concatenatedLogs.Select((message) => message.Replace('$', sign));
-        
+        IEnumerable<string> logsWithModificatorSign = concatenatedLogs.Select((message) => message.Replace('$', sign));
         
         return logsWithModificatorSign.ToArray();
     }
