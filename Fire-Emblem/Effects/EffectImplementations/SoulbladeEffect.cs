@@ -9,7 +9,7 @@ public class SoulbladeEffect : CharacterEffect
         int meanBetweenDefAndRes = (rival.Character.Def + rival.Character.Res) / 2;
         int defDifference = meanBetweenDefAndRes - rival.Character.Def;
         int resDifference = meanBetweenDefAndRes - rival.Character.Res;
-        ApplyToBonusOrPenalty(rival, defDifference).Def.Combat += defDifference;
-        ApplyToBonusOrPenalty(rival, resDifference).Res.Combat += resDifference;
+        ApplyToBonusOrPenalty(rival, defDifference).Combat.Def += defDifference;
+        ApplyToBonusOrPenalty(rival, resDifference).Combat.Res += resDifference;
     }
 }

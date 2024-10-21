@@ -9,7 +9,7 @@ public class BaseHpEffect : CharacterEffect
     public override void Apply(CharacterController controller)
     {
         if (!_activated)
-            controller.BaseHp += 15;
+            controller.Character.MaxHp += 15;
         _activated = true;
     }
 }

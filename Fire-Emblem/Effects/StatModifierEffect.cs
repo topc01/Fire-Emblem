@@ -17,16 +17,16 @@ public abstract class StatModifierEffect : CharacterEffect
         switch (TargetStat)
         {
             case StatType.Atk:
-                statModificator.Atk.Combat += Bonus;
+                statModificator.Combat.Atk += Bonus;
                 break;
             case StatType.Def:
-                statModificator.Def.Combat += Bonus;
+                statModificator.Combat.Def += Bonus;
                 break;
             case StatType.Res:
-                statModificator.Res.Combat += Bonus;
+                statModificator.Combat.Res += Bonus;
                 break;
             case StatType.Spd:
-                statModificator.Spd.Combat += Bonus;
+                statModificator.Combat.Spd += Bonus;
                 break;
         }
     }
