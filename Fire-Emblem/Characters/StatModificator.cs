@@ -35,9 +35,9 @@ public class StatModificator(char sign)
         return stat switch
         {
             StatType.Atk => Neutralizer.Atk ? 0 : stage.Atk,
-            StatType.Spd => Neutralizer.Atk ? 0 : stage.Spd,
-            StatType.Def => Neutralizer.Atk ? 0 : stage.Def,
-            StatType.Res => Neutralizer.Atk ? 0 : stage.Res,
+            StatType.Spd => Neutralizer.Spd ? 0 : stage.Spd,
+            StatType.Def => Neutralizer.Def ? 0 : stage.Def,
+            StatType.Res => Neutralizer.Res ? 0 : stage.Res,
             _ => throw new ArgumentException()
         };
     }
