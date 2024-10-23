@@ -5,6 +5,9 @@ namespace Fire_Emblem.Conditions.LogicalConditions;
 public class TrueCondition : Condition
 {
     public override bool DoesHold(CharacterController _1, CharacterController _2)
-        => true;
+    {
+        Console.WriteLine("Es verdad");
+        return true;
+    }
 
 }

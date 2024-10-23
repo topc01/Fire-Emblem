@@ -9,9 +9,27 @@ public class CharacterController
 {
     private CharacterStats? _character;
     public List<Skill> Skills = new();
-    public StatModificator Bonus = new('+');
-    public StatModificator Penalty = new('-');
-    public BattleStage Stage = BattleStage.Preparation;
+    public StatModificator Combat = new("");
+    public StatModificator FirstAttack = new(" en su primer ataque");
+    public StatModificator FollowUp = new(" en su Follow-Up");
+    
+    public BattleStage Stage = BattleStage.FirstAttack;
+
+    private StatModificator CurrentStage
+    {
+        get
+        {
+            return Stage switch
+            {
+                BattleStage.FirstAttack => FirstAttack,
+                BattleStage.FollowUp => FollowUp,
+                _ => throw new ArgumentException("Stage invalid")
+            };
+        }
+    }
+    
+    public StatsNeutralizer BonusNeutralizer = new();
+    public StatsNeutralizer PenaltyNeutralizer = new();
     private const int SpeedDifferenceRequired = 5;
     public CharacterStats Character
     {
@@ -29,25 +47,29 @@ public class CharacterController
         Character = character.Stats;
         Skills = character.Skills;
     }
+    
+    
     public string Attack(CharacterController opponent)
     {
-        int damage = GetDamageAgainst(opponent.Character);
+        int damage = GetDamageAgainst(opponent);
         opponent.ReceiveDamage(damage);
         return $"{Character.Name} ataca a {opponent.Character.Name} con {damage} de daño";
     }
-    private int GetDamageAgainst(CharacterStats opponent)
+    private int GetDamageAgainst(CharacterController opponent)
     {
-        int atk = Character.Atk;
+        int atk = GetTotalStat(StatType.Atk);
         Armament armament = Character.Armament;
-        double advantage = armament.GetAdvantage(opponent.Armament);
-        double rivalDefense = armament.IsMagic() ? opponent.Res : opponent.Def;
+        double advantage = armament.GetAdvantage(opponent.Character.Armament);
+        StatType rivalDefenseType = armament.IsMagic() ? StatType.Res : StatType.Def;
+        double rivalDefense = opponent.GetTotalStat(rivalDefenseType);
         return int.Max((int)(atk * advantage - rivalDefense), 0);
     }
+    
     private void ReceiveDamage(int damage) => Character.Health -= damage;
     public bool IsAlive() => Character.Health > 0;
     public bool CanFollowUp(CharacterController opponent)
-        => IsFaster(opponent.Character);
-    private bool IsFaster(CharacterStats opponent) => Character.Spd - opponent.Spd >= SpeedDifferenceRequired;
+        => IsFaster(opponent);
+    private bool IsFaster(CharacterController opponent) => GetTotalStat(StatType.Spd) - opponent.GetTotalStat(StatType.Spd) >= SpeedDifferenceRequired;
     public string GetAdvantageMessage(CharacterController opponent)
     {
         Armament armament = Character.Armament;
@@ -63,55 +85,105 @@ public class CharacterController
     public override string ToString() => $"{Character.Name} ({Character.Health})";
     public void Reset()
     {
-        Bonus = new('+');
-        Penalty = new('-');
+        Combat = new("");
+        FirstAttack = new(" en su primer ataque");
+        FollowUp = new(" en su Follow-Up");
+        BonusNeutralizer = new();
+        PenaltyNeutralizer = new();
         Character.IsAttacker = false;
     }
-
-    private int GetCharacterStat(StatType stat)
+    
+    private int GetTotalStat(StatType stat)
     {
         return stat switch
         {
-            StatType.Atk => Character.Atk,
-            StatType.Def => Character.Def,
-            StatType.Res => Character.Res,
-            StatType.Spd => Character.Spd,
+            StatType.Atk => Character.Atk + Combat.Atk + CurrentStage.Atk,
+            StatType.Spd => Character.Spd + Combat.Spd + CurrentStage.Spd,
+            StatType.Def => Character.Def + Combat.Def + CurrentStage.Def,
+            StatType.Res => Character.Res + Combat.Res + CurrentStage.Res,
+            _ => throw new ApplicationException("Stat unknown")
+        };
+    }
+    public int GetStatWithoutSpecificModificators(StatType stat)
+    {
+        return stat switch
+        {
+            StatType.Atk => Character.Atk + Combat.Atk,
+            StatType.Spd => Character.Spd + Combat.Spd,
+            StatType.Def => Character.Def + Combat.Def,
+            StatType.Res => Character.Res + Combat.Res,
             _ => throw new ApplicationException("Stat unknown")
         };
     }
 
-    public int GetStatWithRegularBonusAndPenalty(StatType stat)
+    public void NeutralizeAllStatBonus(StatType stat)
     {
-        int regularBonus = Bonus.Get(BattleStage.Combat, stat);
-        int regularPenalty = Penalty.Get(BattleStage.Combat, stat);
-        return GetCharacterStat(stat) + regularBonus - regularPenalty;
+        SetStatNeutralizer(BonusNeutralizer, stat, true);
+        SetStatNeutralizer(Combat.BonusNeutralizer, stat, true);
+        SetStatNeutralizer(FirstAttack.BonusNeutralizer, stat, true);
+        SetStatNeutralizer(FollowUp.BonusNeutralizer, stat, true);
+    }
+    public void NeutralizeAllStatPenalty(StatType stat)
+    {
+        SetStatNeutralizer(PenaltyNeutralizer, stat, true);
+        SetStatNeutralizer(Combat.PenaltyNeutralizer, stat, true);
+        SetStatNeutralizer(FirstAttack.PenaltyNeutralizer, stat, true);
+        SetStatNeutralizer(FollowUp.PenaltyNeutralizer, stat, true);
+    }
+
+    private void SetStatNeutralizer(StatsNeutralizer neutralizer, StatType stat, bool value)
+    {
+        switch (stat)
+        {
+            case StatType.Atk:
+                neutralizer.Atk = value;
+                break;
+            case StatType.Spd:
+                neutralizer.Spd = value;
+                break;
+            case StatType.Def:
+                neutralizer.Def = value;
+                break;
+            case StatType.Res:
+                neutralizer.Res = value;
+                break;
+        }
     }
     
-    public int GetStatOnFirstAttack(StatType stat)
-    {
-        int firstAttackBonus = Bonus.Get(BattleStage.FirstAttack, stat);
-        int firstAttackPenalty = Penalty.Get(BattleStage.FirstAttack, stat);
-        return GetStatWithRegularBonusAndPenalty(stat) + firstAttackBonus - firstAttackPenalty;
-    }
-    public int GetStatOnFollowUp(StatType stat)
-    {
-        int followUpBonus = Bonus.Get(BattleStage.FollowUp, stat);
-        int followUpPenalty = Penalty.Get(BattleStage.FollowUp, stat);
-        return GetStatWithRegularBonusAndPenalty(stat) + followUpBonus - followUpPenalty;
-    }
     public bool IsLastRival(CharacterController opponent)
         => Character.LastRival == opponent.Character;
 
     public string[] GetLogs()
     {
-        string[] bonusLogs = Bonus.GetLogs();
-        string[] penaltyLogs = Penalty.GetLogs();
-        string[] neutralizedBonusLogs = Bonus.GetNeutralizedLogs();
-        string[] neutralizedPenaltyLogs = Penalty.GetNeutralizedLogs();
-        IEnumerable<string> logs = bonusLogs
-            .Concat(penaltyLogs)
-            .Concat(neutralizedBonusLogs)
-            .Concat(neutralizedPenaltyLogs);
+        string[] combatBonusLogs = Combat.Bonus.GetLogs();
+        string[] combatPenaltyLogs = Combat.Penalty.GetLogs();
+        string[] firstAttackBonusLogs = FirstAttack.Bonus.GetLogs();
+        string[] firstAttackPenaltyLogs = FirstAttack.Penalty.GetLogs();
+        string[] followUpBonusLogs = FollowUp.Bonus.GetLogs();
+        string[] followUpPenaltyLogs = FollowUp.Penalty.GetLogs();
+        string[] neutralizedBonusLogs = BonusNeutralizer.GetLogs();
+        string[] neutralizedPenaltyLogs = PenaltyNeutralizer.GetLogs();
+        
+        string[] combatBonusLogsWithMessage = combatBonusLogs.Select((log) => log.Replace("#", "")).ToArray();
+        string[] combatPenaltyLogsWithMessage = combatPenaltyLogs.Select((log) => log.Replace("#", "")).ToArray();
+        string[] firstAttackBonusLogsWithMessage = firstAttackBonusLogs.Select((log) => log.Replace("#", " en su primer ataque")).ToArray();
+        string[] firstAttackPenaltyLogsWithMessage = firstAttackPenaltyLogs.Select((log) => log.Replace("#", " en su primer ataque")).ToArray();
+        string[] followUpBonusLogsWithMessage = followUpBonusLogs.Select((log) => log.Replace("#", " en su Follow-Up")).ToArray();
+        string[] followUpPenaltyLogsWithMessage = followUpPenaltyLogs.Select((log) => log.Replace("#", " en su Follow-Up")).ToArray();
+
+        string[] neutralizedBonusLogsWithBonusMessage =
+            neutralizedBonusLogs.Select((log) => log.Replace("$", "bonus")).ToArray();
+        string[] neutralizedPenaltyLogsWithPenaltyMessage =
+            neutralizedPenaltyLogs.Select((log) => log.Replace("$", "penalty")).ToArray();
+
+        IEnumerable<string> logs = combatBonusLogsWithMessage
+            .Concat(firstAttackBonusLogsWithMessage)
+            .Concat(followUpBonusLogsWithMessage)
+            .Concat(combatPenaltyLogsWithMessage)
+            .Concat(firstAttackPenaltyLogsWithMessage)
+            .Concat(followUpPenaltyLogsWithMessage)
+            .Concat(neutralizedBonusLogsWithBonusMessage)
+            .Concat(neutralizedPenaltyLogsWithPenaltyMessage);
         IEnumerable<string> logsWithCharacterName = logs.Select((message) => message.Replace("@", Character.Name));
         return logsWithCharacterName.ToArray();
     }

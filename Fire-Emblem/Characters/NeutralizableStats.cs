@@ -4,10 +4,10 @@ namespace Fire_Emblem.Characters;
 
 public class StatsNeutralizer
 {
-    public bool Atk { get; set; }
-    public bool Spd { get; set; }
-    public bool Def { get; set; }
-    public bool Res { get; set; }
+    public bool Atk = false;
+    public bool Spd = false;
+    public bool Def = false;
+    public bool Res = false;
 
     public string[] GetLogs()
     {

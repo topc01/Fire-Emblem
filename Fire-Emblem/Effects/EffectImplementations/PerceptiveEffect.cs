@@ -5,5 +5,5 @@ namespace Fire_Emblem.Effects.EffectImplementations;
 public class PerceptiveEffect : CharacterEffect
 {
     public override void Apply(CharacterController controller)
-        => controller.Bonus.Combat.Spd += 12 + controller.Character.Spd / 4;
+        => controller.Combat.Spd = 12 + controller.Character.Spd / 4;
 }

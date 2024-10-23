@@ -3,77 +3,98 @@ using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Characters;
 
-public class StatModificator(char sign)
+public class StatModificator(string message)
 {
-    public readonly Stats Combat = new();
-    public readonly Stats FirstAttack = new(" en su primer ataque");
-    public readonly Stats FollowUp = new(" en su Follow-Up");
-    public readonly StatsNeutralizer Neutralizer = new();
+    private const string BonusSign = "+";
+    private const string PenaltySign = "-";
+    public readonly Stats Bonus = new(BonusSign);
+    public readonly Stats Penalty = new(PenaltySign);
+    public readonly StatsNeutralizer BonusNeutralizer = new();
+    public readonly StatsNeutralizer PenaltyNeutralizer = new();
 
-    public void Neutralize(StatType stat)
+    public int Atk
     {
-        switch (stat)
+        get
         {
-            case StatType.Atk:
-                Neutralizer.Atk = true;
-                break;
-            case StatType.Spd:
-                Neutralizer.Spd = true;
-                break;
-            case StatType.Def:
-                Neutralizer.Def = true;
-                break;
-            case StatType.Res:
-                Neutralizer.Res = true;
-                break;
+            bool bonusNeutralized = BonusNeutralizer.Atk;
+            bool penaltyNeutralized = PenaltyNeutralizer.Atk;
+            int bonusValue = !bonusNeutralized ? Bonus.Atk : 0;
+            int penaltyValue = !penaltyNeutralized ? Penalty.Atk : 0;
+            return bonusValue - penaltyValue;
+        }
+        set
+        {
+            if (value < 0)
+            {
+                Penalty.Atk += int.Abs(value);
+                return;
+            }
+
+            Bonus.Atk += value;
         }
     }
-
-    public int Get(BattleStage stageType, StatType stat)
+    public int Spd
     {
-        Stats stage = GetStage(stageType);
-        return stat switch
+        get
         {
-            StatType.Atk => Neutralizer.Atk ? 0 : stage.Atk,
-            StatType.Spd => Neutralizer.Spd ? 0 : stage.Spd,
-            StatType.Def => Neutralizer.Def ? 0 : stage.Def,
-            StatType.Res => Neutralizer.Res ? 0 : stage.Res,
-            _ => throw new ArgumentException()
-        };
-    }
-
-    private Stats GetStage(BattleStage stage)
-    {
-        return stage switch
+            bool bonusNeutralized = BonusNeutralizer.Spd;
+            bool penaltyNeutralized = PenaltyNeutralizer.Spd;
+            int bonusValue = !bonusNeutralized ? Bonus.Spd : 0;
+            int penaltyValue = !penaltyNeutralized ? Penalty.Spd : 0;
+            return bonusValue - penaltyValue;
+        }
+        set
         {
-            BattleStage.Combat => Combat,
-            BattleStage.FirstAttack => FirstAttack,
-            BattleStage.FollowUp => FollowUp,
-            _ => throw new ApplicationException()
-        };
+            if (value < 0)
+            {
+                Penalty.Spd += int.Abs(value);
+                return;
+            }
+
+            Bonus.Spd += value;
+        }
     }
-
-    public string[] GetLogs()
+    public int Def
     {
-        string[] combatLogs = Combat.GetLogs();
-        string[] firsAttackLogs = FirstAttack.GetLogs();
-        string[] followUpLogs = FollowUp.GetLogs();
+        get
+        {
+            bool bonusNeutralized = BonusNeutralizer.Def;
+            bool penaltyNeutralized = PenaltyNeutralizer.Def;
+            int bonusValue = !bonusNeutralized ? Bonus.Def : 0;
+            int penaltyValue = !penaltyNeutralized ? Penalty.Def : 0;
+            return bonusValue - penaltyValue;
+        }
+        set
+        {
+            if (value < 0)
+            {
+                Penalty.Def += int.Abs(value);
+                return;
+            }
 
-        IEnumerable<string> concatenatedLogs = combatLogs.Concat(firsAttackLogs).Concat(followUpLogs);
-
-        IEnumerable<string> logsWithModificatorSign = concatenatedLogs.Select((message) => message.Replace('$', sign));
-        
-        return logsWithModificatorSign.ToArray();
+            Bonus.Def += value;
+        }
     }
-
-    public string[] GetNeutralizedLogs()
+    public int Res
     {
-        string modificatorName = sign == '+' ? "bonus" : "penalty";
-        string[] neutralizedModificatorLogs = Neutralizer.GetLogs();
-        IEnumerable<string> neutralizedLogsWithModificatorName =
-            neutralizedModificatorLogs.Select((message) => message.Replace("$", modificatorName));
+        get
+        {
+            bool bonusNeutralized = BonusNeutralizer.Res;
+            bool penaltyNeutralized = PenaltyNeutralizer.Res;
+            int bonusValue = !bonusNeutralized ? Bonus.Res : 0;
+            int penaltyValue = !penaltyNeutralized ? Penalty.Res : 0;
+            return bonusValue - penaltyValue;
+        }
+        set
+        {
+            if (value < 0)
+            {
+                Penalty.Res += int.Abs(value);
+                return;
+            }
 
-        return neutralizedLogsWithModificatorName.ToArray();
+            Bonus.Res += value;
+        }
     }
 
     

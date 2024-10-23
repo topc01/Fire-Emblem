@@ -26,6 +26,9 @@ public class Combat
     public void ExecuteBattleRound()
     {
         SetUpBattle();
+        Console.WriteLine(_defendingPlayer.Controller.IsAttacker());
+        Console.WriteLine(_defendingPlayer.Controller.Character.Armament.Name);
+        Console.WriteLine(_defendingPlayer.Controller.Character.Name);
         PrintMessages();
         ExecuteAttackTurns();
         PrintFinalState();
@@ -37,6 +40,7 @@ public class Combat
         _attackingPlayer.SelectValidCharacter(_view);
         _defendingPlayer.SelectValidCharacter(_view);
         _attackingPlayer.Controller.Character.IsAttacker = true;
+        _defendingPlayer.Controller.Character.IsAttacker = false;
         ApplySkills();
     }
     
@@ -57,7 +61,6 @@ public class Combat
         PrintRoundMessage();
         PrintAdvantageMessage();
         PrintSkillsLogs();
-        
     }
     private void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");
     private void PrintAdvantageMessage() =>_view.WriteLine(_attackingPlayer.GetAdvantageMessage(_defendingPlayer));

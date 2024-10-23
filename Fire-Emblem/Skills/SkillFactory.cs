@@ -31,16 +31,16 @@ public class SkillFactory
                 => new Skill(
                     new IsAttacker(),
                     new MultiEffect(
-                        new BonusEffect(Atk, 6), new RivalEffect(new BonusEffect(Atk, 6)))),
+                        new CombatEffect(Atk, 6), new RivalEffect(new CombatEffect(Atk, 6)))),
             "Will to Win"
                 => new Skill(
                     new OrCondition(
                         new HealthPercentageLessThan(50), new HealthPercentageEquals(50)),
-                    new BonusEffect(Atk, 8)),
+                    new CombatEffect(Atk, 8)),
             "Single-Minded"
                 => new Skill(
                     new IsLastRival(),
-                    new BonusEffect(Atk, 8)),
+                    new CombatEffect(Atk, 8)),
             "Ignis" 
                 => new Skill(new IgnisEffect()),
             "Perceptive"
@@ -51,16 +51,16 @@ public class SkillFactory
                 => new Skill(
                     new WeaponCondition(Armament.Magic),
                     new MultiEffect(
-                        new BonusEffect(Atk, 6), new BonusEffect(Spd, 6))),
+                        new CombatEffect(Atk, 6), new CombatEffect(Spd, 6))),
             "Attack +6" 
                 => new Skill(
-                    new BonusEffect(Atk, 6)),
+                    new CombatEffect(Atk, 6)),
             "Speed +5" 
                 => new Skill(
-                new BonusEffect(Spd, 5)),
+                new CombatEffect(Spd, 5)),
             "Defense +5" 
                 => new Skill(
-                new BonusEffect(Def, 5)),
+                new CombatEffect(Def, 5)),
             "Wrath"
                 => new Skill(new WrathEffect()),
             "Resolve"
@@ -68,126 +68,126 @@ public class SkillFactory
                     new OrCondition(
                         new HealthPercentageEquals(75), new HealthPercentageLessThan(75)),
                     new MultiEffect(
-                        new BonusEffect(Def, 7), new BonusEffect(Res, 7))),
+                        new CombatEffect(Def, 7), new CombatEffect(Res, 7))),
             "Resistance +5"
                 => new Skill(
-                    new BonusEffect(Res, 5)),
+                    new CombatEffect(Res, 5)),
             "Atk/Def +5"
                 => new Skill(
                     new MultiEffect(
-                        new BonusEffect(Atk, 5), new BonusEffect(Def, 5))),
+                        new CombatEffect(Atk, 5), new CombatEffect(Def, 5))),
             "Atk/Res +5"
                 => new Skill(
                     new MultiEffect(
-                        new BonusEffect(Atk, 5), new BonusEffect(Res, 5))),
+                        new CombatEffect(Atk, 5), new CombatEffect(Res, 5))),
             "Spd/Res +5"
                 => new Skill(
                     new MultiEffect(
-                        new BonusEffect(Spd, 5), new BonusEffect(Res, 5))),
+                        new CombatEffect(Spd, 5), new CombatEffect(Res, 5))),
             "Deadly Blade"
                 => new Skill(
                     new AndCondition(
                         new IsAttacker(), new WeaponCondition(Armament.Sword)),
                     new MultiEffect(
-                        new BonusEffect(Atk, 8), new BonusEffect(Spd, 8))),
+                        new CombatEffect(Atk, 8), new CombatEffect(Spd, 8))),
             "Death Blow"
                 => new Skill(
                 new IsAttacker(),
-                        new BonusEffect(Atk, 8)),
+                        new CombatEffect(Atk, 8)),
             "Armored Blow"
                 => new Skill(
                     new IsAttacker(),
-                            new BonusEffect(Def, 8)),
+                            new CombatEffect(Def, 8)),
             "Darting Blow"
                 => new Skill(
                     new IsAttacker(),
-                    new BonusEffect(Spd, 8)),
+                    new CombatEffect(Spd, 8)),
             "Warding Blow"
                 => new Skill(
                     new IsAttacker(),
-                    new BonusEffect(Res, 8)),
+                    new CombatEffect(Res, 8)),
             "Swift Sparrow"
                 => new Skill(
                     new IsAttacker(),
                     new MultiEffect(
-                        new BonusEffect(Atk, 6), new BonusEffect(Spd, 6))),
+                        new CombatEffect(Atk, 6), new CombatEffect(Spd, 6))),
             "Sturdy Blow"
                 => new Skill(
                     new IsAttacker(),
                     new MultiEffect(
-                        new BonusEffect(Atk, 6), new BonusEffect(Def, 6))),
+                        new CombatEffect(Atk, 6), new CombatEffect(Def, 6))),
             "Mirror Strike"
                 => new Skill(
                     new IsAttacker(),
                     new MultiEffect(
-                        new BonusEffect(Atk, 6), new BonusEffect(Res, 6))),
+                        new CombatEffect(Atk, 6), new CombatEffect(Res, 6))),
             "Steady Blow"
                 => new Skill(
                     new IsAttacker(),
                     new MultiEffect(
-                        new BonusEffect(Spd, 6), new BonusEffect(Def, 6))),
+                        new CombatEffect(Spd, 6), new CombatEffect(Def, 6))),
             "Swift Strike"
                 => new Skill(
                     new IsAttacker(),
                     new MultiEffect(
-                        new BonusEffect(Spd, 6), new BonusEffect(Res, 6))),
+                        new CombatEffect(Spd, 6), new CombatEffect(Res, 6))),
             "Bracing Blow"
                 => new Skill(
                     new IsAttacker(),
                     new MultiEffect(
-                        new BonusEffect(Res, 6), new BonusEffect(Def, 6))),
+                        new CombatEffect(Res, 6), new CombatEffect(Def, 6))),
             "Brazen Atk/Spd"
                 => new Skill(
                     new OrCondition(
                         new HealthPercentageEquals(80), new HealthPercentageLessThan(80)),
                     new MultiEffect(
-                        new BonusEffect(Atk, 10), new BonusEffect(Spd, 10))),
+                        new CombatEffect(Atk, 10), new CombatEffect(Spd, 10))),
             "Brazen Atk/Def"
                 => new Skill(
                     new OrCondition(
                         new HealthPercentageEquals(80), new HealthPercentageLessThan(80)),
                     new MultiEffect(
-                        new BonusEffect(Atk, 10), new BonusEffect(Def, 10))),
+                        new CombatEffect(Atk, 10), new CombatEffect(Def, 10))),
             "Brazen Atk/Res"
                 => new Skill(
                     new OrCondition(
                         new HealthPercentageEquals(80), new HealthPercentageLessThan(80)),
                     new MultiEffect(
-                        new BonusEffect(Atk, 10), new BonusEffect(Res, 10))),
+                        new CombatEffect(Atk, 10), new CombatEffect(Res, 10))),
             "Brazen Spd/Def"
                 => new Skill(
                     new OrCondition(
                         new HealthPercentageEquals(80), new HealthPercentageLessThan(80)),
                     new MultiEffect(
-                        new BonusEffect(Spd, 10), new BonusEffect(Def, 10))),
+                        new CombatEffect(Spd, 10), new CombatEffect(Def, 10))),
             "Brazen Spd/Res"
                 => new Skill(
                     new OrCondition(
                         new HealthPercentageEquals(80), new HealthPercentageLessThan(80)),
                     new MultiEffect(
-                        new BonusEffect(Spd, 10), new BonusEffect(Res, 10))),
+                        new CombatEffect(Spd, 10), new CombatEffect(Res, 10))),
             "Brazen Def/Res"
                 => new Skill(
                     new OrCondition(
                         new HealthPercentageEquals(80), new HealthPercentageLessThan(80)),
                     new MultiEffect(
-                        new BonusEffect(Def, 10), new BonusEffect(Res, 10))),
+                        new CombatEffect(Def, 10), new CombatEffect(Res, 10))),
             "Fire Boost"
                 => new Skill(
                     new HealthGreaterOrEqualThanRivalBy(3),
-                    new BonusEffect(Atk, 6)),
+                    new CombatEffect(Atk, 6)),
             "Wind Boost"
                 => new Skill(
                     new HealthGreaterOrEqualThanRivalBy(3),
-                    new BonusEffect(Spd, 6)),
+                    new CombatEffect(Spd, 6)),
             "Earth Boost"
                 => new Skill(
                     new HealthGreaterOrEqualThanRivalBy(3),
-                    new BonusEffect(Def, 6)),
+                    new CombatEffect(Def, 6)),
             "Water Boost"
                 => new Skill(
                     new HealthGreaterOrEqualThanRivalBy(3),
-                    new BonusEffect(Res, 6)),
+                    new CombatEffect(Res, 6)),
             "Chaos Style"
                 => new Skill(new AndCondition(
                         new IsAttacker(),
@@ -201,7 +201,7 @@ public class SkillFactory
                             new NotCondition(new RivalCondition(new WeaponCondition(Armament.Magic)))
                             )
                         )),
-                    new BonusEffect(Spd, 3)),
+                    new CombatEffect(Spd, 3)),
             "Blinding Flash"
                 => new Skill(
                     new IsAttacker(),
@@ -248,42 +248,42 @@ public class SkillFactory
                 => new Skill(
                     new WeaponCondition(Armament.Sword),
                     new MultiEffect(
-                        new BonusEffect(Spd, 12), new PenaltyEffect(Atk, 6))),
+                        new CombatEffect(Spd, 12), new PenaltyEffect(Atk, 6))),
             "Lance Power"
                 => new Skill(
                     new WeaponCondition(Armament.Lance),
                     new MultiEffect(
-                        new BonusEffect(Atk, 10), new PenaltyEffect(Def, 10))),
+                        new CombatEffect(Atk, 10), new PenaltyEffect(Def, 10))),
             "Sword Power"
                 => new Skill(
                     new WeaponCondition(Armament.Sword),
                     new MultiEffect(
-                        new BonusEffect(Atk, 10), new PenaltyEffect(Def, 10))),
+                        new CombatEffect(Atk, 10), new PenaltyEffect(Def, 10))),
             "Bow Focus"
                 => new Skill(
                     new WeaponCondition(Armament.Bow),
                     new MultiEffect(
-                        new BonusEffect(Atk, 10), new PenaltyEffect(Res, 10))),
+                        new CombatEffect(Atk, 10), new PenaltyEffect(Res, 10))),
             "Lance Agility"
                 => new Skill(
                     new WeaponCondition(Armament.Lance),
                     new MultiEffect(
-                        new BonusEffect(Spd, 12), new PenaltyEffect(Atk, 6))),
+                        new CombatEffect(Spd, 12), new PenaltyEffect(Atk, 6))),
             "Axe Power"
                 => new Skill(
                     new WeaponCondition(Armament.Axe),
                     new MultiEffect(
-                        new BonusEffect(Atk, 10), new PenaltyEffect(Def, 10))),
+                        new CombatEffect(Atk, 10), new PenaltyEffect(Def, 10))),
             "Bow Agility"
                 => new Skill(
                     new WeaponCondition(Armament.Bow),
                     new MultiEffect(
-                        new BonusEffect(Spd, 12), new PenaltyEffect(Atk, 6))),
+                        new CombatEffect(Spd, 12), new PenaltyEffect(Atk, 6))),
             "Sword Focus"
                 => new Skill(
                     new WeaponCondition(Armament.Sword),
                     new MultiEffect(
-                        new BonusEffect(Atk, 10), new PenaltyEffect(Res, 10))),
+                        new CombatEffect(Atk, 10), new PenaltyEffect(Res, 10))),
             "Close Def"
                 => new Skill(
                     new AndCondition(
@@ -293,7 +293,7 @@ public class SkillFactory
                             new RivalCondition(new WeaponCondition(Armament.Lance)), 
                             new RivalCondition (new WeaponCondition(Armament.Axe)))),
                     new MultiEffect(
-                        new BonusEffect(Def, 8), new BonusEffect(Res, 8), new RivalEffect(new BonusNeutralizer()))),
+                        new CombatEffect(Def, 8), new CombatEffect(Res, 8), new RivalEffect(new BonusNeutralizer()))),
             "Distant Def"
                 => new Skill(
                     new AndCondition(
@@ -302,7 +302,7 @@ public class SkillFactory
                                 new RivalCondition(new WeaponCondition(Armament.Magic)),
                                 new RivalCondition(new WeaponCondition(Armament.Bow)))),
                     new MultiEffect(
-                        new BonusEffect(Def, 8), new BonusEffect(Res, 8), new RivalEffect(new BonusNeutralizer()))),
+                        new CombatEffect(Def, 8), new CombatEffect(Res, 8), new RivalEffect(new BonusNeutralizer()))),
             "Lull Atk/Spd"
                 => new Skill(
                     new MultiEffect(
@@ -354,16 +354,16 @@ public class SkillFactory
             "Fort. Def/Res"
                 => new Skill(
                     new MultiEffect(
-                        new BonusEffect(Def, 6),
-                        new BonusEffect(Res, 6),
+                        new CombatEffect(Def, 6),
+                        new CombatEffect(Res, 6),
                         new PenaltyEffect(Atk, 2)
                         )
                     ),
             "Life and Death"
                 => new Skill(
                     new MultiEffect(
-                        new BonusEffect(Atk, 6),
-                        new BonusEffect(Spd, 6),
+                        new CombatEffect(Atk, 6),
+                        new CombatEffect(Spd, 6),
                         new PenaltyEffect(Def, 5),
                         new PenaltyEffect(Res, 5)
                         )
@@ -371,16 +371,16 @@ public class SkillFactory
             "Solid Ground"
                 => new Skill(
                     new MultiEffect(
-                        new BonusEffect(Atk, 6),
-                        new BonusEffect(Def, 6),
+                        new CombatEffect(Atk, 6),
+                        new CombatEffect(Def, 6),
                         new PenaltyEffect(Res, 5)
                         )
                     ),
             "Still Water"
                 => new Skill(
                     new MultiEffect(
-                        new BonusEffect(Atk, 6),
-                        new BonusEffect(Res, 6),
+                        new CombatEffect(Atk, 6),
+                        new CombatEffect(Res, 6),
                         new PenaltyEffect(Def, 5)
                         )
                     ),
@@ -391,10 +391,10 @@ public class SkillFactory
                         new NotCondition(new RivalCondition(new HealthPercentageLessThan(75)))
                         ),
                     new MultiEffect(
-                        new BonusEffect(Atk, 6),
-                        new BonusEffect(Spd, 6),
-                        new BonusEffect(Def, 6),
-                        new BonusEffect(Res, 6),
+                        new CombatEffect(Atk, 6),
+                        new CombatEffect(Spd, 6),
+                        new CombatEffect(Def, 6),
+                        new CombatEffect(Res, 6),
                         new RivalEffect(new BonusNeutralizer())
                         )
                     ),

@@ -3,9 +3,9 @@ using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Effects;
 
-public class PenaltyEffect : StatModifierEffect
+public class CombatEffect : StatModifierEffect
 {
-    public PenaltyEffect(StatType targetStat, int penalty) : base(targetStat, - penalty){}
+    public CombatEffect(StatType targetStat, int bonusOrPenalty) : base(targetStat, bonusOrPenalty){}
     public override void Apply(CharacterController character)
         => Apply(character.Combat);
 }

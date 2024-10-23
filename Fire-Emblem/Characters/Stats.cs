@@ -9,7 +9,7 @@ public class Stats
     public int Def { get; set; }
     public int Res { get; set; }
 
-    private readonly string _message = "";
+    private readonly string _sign = "";
 
     public Stats()
     {
@@ -19,18 +19,22 @@ public class Stats
         Res = 0;
     }
 
-    public Stats(string message)
+    public Stats(string sign)
     {
-        _message = message;
+        _sign = sign;
+        Atk = 0;
+        Spd = 0;
+        Def = 0;
+        Res = 0;
     }
     
     public string[] GetLogs()
     {
         List<string> logs = new List<string>();
-        if (Atk > 0) logs.Add($"@ obtiene Atk${Atk}{_message}");
-        if (Spd > 0) logs.Add($"@ obtiene Spd${Spd}{_message}");
-        if (Def > 0) logs.Add($"@ obtiene Def${Def}{_message}");
-        if (Res > 0) logs.Add($"@ obtiene Res${Res}{_message}");
+        if (Atk > 0) logs.Add($"@ obtiene Atk{_sign}{Atk}#");
+        if (Spd > 0) logs.Add($"@ obtiene Spd{_sign}{Spd}#");
+        if (Def > 0) logs.Add($"@ obtiene Def{_sign}{Def}#");
+        if (Res > 0) logs.Add($"@ obtiene Res{_sign}{Res}#");
         return logs.ToArray();
     }
 }

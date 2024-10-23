@@ -6,7 +6,7 @@ public class LunaEffect : CharacterEffect
 {
     public override void Apply(CharacterController controller)
     {
-        controller.Penalty.FirstAttack.Def += Round(controller.Character.Def * 0.5);
-        controller.Penalty.FirstAttack.Res += Round(controller.Character.Res * 0.5);
+        controller.FirstAttack.Def = - Round(controller.Character.Def * 0.5);
+        controller.FirstAttack.Res = - Round(controller.Character.Res * 0.5);
     }
 }

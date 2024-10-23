@@ -1,4 +1,5 @@
 using Fire_Emblem.Characters;
+using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Effects.EffectImplementations;
 
@@ -6,8 +7,10 @@ public class SandstormEffect : CharacterEffect
 {
     public override void Apply(CharacterController controller)
     {
-        double defenseWeightedBy150 = controller.Character.Def * 1.5;
-        int differenceWithWeightedDefense = Round(defenseWeightedBy150 - controller.Character.Atk);
-        ApplyToBonusOrPenalty(controller, differenceWithWeightedDefense).FollowUp.Atk += differenceWithWeightedDefense;
+        int def = controller.Character.Def;
+        int atk = controller.Character.Atk;
+        double defenseWeightedBy150 = def * 1.5;
+        int differenceWithWeightedDefense = Round(defenseWeightedBy150 - atk);
+        controller.FollowUp.Atk = differenceWithWeightedDefense;
     }
 }
