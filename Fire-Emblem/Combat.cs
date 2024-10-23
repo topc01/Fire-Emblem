@@ -26,9 +26,6 @@ public class Combat
     public void ExecuteBattleRound()
     {
         SetUpBattle();
-        Console.WriteLine(_defendingPlayer.Controller.IsAttacker());
-        Console.WriteLine(_defendingPlayer.Controller.Character.Armament.Name);
-        Console.WriteLine(_defendingPlayer.Controller.Character.Name);
         PrintMessages();
         ExecuteAttackTurns();
         PrintFinalState();

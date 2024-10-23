@@ -6,7 +6,6 @@ public class TrueCondition : Condition
 {
     public override bool DoesHold(CharacterController _1, CharacterController _2)
     {
-        Console.WriteLine("Es verdad");
         return true;
     }
 
