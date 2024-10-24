@@ -8,6 +8,39 @@ public class StatsNeutralizer
     public bool Spd = false;
     public bool Def = false;
     public bool Res = false;
+    
+    public bool Get(StatType stat)
+    {
+        return stat switch
+        {
+            StatType.Atk => Atk,
+            StatType.Spd => Spd,
+            StatType.Def => Def,
+            StatType.Res => Res,
+            _ => throw new ArgumentException("Stat unknown")
+        };
+    }
+    
+    public void Set(StatType stat, bool value)
+    {
+        switch (stat)
+        {
+            case StatType.Atk:
+                Atk = value;
+                break;
+            case StatType.Spd:
+                Spd = value;
+                break;
+            case StatType.Def:
+                Def = value;
+                break;
+            case StatType.Res:
+                Res = value;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(stat), $"Invalid stat type: {stat}");
+        }
+    }
 
     public string[] GetLogs()
     {

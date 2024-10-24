@@ -95,59 +95,28 @@ public class CharacterController
     
     private int GetTotalStat(StatType stat)
     {
-        return stat switch
-        {
-            StatType.Atk => Character.Atk + Combat.Atk + CurrentStage.Atk,
-            StatType.Spd => Character.Spd + Combat.Spd + CurrentStage.Spd,
-            StatType.Def => Character.Def + Combat.Def + CurrentStage.Def,
-            StatType.Res => Character.Res + Combat.Res + CurrentStage.Res,
-            _ => throw new ApplicationException("Stat unknown")
-        };
-    }
-    public int GetStatWithoutSpecificModificators(StatType stat)
-    {
-        return stat switch
-        {
-            StatType.Atk => Character.Atk + Combat.Atk,
-            StatType.Spd => Character.Spd + Combat.Spd,
-            StatType.Def => Character.Def + Combat.Def,
-            StatType.Res => Character.Res + Combat.Res,
-            _ => throw new ApplicationException("Stat unknown")
-        };
+        int baseStat = Character.Get(stat);
+        int combatStat = Combat.Get(stat);
+        int currentStageStat = CurrentStage.Get(stat);
+        return baseStat + combatStat + currentStageStat;
     }
 
+    public int GetStatWithoutSpecificModificators(StatType stat)
+        => GetTotalStat(stat) - CurrentStage.Get(stat);
+    
     public void NeutralizeAllStatBonus(StatType stat)
     {
-        SetStatNeutralizer(BonusNeutralizer, stat, true);
-        SetStatNeutralizer(Combat.BonusNeutralizer, stat, true);
-        SetStatNeutralizer(FirstAttack.BonusNeutralizer, stat, true);
-        SetStatNeutralizer(FollowUp.BonusNeutralizer, stat, true);
+        BonusNeutralizer.Set(stat, true);
+        Combat.BonusNeutralizer.Set(stat, true);
+        FirstAttack.BonusNeutralizer.Set(stat, true);
+        FollowUp.BonusNeutralizer.Set(stat, true);
     }
     public void NeutralizeAllStatPenalty(StatType stat)
     {
-        SetStatNeutralizer(PenaltyNeutralizer, stat, true);
-        SetStatNeutralizer(Combat.PenaltyNeutralizer, stat, true);
-        SetStatNeutralizer(FirstAttack.PenaltyNeutralizer, stat, true);
-        SetStatNeutralizer(FollowUp.PenaltyNeutralizer, stat, true);
-    }
-
-    private void SetStatNeutralizer(StatsNeutralizer neutralizer, StatType stat, bool value)
-    {
-        switch (stat)
-        {
-            case StatType.Atk:
-                neutralizer.Atk = value;
-                break;
-            case StatType.Spd:
-                neutralizer.Spd = value;
-                break;
-            case StatType.Def:
-                neutralizer.Def = value;
-                break;
-            case StatType.Res:
-                neutralizer.Res = value;
-                break;
-        }
+        PenaltyNeutralizer.Set(stat, true);
+        Combat.PenaltyNeutralizer.Set(stat, true);
+        FirstAttack.PenaltyNeutralizer.Set(stat, true);
+        FollowUp.PenaltyNeutralizer.Set(stat, true);
     }
     
     public bool IsLastRival(CharacterController opponent)

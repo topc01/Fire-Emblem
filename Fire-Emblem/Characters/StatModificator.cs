@@ -12,16 +12,18 @@ public class StatModificator(string message)
     public readonly StatsNeutralizer BonusNeutralizer = new();
     public readonly StatsNeutralizer PenaltyNeutralizer = new();
 
+    public int Get(StatType stat)
+    {
+        bool bonusNeutralized = BonusNeutralizer.Get(stat);
+        bool penaltyNeutralized = PenaltyNeutralizer.Get(stat);
+        int bonusValue = !bonusNeutralized ? Bonus.Get(stat) : 0;
+        int penaltyValue = !penaltyNeutralized ? Penalty.Get(stat) : 0;
+        return bonusValue - penaltyValue;
+    }
+
     public int Atk
     {
-        get
-        {
-            bool bonusNeutralized = BonusNeutralizer.Atk;
-            bool penaltyNeutralized = PenaltyNeutralizer.Atk;
-            int bonusValue = !bonusNeutralized ? Bonus.Atk : 0;
-            int penaltyValue = !penaltyNeutralized ? Penalty.Atk : 0;
-            return bonusValue - penaltyValue;
-        }
+        get => Get(StatType.Atk);
         set
         {
             if (value < 0)
@@ -35,14 +37,7 @@ public class StatModificator(string message)
     }
     public int Spd
     {
-        get
-        {
-            bool bonusNeutralized = BonusNeutralizer.Spd;
-            bool penaltyNeutralized = PenaltyNeutralizer.Spd;
-            int bonusValue = !bonusNeutralized ? Bonus.Spd : 0;
-            int penaltyValue = !penaltyNeutralized ? Penalty.Spd : 0;
-            return bonusValue - penaltyValue;
-        }
+        get => Get(StatType.Spd);
         set
         {
             if (value < 0)
@@ -56,14 +51,7 @@ public class StatModificator(string message)
     }
     public int Def
     {
-        get
-        {
-            bool bonusNeutralized = BonusNeutralizer.Def;
-            bool penaltyNeutralized = PenaltyNeutralizer.Def;
-            int bonusValue = !bonusNeutralized ? Bonus.Def : 0;
-            int penaltyValue = !penaltyNeutralized ? Penalty.Def : 0;
-            return bonusValue - penaltyValue;
-        }
+        get => Get(StatType.Def);
         set
         {
             if (value < 0)
@@ -77,14 +65,7 @@ public class StatModificator(string message)
     }
     public int Res
     {
-        get
-        {
-            bool bonusNeutralized = BonusNeutralizer.Res;
-            bool penaltyNeutralized = PenaltyNeutralizer.Res;
-            int bonusValue = !bonusNeutralized ? Bonus.Res : 0;
-            int penaltyValue = !penaltyNeutralized ? Penalty.Res : 0;
-            return bonusValue - penaltyValue;
-        }
+        get => Get(StatType.Res);
         set
         {
             if (value < 0)
