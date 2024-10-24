@@ -52,8 +52,8 @@ public class CharacterController
     public string Attack(CharacterController opponent)
     {
         int damage = GetDamageAgainst(opponent);
-        opponent.ReceiveDamage(damage);
-        return $"{Character.Name} ataca a {opponent.Character.Name} con {damage} de daño";
+        int reducedDamage = opponent.ReceiveDamage(damage);
+        return $"{Character.Name} ataca a {opponent.Character.Name} con {reducedDamage} de daño";
     }
     private int GetDamageAgainst(CharacterController opponent)
     {
@@ -62,10 +62,17 @@ public class CharacterController
         double advantage = armament.GetAdvantage(opponent.Character.Armament);
         StatType rivalDefenseType = armament.IsMagic() ? StatType.Res : StatType.Def;
         double rivalDefense = opponent.GetTotalStat(rivalDefenseType);
-        return int.Max((int)(atk * advantage - rivalDefense), 0);
+        double ponderedAtk = atk * advantage;
+        int extraDamage = Combat.ExtraDamage + CurrentStage.ExtraDamage;
+        return int.Max((int)(ponderedAtk - rivalDefense + extraDamage), 0);
     }
-    
-    private void ReceiveDamage(int damage) => Character.Health -= damage;
+
+    private int ReceiveDamage(int damage)
+    {
+        int newDamage = CurrentStage.ReduceDamage(damage);
+        Character.Health -= newDamage;
+        return newDamage;
+    }
     public bool IsAlive() => Character.Health > 0;
     public bool CanFollowUp(CharacterController opponent)
         => IsFaster(opponent);
@@ -126,27 +133,38 @@ public class CharacterController
     {
         string[] combatBonusLogs = Combat.Bonus.GetLogs();
         string[] combatPenaltyLogs = Combat.Penalty.GetLogs();
+        string? combatExtraDamageLog = Combat.GetExtraDamageLog();
+        string? combatPercentageReducedDamageLog = Combat.GetPercentageReducedDamageLog();
+        string? combatAbsolutReducedDamageLog = Combat.GetAbsolutReducedDamageLog();
         string[] firstAttackBonusLogs = FirstAttack.Bonus.GetLogs();
         string[] firstAttackPenaltyLogs = FirstAttack.Penalty.GetLogs();
+        string? firstAttackExtraDamageLog = Combat.GetExtraDamageLog();
         string[] followUpBonusLogs = FollowUp.Bonus.GetLogs();
         string[] followUpPenaltyLogs = FollowUp.Penalty.GetLogs();
+        string? followUpExtraDamageLog = Combat.GetExtraDamageLog();
         string[] neutralizedBonusLogs = BonusNeutralizer.GetLogs();
         string[] neutralizedPenaltyLogs = PenaltyNeutralizer.GetLogs();
-        
-        string[] combatBonusLogsWithMessage = combatBonusLogs.Select((log) => log.Replace("#", "")).ToArray();
-        string[] combatPenaltyLogsWithMessage = combatPenaltyLogs.Select((log) => log.Replace("#", "")).ToArray();
-        string[] firstAttackBonusLogsWithMessage = firstAttackBonusLogs.Select((log) => log.Replace("#", " en su primer ataque")).ToArray();
-        string[] firstAttackPenaltyLogsWithMessage = firstAttackPenaltyLogs.Select((log) => log.Replace("#", " en su primer ataque")).ToArray();
-        string[] followUpBonusLogsWithMessage = followUpBonusLogs.Select((log) => log.Replace("#", " en su Follow-Up")).ToArray();
-        string[] followUpPenaltyLogsWithMessage = followUpPenaltyLogs.Select((log) => log.Replace("#", " en su Follow-Up")).ToArray();
 
-        string[] neutralizedBonusLogsWithBonusMessage =
-            neutralizedBonusLogs.Select((log) => log.Replace("$", "bonus")).ToArray();
-        string[] neutralizedPenaltyLogsWithPenaltyMessage =
-            neutralizedPenaltyLogs.Select((log) => log.Replace("$", "penalty")).ToArray();
+        string combatMessage = "";
+        string combatExtraDamageMessage = " en cada ataque";
+        string combatReducedDamageMessage = " los ataques";
+        string firstAttackMessage = " en su primer ataque";
+        string firstAttackReducedDamageMessage = "l primer ataque";
+        string followUpMessage = " en su Follow-Up";
+        string followUpReducedDamageMessage = "l Follow-Up";
+        string[] combatBonusLogsWithMessage = AddLogsMessage(combatBonusLogs, combatMessage);
+        string[] combatPenaltyLogsWithMessage = AddLogsMessage(combatPenaltyLogs, combatMessage);
+        string[] firstAttackBonusLogsWithMessage = AddLogsMessage(firstAttackBonusLogs, firstAttackMessage);
+        string[] firstAttackPenaltyLogsWithMessage = AddLogsMessage(firstAttackPenaltyLogs, firstAttackMessage);
+        string[] followUpBonusLogsWithMessage = AddLogsMessage(followUpBonusLogs, followUpMessage);
+        string[] followUpPenaltyLogsWithMessage = AddLogsMessage(followUpPenaltyLogs, followUpMessage);
+
+        string[] neutralizedBonusLogsWithBonusMessage = AddLogsSign(neutralizedBonusLogs, "bonus");
+        string[] neutralizedPenaltyLogsWithPenaltyMessage = AddLogsSign(neutralizedPenaltyLogs, "penalty");
 
         IEnumerable<string> logs = combatBonusLogsWithMessage
             .Concat(firstAttackBonusLogsWithMessage)
+            .Append(combatExtraDamageLog)
             .Concat(followUpBonusLogsWithMessage)
             .Concat(combatPenaltyLogsWithMessage)
             .Concat(firstAttackPenaltyLogsWithMessage)
@@ -157,5 +175,11 @@ public class CharacterController
         return logsWithCharacterName.ToArray();
     }
 
-    
+    private string[] AddLogsMessage(string[] logs, string message)
+        => logs.Select((log) => log.Replace("#", " en su Follow-Up")).ToArray();
+
+    private string[] AddLogsSign(string[] logs, string signName)
+        => logs.Select((log) => log.Replace("$", signName)).ToArray();
+
+
 }

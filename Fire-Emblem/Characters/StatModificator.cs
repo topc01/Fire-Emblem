@@ -11,7 +11,29 @@ public class StatModificator()
     public readonly Stats Penalty = new(PenaltySign);
     public readonly StatsNeutralizer BonusNeutralizer = new();
     public readonly StatsNeutralizer PenaltyNeutralizer = new();
+    public int ExtraDamage { get; set; }
 
+    private double _percentageDamage = 1;
+    public int PercentageDamageReduction
+    {
+        get => Convert.ToInt32(_percentageDamage * 100);
+        set
+        {
+            double newReduction = (100 - value) * 0.01;
+            _percentageDamage *= newReduction;
+        }
+    }
+    
+    public int AbsoluteDamageReduction { get; set; }
+
+    public int ReduceDamage(int damage)
+    {
+        double newDamage = damage * _percentageDamage;
+        newDamage = Math.Round(newDamage, 9);
+        int afterPercentageDamageReduction = Convert.ToInt32(Math.Floor(newDamage));
+        int afterAbsoluteDamageReduction = afterPercentageDamageReduction - AbsoluteDamageReduction;
+        return afterAbsoluteDamageReduction;
+    }
     public int Get(StatType stat)
     {
         bool bonusNeutralized = BonusNeutralizer.Get(stat);
@@ -74,6 +96,13 @@ public class StatModificator()
         }
     }
 
-    
-    
+    public string? GetExtraDamageLog()
+        => ExtraDamage > 0 ? $"@ realizará {ExtraDamage} daño extra#" : null;
+    public string? GetPercentageReducedDamageLog()
+        => ExtraDamage > 0 ? $"@ reducirá el daño de# del rival en un {PercentageDamageReduction}%" : null;
+    public string? GetAbsolutReducedDamageLog()
+            => ExtraDamage > 0 ? $"@ recibirá -{AbsoluteDamageReduction} daño en cada ataque" : null;
+
+
+
 }
