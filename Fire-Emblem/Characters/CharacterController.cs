@@ -85,9 +85,9 @@ public class CharacterController
     public override string ToString() => $"{Character.Name} ({Character.Health})";
     public void Reset()
     {
-        Combat = new("");
-        FirstAttack = new(" en su primer ataque");
-        FollowUp = new(" en su Follow-Up");
+        Combat = new();
+        FirstAttack = new();
+        FollowUp = new();
         BonusNeutralizer = new();
         PenaltyNeutralizer = new();
         Character.IsAttacker = false;
