@@ -3,7 +3,7 @@ using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Characters;
 
-public class StatModificator(string message)
+public class StatModificator()
 {
     private const string BonusSign = "+";
     private const string PenaltySign = "-";

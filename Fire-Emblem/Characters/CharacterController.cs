@@ -9,9 +9,9 @@ public class CharacterController
 {
     private CharacterStats? _character;
     public List<Skill> Skills = new();
-    public StatModificator Combat = new("");
-    public StatModificator FirstAttack = new(" en su primer ataque");
-    public StatModificator FollowUp = new(" en su Follow-Up");
+    public StatModificator Combat = new();
+    public StatModificator FirstAttack = new();
+    public StatModificator FollowUp = new();
     
     public BattleStage Stage = BattleStage.FirstAttack;
 
