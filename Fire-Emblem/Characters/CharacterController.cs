@@ -2,6 +2,7 @@
 
 using Fire_Emblem.Skills;
 using Fire_Emblem.Types;
+using Fire_Emblem.Utils;
 
 namespace Fire_Emblem.Characters;
 
@@ -133,15 +134,17 @@ public class CharacterController
     {
         string[] combatBonusLogs = Combat.Bonus.GetLogs();
         string[] combatPenaltyLogs = Combat.Penalty.GetLogs();
-        string? combatExtraDamageLog = Combat.GetExtraDamageLog();
-        string? combatPercentageReducedDamageLog = Combat.GetPercentageReducedDamageLog();
-        string? combatAbsolutReducedDamageLog = Combat.GetAbsolutReducedDamageLog();
-        string[] firstAttackBonusLogs = FirstAttack.Bonus.GetLogs();
+        string combatExtraDamageLog = Combat.GetExtraDamageLog();
+        string combatPercentageReducedDamageLog = Combat.GetPercentageReducedDamageLog();
+        string combatAbsolutReducedDamageLog = Combat.GetAbsolutReducedDamageLog();
         string[] firstAttackPenaltyLogs = FirstAttack.Penalty.GetLogs();
-        string? firstAttackExtraDamageLog = Combat.GetExtraDamageLog();
+        string firstAttackExtraDamageLog = FirstAttack.GetExtraDamageLog();
+        string firstAttackPercentageReducedDamageLog = FirstAttack.GetPercentageReducedDamageLog();
         string[] followUpBonusLogs = FollowUp.Bonus.GetLogs();
         string[] followUpPenaltyLogs = FollowUp.Penalty.GetLogs();
-        string? followUpExtraDamageLog = Combat.GetExtraDamageLog();
+        string followUpExtraDamageLog = FollowUp.GetExtraDamageLog();
+        string followUpPercentageReducedDamageLog = FollowUp.GetPercentageReducedDamageLog();
+        string[] firstAttackBonusLogs = FirstAttack.Bonus.GetLogs();
         string[] neutralizedBonusLogs = BonusNeutralizer.GetLogs();
         string[] neutralizedPenaltyLogs = PenaltyNeutralizer.GetLogs();
 
@@ -152,26 +155,44 @@ public class CharacterController
         string firstAttackReducedDamageMessage = "l primer ataque";
         string followUpMessage = " en su Follow-Up";
         string followUpReducedDamageMessage = "l Follow-Up";
-        string[] combatBonusLogsWithMessage = AddLogsMessage(combatBonusLogs, combatMessage);
-        string[] combatPenaltyLogsWithMessage = AddLogsMessage(combatPenaltyLogs, combatMessage);
-        string[] firstAttackBonusLogsWithMessage = AddLogsMessage(firstAttackBonusLogs, firstAttackMessage);
-        string[] firstAttackPenaltyLogsWithMessage = AddLogsMessage(firstAttackPenaltyLogs, firstAttackMessage);
-        string[] followUpBonusLogsWithMessage = AddLogsMessage(followUpBonusLogs, followUpMessage);
-        string[] followUpPenaltyLogsWithMessage = AddLogsMessage(followUpPenaltyLogs, followUpMessage);
-
+        string[] combatBonusLogsWithMessage = combatBonusLogs.ReplaceMessage(combatMessage);
+        string[] combatPenaltyLogsWithMessage = combatPenaltyLogs.ReplaceMessage(combatMessage);
+        string combatExtraDamageLogWithMessage = combatExtraDamageLog.Replace("#", combatExtraDamageMessage);
+        string combatPercentageReducedDamageLogWithMessage = combatPercentageReducedDamageLog.Replace("#", combatReducedDamageMessage);
+        string combatAbsolutReducedDamageLogWithMessage = combatAbsolutReducedDamageLog.Replace("#", combatReducedDamageMessage);
+        string[] firstAttackBonusLogsWithMessage = firstAttackBonusLogs.ReplaceMessage(firstAttackMessage);
+        string[] firstAttackPenaltyLogsWithMessage = firstAttackPenaltyLogs.ReplaceMessage(firstAttackMessage);
+        string firstAttackExtraDamageLogWithMessage = firstAttackExtraDamageLog.Replace("#", firstAttackMessage);
+        string firstAttackPercentageReducedDamageLogWithMessage = firstAttackPercentageReducedDamageLog.Replace("#", firstAttackReducedDamageMessage);
+        string[] followUpBonusLogsWithMessage = followUpBonusLogs.ReplaceMessage(followUpMessage);
+        string[] followUpPenaltyLogsWithMessage = followUpPenaltyLogs.ReplaceMessage(followUpMessage);
+        string followUpExtraDamageLogWithMessage = followUpExtraDamageLog.Replace("#", followUpMessage);
+        string followUpPercentageReducedDamageLogWithMessage = followUpPercentageReducedDamageLog.Replace("#", followUpReducedDamageMessage);
+        
         string[] neutralizedBonusLogsWithBonusMessage = AddLogsSign(neutralizedBonusLogs, "bonus");
         string[] neutralizedPenaltyLogsWithPenaltyMessage = AddLogsSign(neutralizedPenaltyLogs, "penalty");
 
-        IEnumerable<string> logs = combatBonusLogsWithMessage
-            .Concat(firstAttackBonusLogsWithMessage)
-            .Append(combatExtraDamageLog)
-            .Concat(followUpBonusLogsWithMessage)
-            .Concat(combatPenaltyLogsWithMessage)
-            .Concat(firstAttackPenaltyLogsWithMessage)
-            .Concat(followUpPenaltyLogsWithMessage)
-            .Concat(neutralizedBonusLogsWithBonusMessage)
-            .Concat(neutralizedPenaltyLogsWithPenaltyMessage);
-        IEnumerable<string> logsWithCharacterName = logs.Select((message) => message.Replace("@", Character.Name));
+        List<string> logsList = new();
+        logsList.AddManyLogs(
+            combatBonusLogsWithMessage,
+            firstAttackBonusLogsWithMessage,
+            followUpBonusLogsWithMessage,
+            combatPenaltyLogsWithMessage,
+            firstAttackPenaltyLogsWithMessage,
+            followUpPenaltyLogsWithMessage,
+            neutralizedBonusLogsWithBonusMessage,
+            neutralizedPenaltyLogsWithPenaltyMessage
+            );
+        logsList.SoftAppend(
+            combatExtraDamageLogWithMessage,
+            firstAttackExtraDamageLogWithMessage,
+            followUpExtraDamageLogWithMessage,
+            combatPercentageReducedDamageLogWithMessage,
+            firstAttackPercentageReducedDamageLogWithMessage,
+            followUpPercentageReducedDamageLogWithMessage,
+            combatAbsolutReducedDamageLogWithMessage
+            );
+        List<string> logsWithCharacterName = logsList.ReplaceName(Character.Name);
         return logsWithCharacterName.ToArray();
     }
 
