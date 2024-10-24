@@ -96,12 +96,12 @@ public class StatModificator()
         }
     }
 
-    public string? GetExtraDamageLog()
-        => ExtraDamage > 0 ? $"@ realizará {ExtraDamage} daño extra#" : null;
-    public string? GetPercentageReducedDamageLog()
-        => ExtraDamage > 0 ? $"@ reducirá el daño de# del rival en un {PercentageDamageReduction}%" : null;
-    public string? GetAbsolutReducedDamageLog()
-            => ExtraDamage > 0 ? $"@ recibirá -{AbsoluteDamageReduction} daño en cada ataque" : null;
+    public string GetExtraDamageLog()
+        => ExtraDamage > 0 ? $"@ realizará {ExtraDamage} daño extra#1" : "";
+    public string GetPercentageReducedDamageLog()
+        => ExtraDamage > 0 ? $"@ reducirá el daño de#2 del rival en un {PercentageDamageReduction}%" : "";
+    public string GetAbsolutReducedDamageLog()
+            => ExtraDamage > 0 ? $"@ recibirá -{AbsoluteDamageReduction} daño en cada ataque" : "";
 
 
 
