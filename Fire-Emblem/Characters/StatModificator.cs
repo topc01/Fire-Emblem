@@ -23,7 +23,6 @@ public class StatModificator()
 
     public int Atk
     {
-        get => Get(StatType.Atk);
         set
         {
             if (value < 0)
@@ -37,7 +36,6 @@ public class StatModificator()
     }
     public int Spd
     {
-        get => Get(StatType.Spd);
         set
         {
             if (value < 0)
@@ -51,7 +49,6 @@ public class StatModificator()
     }
     public int Def
     {
-        get => Get(StatType.Def);
         set
         {
             if (value < 0)
@@ -65,7 +62,6 @@ public class StatModificator()
     }
     public int Res
     {
-        get => Get(StatType.Res);
         set
         {
             if (value < 0)
