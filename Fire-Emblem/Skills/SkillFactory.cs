@@ -409,6 +409,58 @@ public class SkillFactory
                         new RivalEffect(new BonusNeutralizer())
                         )
                     ),
+            "Dragon Wall"
+                => new Skill(
+                    new StatGreaterThanRival(Res),
+                    new PercentageReducedDamageByStatDifference(Res, 40)),
+            "Dodge"
+                => new Skill(
+                    new StatGreaterThanRival(Spd),
+                    new PercentageReducedDamageByStatDifference(Spd, 40)),
+            "Golden Lotus"
+                => new Skill(
+                    new NotCondition(new RivalCondition(new WeaponCondition(Armament.ArmamentType.Magic))),
+                    new FirstAttackDamageReduce(50)),
+            "Gentility"
+                => new Skill(
+                    new AbsolutDamageReduce(5)),
+            "Bow Guard"
+                => new Skill(
+                    new RivalCondition(new WeaponCondition(Armament.ArmamentType.Bow)),
+                    new AbsolutDamageReduce(5)),
+            "Arms Shield"
+                => new Skill(
+                    new HasArmamentAdvantage(),
+                    new AbsolutDamageReduce(7)),
+            "Axe Guard"
+                => new Skill(
+                    new RivalCondition(new WeaponCondition(Armament.ArmamentType.Axe)),
+                    new AbsolutDamageReduce(5)),
+            "Magic Guard"
+                => new Skill(
+                    new RivalCondition(new WeaponCondition(Armament.ArmamentType.Magic)),
+                    new AbsolutDamageReduce(5)),
+            "Lance Guard"
+                => new Skill(
+                    new RivalCondition(new WeaponCondition(Armament.ArmamentType.Lance)),
+                    new AbsolutDamageReduce(5)),
+            "Sympathetic"
+                => new Skill(
+                    new AndCondition(
+                        new IsAttacker(),
+                        new OrCondition(
+                            new HealthPercentageEquals(50), new HealthPercentageLessThan(50))),
+                    new AbsolutDamageReduce(5)),
+            "Back at You"
+                => new Skill(
+                    new RivalCondition(new IsAttacker()),
+                    new BackAtYouEffect()),
+            "Lunar Brace"
+                => new Skill(
+                    new NotCondition(new WeaponCondition(Armament.ArmamentType.Magic)),
+                    new LunarBraceEffect()),
+            
+            
             _ => new Skill()
         };
         
