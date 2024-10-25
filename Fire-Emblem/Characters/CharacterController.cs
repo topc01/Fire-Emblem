@@ -130,6 +130,9 @@ public class CharacterController
     public bool IsLastRival(CharacterController opponent)
         => Character.LastRival == opponent.Character;
 
+    public bool HasAdvantage(CharacterController opponent)
+        => Character.Armament.GetAdvantage(opponent.Character.Armament) != 0.0;
+
     public string[] GetLogs()
     {
         string[] combatBonusLogs = Combat.Bonus.GetLogs();
