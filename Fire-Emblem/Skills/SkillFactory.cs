@@ -487,7 +487,7 @@ public class SkillFactory
                 => new Skill(new MultiEffect(
                     new CombatEffect(Def, 6),
                     new CombatEffect(Res, 3),
-                    new PercentageDamageReduce(50)
+                    new PercentageDamageReduce(BattleStage.FirstAttack, 50)
                     )),
             "Remote Sparrow"=> new Skill(new IsAttacker(), new MultiEffect(new CombatEffect(Atk, 7), new CombatEffect(Spd, 7), new PercentageDamageReduce(BattleStage.FirstAttack,30))),
             "Remote Mirror" => new Skill(new IsAttacker(), new MultiEffect(new CombatEffect(Atk, 7), new CombatEffect(Res,10), new PercentageDamageReduce(BattleStage.FirstAttack,30))),
@@ -505,7 +505,7 @@ public class SkillFactory
             "Poetic Justice" => new Skill(new MultiEffect(new PenaltyEffect(Spd, 4), new ExtraDamageMultipliedByRivalStat(Atk,15))),
             "Laguz Friend" => new Skill(new MultiEffect(new PercentageDamageReduce(50), new BonusNeutralizer(Def, Res), new PenaltyFromBaseStatPercentage(Def, 50), new PenaltyFromBaseStatPercentage(Res, 50))),
             "Chivalry" => new Skill(new AndCondition(new IsAttacker(), new RivalCondition(new HealthPercentageEquals(100))),
-                new MultiEffect(new ExtraDamage(2), new RivalEffect(new ExtraDamage(2)))),
+                new MultiEffect(new ExtraDamage(2), new AbsolutDamageReduce(2))),
             "Dragon's Wrath" => new MultiSkill(
                 new Skill(new PercentageDamageReduce(25)),
                 new Skill(new StatGreaterThanRival(Atk), new DragonsWrathEffect())),
