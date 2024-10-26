@@ -5,9 +5,8 @@ using Fire_Emblem.Effects;
 
 namespace Fire_Emblem.Skills;
 
-public class Skill
+public class Skill : BaseSkill
 {
-    public string Name { get; set; }
     public string Description { get; set; }
     private readonly Condition _condition;
     private readonly Effect _effect;
@@ -27,21 +26,11 @@ public class Skill
     {
     }
     
-    public void ApplyIfDoesHold(CharacterController character, CharacterController rival)
+    public override void ApplyIfDoesHold(CharacterController character, CharacterController rival)
     {
         if (_condition.DoesHold(character, rival))
             _effect.Apply(character, rival);
     }
 
-    public override bool Equals(object? obj)
-    {
-        if (obj == null || GetType() != obj.GetType())
-            return false;
-        var other = (Skill)obj;
-        return Name == other.Name;
-    }
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Name);
-    }
+    
 }

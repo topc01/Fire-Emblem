@@ -8,6 +8,6 @@ public class IgnisEffect : CharacterEffect
     public override void Apply(CharacterController controller)
     {
         int baseAtk = controller.Character.Atk;
-        controller.FirstAttack.Atk = Round(baseAtk * 0.5);
+        controller.FirstAttack.Atk = Truncate(baseAtk * 0.5);
     }
 }

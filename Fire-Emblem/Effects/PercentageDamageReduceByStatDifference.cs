@@ -3,7 +3,7 @@ using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Effects;
 
-public class PercentageReducedDamageByStatDifference(StatType stat, int factor = 4, int max = int.MaxValue) : Effect
+public class PercentageDamageReduceByStatDifference(StatType stat, int factor = 4, int max = int.MaxValue) : Effect
 {
     public override void Apply(CharacterController controller, CharacterController rival)
     {

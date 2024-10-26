@@ -10,7 +10,7 @@ public class SandstormEffect : CharacterEffect
         int def = controller.Character.Def;
         int atk = controller.Character.Atk;
         double defenseWeightedBy150 = def * 1.5;
-        int differenceWithWeightedDefense = Round(defenseWeightedBy150 - atk);
+        int differenceWithWeightedDefense = Truncate(defenseWeightedBy150 - atk);
         controller.FollowUp.Atk = differenceWithWeightedDefense;
     }
 }

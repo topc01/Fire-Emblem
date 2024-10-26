@@ -9,5 +9,5 @@ public class HealthPercentageLessThan : CharacterCondition
     public HealthPercentageLessThan(int percentage)
         => _percentage = percentage;
     public override bool DoesHold(CharacterController controller)
-        => Round((double)controller.Character.Health / controller.Character.MaxHp * 100) < _percentage;
+        => Truncate((double)controller.Character.Health / controller.Character.MaxHp * 100) < _percentage;
 }

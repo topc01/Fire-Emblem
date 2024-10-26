@@ -34,14 +34,14 @@ public class CharacterController
     private const int SpeedDifferenceRequired = 5;
     public CharacterStats Character
     {
-        private set => _character = value;
+        private set
+        { 
+            _character = value;
+            _character.StartingHealth = _character.Health;
+        }
         get => _character ?? throw new InvalidOperationException("Character is not initialized.");
     }
     
-    
-    /*
-    public bool IsAttacker { get; set; }
-    */
     public bool IsAttacker() => Character.IsAttacker;
     public void SetCharacter(Character character)
     {
@@ -54,6 +54,7 @@ public class CharacterController
     {
         int damage = GetDamageAgainst(opponent);
         int reducedDamage = opponent.ReceiveDamage(damage);
+        StoreFirstAttackDamage(reducedDamage);
         return $"{Character.Name} ataca a {opponent.Character.Name} con {reducedDamage} de daño";
     }
     private int GetDamageAgainst(CharacterController opponent)
@@ -73,6 +74,12 @@ public class CharacterController
         int newDamage = CurrentStage.ReduceDamage(damage);
         Character.Health -= newDamage;
         return newDamage;
+    }
+
+    private void StoreFirstAttackDamage(int damage)
+    {
+        if (Stage == BattleStage.FirstAttack)
+            Character.FirstAttackTotalDamage = damage;
     }
     public bool IsAlive() => Character.Health > 0;
     public bool CanFollowUp(CharacterController opponent)

@@ -9,6 +9,6 @@ public class BackAtYouEffect() : CharacterEffect
         int initialHealth = controller.Character.MaxHp;
         int actualHealth = controller.Character.Health;
         int healthLost = initialHealth - actualHealth;
-        controller.Combat.ExtraDamage += Round(healthLost * 0.5);
+        controller.Combat.ExtraDamage += Truncate(healthLost * 0.5);
     }
 }
