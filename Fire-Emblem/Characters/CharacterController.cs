@@ -22,6 +22,7 @@ public class CharacterController
         {
             return Stage switch
             {
+                BattleStage.Combat => Combat,
                 BattleStage.FirstAttack => FirstAttack,
                 BattleStage.FollowUp => FollowUp,
                 _ => throw new ArgumentException("Stage invalid")
@@ -53,11 +54,12 @@ public class CharacterController
     public string Attack(CharacterController opponent)
     {
         int damage = GetDamageAgainst(opponent);
-        int reducedDamage = opponent.ReceiveDamage(damage);
+        int reducedDamage = opponent.ReduceDamage(damage);
+        opponent.ReceiveDamage(reducedDamage);
         StoreFirstAttackDamage(reducedDamage);
         return $"{Character.Name} ataca a {opponent.Character.Name} con {reducedDamage} de daño";
     }
-    private int GetDamageAgainst(CharacterController opponent)
+    public int GetDamageAgainst(CharacterController opponent)
     {
         int atk = GetTotalStat(StatType.Atk);
         Armament armament = Character.Armament;
@@ -69,11 +71,16 @@ public class CharacterController
         return int.Max((int)(ponderedAtk - rivalDefense + extraDamage), 0);
     }
 
-    private int ReceiveDamage(int damage)
+    public int ReduceDamage(int damage)
     {
-        int newDamage = CurrentStage.ReduceDamage(damage);
-        Character.Health -= newDamage;
-        return newDamage;
+        int reducedDamageByCombatDefenses = Combat.ReduceDamage(damage);
+        int reducedDamageBySpecificDefenses = CurrentStage.ReduceDamage(reducedDamageByCombatDefenses);
+        int total = int.Max(reducedDamageBySpecificDefenses, 0);
+        return total;
+    }
+    private void ReceiveDamage(int damage)
+    {
+        Character.Health -= damage;
     }
 
     private void StoreFirstAttackDamage(int damage)
