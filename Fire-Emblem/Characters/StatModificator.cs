@@ -13,14 +13,21 @@ public class StatModificator()
     public readonly StatsNeutralizer PenaltyNeutralizer = new();
     public int ExtraDamage { get; set; }
 
-    private double _percentageDamage = 1;
+    private int _percentageDamage = 100;
     public int PercentageDamageReduction
     {
-        get => Convert.ToInt32(_percentageDamage * 100);
+        get
+        {
+            int val = Convert.ToInt32(_percentageDamage * 100);
+            return 100 - _percentageDamage;
+        }
         set
         {
-            double newReduction = (100 - value) * 0.01;
-            _percentageDamage *= newReduction;
+            Console.WriteLine($"Setting percentage {value}");
+            int newReduction = (100 - value);
+            Console.WriteLine($"Calulated percentage {newReduction}");
+            this._percentageDamage = (int)(_percentageDamage * newReduction * 0.01);
+            Console.WriteLine($"New percentage {_percentageDamage}");
         }
     }
     
@@ -28,10 +35,12 @@ public class StatModificator()
 
     public int ReduceDamage(int damage)
     {
-        double newDamage = damage * _percentageDamage;
+        double newDamage = damage * _percentageDamage * 0.01;
         newDamage = Math.Round(newDamage, 9);
         int afterPercentageDamageReduction = Convert.ToInt32(Math.Floor(newDamage));
         int afterAbsoluteDamageReduction = afterPercentageDamageReduction - AbsoluteDamageReduction;
+        Console.WriteLine($"Damage: {damage} {_percentageDamage} {newDamage}");
+        Console.WriteLine($"New Damage: {afterAbsoluteDamageReduction}");
         return afterAbsoluteDamageReduction;
     }
     public int Get(StatType stat)
@@ -97,11 +106,11 @@ public class StatModificator()
     }
 
     public string GetExtraDamageLog()
-        => ExtraDamage > 0 ? $"@ realizará {ExtraDamage} daño extra#1" : "";
+        => ExtraDamage > 0 ? $"@ realizará +{ExtraDamage} daño extra#" : "";
     public string GetPercentageReducedDamageLog()
-        => ExtraDamage > 0 ? $"@ reducirá el daño de#2 del rival en un {PercentageDamageReduction}%" : "";
+        => PercentageDamageReduction > 0 ? $"@ reducirá el daño de# del rival en un {PercentageDamageReduction}%" : "";
     public string GetAbsolutReducedDamageLog()
-            => ExtraDamage > 0 ? $"@ recibirá -{AbsoluteDamageReduction} daño en cada ataque" : "";
+            => AbsoluteDamageReduction > 0 ? $"@ recibirá -{AbsoluteDamageReduction} daño en cada ataque" : "";
 
 
 
