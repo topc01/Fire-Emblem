@@ -9,7 +9,7 @@ public class StatsNeutralizer
     private bool _def = false;
     private bool _res = false;
     
-    public bool Get(StatType stat)
+    public bool IsStatNeutralized(StatType stat)
     {
         return stat switch
         {
@@ -21,7 +21,7 @@ public class StatsNeutralizer
         };
     }
     
-    public void Set(StatType stat, bool value)
+    public void NeutralizeStat(StatType stat)
     {
         switch (stat)
         {

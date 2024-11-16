@@ -128,17 +128,17 @@ public class CharacterController
     
     public void NeutralizeAllStatBonus(StatType stat)
     {
-        BonusNeutralizer.Set(stat, true);
-        Combat.BonusNeutralizer.Set(stat, true);
-        FirstAttack.BonusNeutralizer.Set(stat, true);
-        FollowUp.BonusNeutralizer.Set(stat, true);
+        BonusNeutralizer.NeutralizeStat(stat);
+        Combat.BonusNeutralizer.NeutralizeStat(stat);
+        FirstAttack.BonusNeutralizer.NeutralizeStat(stat);
+        FollowUp.BonusNeutralizer.NeutralizeStat(stat);
     }
     public void NeutralizeAllStatPenalty(StatType stat)
     {
-        PenaltyNeutralizer.Set(stat, true);
-        Combat.PenaltyNeutralizer.Set(stat, true);
-        FirstAttack.PenaltyNeutralizer.Set(stat, true);
-        FollowUp.PenaltyNeutralizer.Set(stat, true);
+        PenaltyNeutralizer.NeutralizeStat(stat);
+        Combat.PenaltyNeutralizer.NeutralizeStat(stat);
+        FirstAttack.PenaltyNeutralizer.NeutralizeStat(stat);
+        FollowUp.PenaltyNeutralizer.NeutralizeStat(stat);
     }
     
     public bool IsLastRival(CharacterController opponent)

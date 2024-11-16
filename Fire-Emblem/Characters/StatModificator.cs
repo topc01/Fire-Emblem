@@ -45,8 +45,8 @@ public class StatModificator()
     }
     public int Get(StatType stat)
     {
-        bool bonusNeutralized = BonusNeutralizer.Get(stat);
-        bool penaltyNeutralized = PenaltyNeutralizer.Get(stat);
+        bool bonusNeutralized = BonusNeutralizer.IsStatNeutralized(stat);
+        bool penaltyNeutralized = PenaltyNeutralizer.IsStatNeutralized(stat);
         int bonusValue = !bonusNeutralized ? Bonus.Get(stat) : 0;
         int penaltyValue = !penaltyNeutralized ? Penalty.Get(stat) : 0;
         return bonusValue - penaltyValue;
