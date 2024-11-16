@@ -2,13 +2,13 @@ using Fire_Emblem.Characters;
 
 namespace Fire_Emblem.Effects.EffectImplementations;
 
-public class ExtraChivalry2Effect : CharacterEffect
+public class ExtraChivalry2Effect : Effect
 {
-    public override void Apply(CharacterController controller)
+    public override void Apply(CharacterController controller, CharacterController rival)
     {
-        int health = controller.Character.Health;
-        int maxHealth = controller.Character.MaxHp;
-        int percentage = health / maxHealth;
+        int health = rival.Character.Hp;
+        int maxHealth = rival.Character.MaxHp;
+        int percentage = Truncate((double)health / maxHealth * 100);
         int reduction = Truncate(percentage * 0.5);
         controller.Combat.PercentageDamageReduction = reduction;
     }
