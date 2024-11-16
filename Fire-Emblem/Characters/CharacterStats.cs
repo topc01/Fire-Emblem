@@ -2,23 +2,14 @@ namespace Fire_Emblem.Characters;
 
 public class CharacterStats : Stats, ICloneable
 {
-    public required string Name
-    {
-        get; set;
-    }
+    public required string Name { get; set; }
     public required string Weapon
     {
         init => Armament = Armament.GetArmamentFromName(value);
         get => Armament.Name;
     }
-    public required string Gender
-    {
-        get; set;
-    }
-    public required string DeathQuote
-    {
-        get; set;
-    }
+    public required string Gender { get; set; }
+    public required string DeathQuote { get; set; }
     public required string HP
     {
         init
