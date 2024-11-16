@@ -118,13 +118,13 @@ public class CharacterController
     private int GetTotalStat(StatType stat)
     {
         int baseStat = Character.Get(stat);
-        int combatStat = Combat.Get(stat);
-        int currentStageStat = CurrentStage.Get(stat);
+        int combatStat = Combat.GetStatValue(stat);
+        int currentStageStat = CurrentStage.GetStatValue(stat);
         return baseStat + combatStat + currentStageStat;
     }
 
     public int GetStatWithoutSpecificModificators(StatType stat)
-        => GetTotalStat(stat) - CurrentStage.Get(stat);
+        => GetTotalStat(stat) - CurrentStage.GetStatValue(stat);
     
     public void NeutralizeAllStatBonus(StatType stat)
     {

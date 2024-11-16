@@ -38,7 +38,7 @@ public class StatModificator()
         int afterAbsoluteDamageReduction = afterPercentageDamageReduction - AbsoluteDamageReduction;
         return afterAbsoluteDamageReduction;
     }
-    public int Get(StatType stat)
+    public int GetStatValue(StatType stat)
     {
         bool bonusNeutralized = BonusNeutralizer.IsStatNeutralized(stat);
         bool penaltyNeutralized = PenaltyNeutralizer.IsStatNeutralized(stat);
