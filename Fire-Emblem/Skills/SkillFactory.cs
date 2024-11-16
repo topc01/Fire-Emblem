@@ -517,7 +517,7 @@ public class SkillFactory
             "Extra Chivalry" => new MultiSkill(
                 new Skill(new NotCondition(new RivalCondition(new HealthPercentageLessThan(50))),
                     new MultiEffect(new PenaltyEffect(Atk, 5), new PenaltyEffect(Spd, 5), new PenaltyEffect(Def, 5))),
-                new Skill(new RivalEffect(new ExtraChivalry2Effect()))
+                new Skill(new ExtraChivalry2Effect())
                 ),
             "Guard Bearing" => new MultiSkill(
                 new Skill(new MultiEffect(new RivalEffect(new PenaltyEffect(Spd, 4)), new RivalEffect(new PenaltyEffect(Def, 4)))),
