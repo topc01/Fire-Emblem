@@ -79,9 +79,9 @@ public class Logger(View view, Player attacker, Player defender)
         int firstAttackExtraDamage = controller.FirstAttack.ExtraDamage;
         int followUpExtraDamage = controller.FollowUp.ExtraDamage;
 
-        if (combatExtraDamage > 0) view.WriteLine($"{name} realizará {combatExtraDamage} {combatMessage}");
-        if (firstAttackExtraDamage > 0) view.WriteLine($"{name} realizará {firstAttackExtraDamage} {firstAttackMessage}");
-        if (followUpExtraDamage > 0) view.WriteLine($"{name} realizará {followUpExtraDamage} {followUpMessage}");
+        if (combatExtraDamage > 0) view.WriteLine($"{name} realizará +{combatExtraDamage} daño extra {combatMessage}");
+        if (firstAttackExtraDamage > 0) view.WriteLine($"{name} realizará +{firstAttackExtraDamage} daño extra {firstAttackMessage}");
+        if (followUpExtraDamage > 0) view.WriteLine($"{name} realizará +{followUpExtraDamage} daño extra {followUpMessage}");
     }
     
     public void LogPercentageDamageReduction(CharacterController controller)
