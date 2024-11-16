@@ -36,8 +36,6 @@ public class StatModificator()
         newDamage = Math.Round(newDamage, 9);
         int afterPercentageDamageReduction = Convert.ToInt32(Math.Floor(newDamage));
         int afterAbsoluteDamageReduction = afterPercentageDamageReduction - AbsoluteDamageReduction;
-        Console.WriteLine($"Damage: {damage} {_percentageDamage} {newDamage}");
-        Console.WriteLine($"New Damage: {afterAbsoluteDamageReduction}");
         return afterAbsoluteDamageReduction;
     }
     public int Get(StatType stat)
