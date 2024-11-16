@@ -38,7 +38,7 @@ public class CharacterController
         private set
         { 
             _character = value;
-            _character.StartingHealth = _character.Health;
+            _character.StartingHealth = _character.Hp;
         }
         get => _character ?? throw new InvalidOperationException("Character is not initialized.");
     }
@@ -80,7 +80,7 @@ public class CharacterController
     }
     private void ReceiveDamage(int damage)
     {
-        Character.Health -= damage;
+        Character.Hp -= damage;
     }
 
     private void StoreFirstAttackDamage(int damage)
@@ -88,7 +88,7 @@ public class CharacterController
         if (Stage == BattleStage.FirstAttack)
             Character.FirstAttackTotalDamage = damage;
     }
-    public bool IsAlive() => Character.Health > 0;
+    public bool IsAlive() => Character.Hp > 0;
     public bool CanFollowUp(CharacterController opponent)
         => IsFaster(opponent);
     private bool IsFaster(CharacterController opponent) => GetTotalStat(StatType.Spd) - opponent.GetTotalStat(StatType.Spd) >= SpeedDifferenceRequired;
@@ -104,7 +104,7 @@ public class CharacterController
             _ => throw new Exception($"Unknown advantage for {Character.Weapon} and {opponent.Character.Weapon}")
         };
     }
-    public override string ToString() => $"{Character.Name} ({Character.Health})";
+    public override string ToString() => $"{Character.Name} ({Character.Hp})";
     public void Reset()
     {
         Combat = new();

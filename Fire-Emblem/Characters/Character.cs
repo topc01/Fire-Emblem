@@ -14,7 +14,7 @@ public class Character
     public string Name => Stats.Name;
 
     public bool IsAlive()
-        => Stats.Health > 0;
+        => Stats.Hp > 0;
 
     public void AddSkills(Skill[] skills)
     {
@@ -32,7 +32,7 @@ public class Character
         => Skills.Count > 2;
 
     public override string ToString()
-        => $"{Stats.Name} ({Stats.Health})";
+        => $"{Stats.Name} ({Stats.Hp})";
 
     public override bool Equals(object? obj)
     {

@@ -24,7 +24,7 @@ public class CharacterStats : Stats, ICloneable
         init
         {
             MaxHp = Convert.ToInt32(value);
-            _health = MaxHp;
+            _hp = MaxHp;
         }
     }
     
@@ -36,18 +36,18 @@ public class CharacterStats : Stats, ICloneable
         {
             int currentMaxHp = MaxHp;
             _maxHp = value;
-            if (Health == currentMaxHp)
-                Health = _maxHp;
+            if (Hp == currentMaxHp)
+                Hp = _maxHp;
         }
     }
 
     private int _maxHp;
-    public int Health
+    public int Hp
     {
-        get => _health;
-        set => _health = int.Max(0, int.Min(MaxHp, value));
+        get => _hp;
+        set => _hp = int.Max(0, int.Min(MaxHp, value));
     }
-    private int _health;
+    private int _hp;
     public CharacterStats? LastRival;
     private bool _isAttacker;
     public bool IsAttacker
