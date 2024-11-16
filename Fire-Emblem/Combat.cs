@@ -11,6 +11,12 @@ public class Combat
     private Player _attackingPlayer;
     private Player _defendingPlayer;
 
+    public CharacterController GetAttackingCharacter() => _attackingPlayer.Controller;
+    public CharacterController GetDefendingCharacter() => _defendingPlayer.Controller;
+
+    public (Player, Player) GetPlayers() =>
+        (_attackingPlayer, _defendingPlayer);
+
     private int _round = 1;
     
     public Combat(Player player1, Player player2, View view)
@@ -23,25 +29,25 @@ public class Combat
     public bool IsThereAWinner()
         => _attackingPlayer.HasLost() || _defendingPlayer.HasLost();
 
-    public void ExecuteBattleRound()
+    /*public void ExecuteBattleRound()
     {
         SetUpBattle();
         PrintMessages();
         ExecuteAttackTurns();
         PrintFinalState();
         SetLastRivals();
-    }
+    }*/
 
-    private void SetUpBattle()
+    public void SelectCharacters()
     {
         _attackingPlayer.SelectValidCharacter(_view);
         _defendingPlayer.SelectValidCharacter(_view);
         _attackingPlayer.Controller.Character.IsAttacker = true;
         _defendingPlayer.Controller.Character.IsAttacker = false;
-        ApplySkills();
+        // ApplySkills();
     }
     
-    private void ApplySkills()
+    public void ApplySkills()
     {
         foreach (Skill skill in _attackingPlayer.Controller.Skills)
         {
@@ -59,21 +65,22 @@ public class Combat
         PrintAdvantageMessage();
         PrintSkillsLogs();
     }
-    private void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");
-    private void PrintAdvantageMessage() =>_view.WriteLine(_attackingPlayer.GetAdvantageMessage(_defendingPlayer));
+    public void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");
+    public void PrintAdvantageMessage() =>_view.WriteLine(_attackingPlayer.GetAdvantageMessage(_defendingPlayer));
 
     private void PrintSkillsLogs()
     {
-        foreach (string log in _attackingPlayer.Controller.GetLogs())
+        
+        /*foreach (string log in _attackingPlayer.Controller.GetLogs())
         {
             _view.WriteLine(log);
         }
         foreach (string log in _defendingPlayer.Controller.GetLogs())
         {
             _view.WriteLine(log);
-        }
+        }*/
     }
-    private void ExecuteAttackTurns()
+    public void ExecuteAttackTurns()
     {
         CharacterController attacker = _attackingPlayer.Controller;
         CharacterController defender = _defendingPlayer.Controller;
@@ -101,9 +108,9 @@ public class Combat
         defender.Stage = BattleStage.FollowUp;
         _view.WriteLine(attacker.Attack(defender));
     }
-    private void PrintFinalState()
+    public void PrintFinalState()
         => _view.WriteLine($"{_attackingPlayer.CharacterFinalStatus} : {_defendingPlayer.CharacterFinalStatus}");
-    private void SetLastRivals()
+    public void SetLastRivals()
     {
         _attackingPlayer.Controller.Character.LastRival = _defendingPlayer.Controller.Character;
         _defendingPlayer.Controller.Character.LastRival = _attackingPlayer.Controller.Character;
