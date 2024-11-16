@@ -9,7 +9,7 @@ public class Stats
     public int Def { get; set; }
     public int Res { get; set; }
 
-    private readonly string _sign = "";
+    public string Sign { get; } = "";
 
     public Stats()
     {
@@ -21,14 +21,14 @@ public class Stats
 
     public Stats(string sign)
     {
-        _sign = sign;
+        Sign = sign;
         Atk = 0;
         Spd = 0;
         Def = 0;
         Res = 0;
     }
 
-    public int Get(StatType stat)
+    public int GetStat(StatType stat)
     {
         return stat switch
         {
@@ -40,7 +40,7 @@ public class Stats
         };
     }
     
-    public void Set(StatType stat, int value)
+    public void SetStat(StatType stat, int value)
     {
         switch (stat)
         {

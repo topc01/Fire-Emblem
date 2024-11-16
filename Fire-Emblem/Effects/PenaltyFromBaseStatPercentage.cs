@@ -7,8 +7,8 @@ public class PenaltyFromBaseStatPercentage(StatType stat, int percentage) : Char
 {
     public override void Apply(CharacterController controller)
     {
-        int baseStat = controller.Character.Get(stat);
+        int baseStat = controller.Character.GetStat(stat);
         int reduction = Truncate(baseStat * percentage * 0.01);
-        controller.Combat.Penalty.Set(stat, reduction);
+        controller.Combat.Penalty.SetStat(stat, reduction);
     }
 }
