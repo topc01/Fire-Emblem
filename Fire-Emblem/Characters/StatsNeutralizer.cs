@@ -4,19 +4,19 @@ namespace Fire_Emblem.Characters;
 
 public class StatsNeutralizer
 {
-    private bool _atk = false;
-    private bool _spd = false;
-    private bool _def = false;
-    private bool _res = false;
+    public bool Atk {get; private set; } = false;
+    public bool Spd {get; private set; } = false;
+    public bool Def {get; private set; } = false;
+    public bool Res {get; private set; } = false;
     
     public bool IsStatNeutralized(StatType stat)
     {
         return stat switch
         {
-            StatType.Atk => _atk,
-            StatType.Spd => _spd,
-            StatType.Def => _def,
-            StatType.Res => _res,
+            StatType.Atk => Atk,
+            StatType.Spd => Spd,
+            StatType.Def => Def,
+            StatType.Res => Res,
             _ => throw new ArgumentException("Stat unknown")
         };
     }
@@ -26,16 +26,16 @@ public class StatsNeutralizer
         switch (stat)
         {
             case StatType.Atk:
-                _atk = true;
+                Atk = true;
                 break;
             case StatType.Spd:
-                _spd = true;
+                Spd = true;
                 break;
             case StatType.Def:
-                _def = true;
+                Def = true;
                 break;
             case StatType.Res:
-                _res = true;
+                Res = true;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(stat), $"Invalid stat type: {stat}");

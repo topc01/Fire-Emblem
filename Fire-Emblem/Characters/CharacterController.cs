@@ -2,7 +2,6 @@
 
 using Fire_Emblem.Skills;
 using Fire_Emblem.Types;
-using Fire_Emblem.Utils;
 
 namespace Fire_Emblem.Characters;
 
@@ -49,7 +48,6 @@ public class CharacterController
         Character = character.Stats;
         Skills = character.Skills;
     }
-    
     
     public string Attack(CharacterController opponent)
     {
@@ -117,7 +115,7 @@ public class CharacterController
     
     private int GetTotalStat(StatType stat)
     {
-        int baseStat = Character.Get(stat);
+        int baseStat = Character.GetStat(stat);
         int combatStat = Combat.GetStatValue(stat);
         int currentStageStat = CurrentStage.GetStatValue(stat);
         return baseStat + combatStat + currentStageStat;
