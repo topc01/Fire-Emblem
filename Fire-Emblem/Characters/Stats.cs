@@ -60,14 +60,4 @@ public class Stats
                 throw new ArgumentOutOfRangeException(nameof(stat), $"Invalid stat type: {stat}");
         }
     }
-    
-    public string[] GetLogs()
-    {
-        List<string> logs = new List<string>();
-        if (Atk > 0) logs.Add($"@ obtiene Atk{_sign}{Atk}#");
-        if (Spd > 0) logs.Add($"@ obtiene Spd{_sign}{Spd}#");
-        if (Def > 0) logs.Add($"@ obtiene Def{_sign}{Def}#");
-        if (Res > 0) logs.Add($"@ obtiene Res{_sign}{Res}#");
-        return logs.ToArray();
-    }
 }

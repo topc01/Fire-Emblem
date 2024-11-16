@@ -41,16 +41,4 @@ public class StatsNeutralizer
                 throw new ArgumentOutOfRangeException(nameof(stat), $"Invalid stat type: {stat}");
         }
     }
-
-    public string[] GetLogs()
-    {
-        List<string> logs = new List<string>();
-        if (_atk) logs.Add($"Los $ de Atk de @ fueron neutralizados");
-        if (_spd) logs.Add($"Los $ de Spd de @ fueron neutralizados");
-        if (_def) logs.Add($"Los $ de Def de @ fueron neutralizados");
-        if (_res) logs.Add($"Los $ de Res de @ fueron neutralizados");
-        return logs.ToArray();
-    }
-    
-    
 }

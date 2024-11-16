@@ -13,11 +13,9 @@ public class Game
     
     private readonly DataParser _dataParser = new();
     private readonly TeamReader _teamReader;
-    private readonly Logger _logger;
     public Game(View view, string teamsFolder)
     {
         _view = view;
-        _logger = new Logger(_view);
         string[] teamFiles = _dataParser.RetrieveTeamFilesFromFolder(teamsFolder);
         _allCharacters = _dataParser.SetUpCharacters(CharactersFile);
         _teamReader = new TeamReader(teamFiles, _view);
