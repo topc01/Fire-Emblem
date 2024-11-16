@@ -12,6 +12,5 @@ public class PercentageDamageReduceByStatDifference(StatType stat, int factor = 
         int difference = controllerStat - rivalStat;
         int reduction = int.Min(difference * factor, max);
         controller.Combat.PercentageDamageReduction = reduction;
-        Console.WriteLine($"ACAAAA {reduction}");
     }
 }

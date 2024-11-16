@@ -23,11 +23,8 @@ public class StatModificator()
         }
         set
         {
-            Console.WriteLine($"Setting percentage {value}");
             int newReduction = (100 - value);
-            Console.WriteLine($"Calulated percentage {newReduction}");
             this._percentageDamage = (int)(_percentageDamage * newReduction * 0.01);
-            Console.WriteLine($"New percentage {_percentageDamage}");
         }
     }
     

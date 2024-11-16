@@ -27,8 +27,6 @@ public class DivineRecreationEffect : Effect
         int totalDamage = rival.GetDamageAgainst(controller);
         int totalReduced = controller.ReduceDamage(totalDamage);
         int difference = totalReduced - totalReduced;
-        Console.WriteLine(stage);
-        Console.WriteLine($"{totalDamage}, {totalReduced}, {difference}");
         nextStage.ExtraDamage += difference;
     }
 }
