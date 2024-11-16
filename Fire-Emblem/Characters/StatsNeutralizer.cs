@@ -4,19 +4,19 @@ namespace Fire_Emblem.Characters;
 
 public class StatsNeutralizer
 {
-    public bool Atk = false;
-    public bool Spd = false;
-    public bool Def = false;
-    public bool Res = false;
+    private bool _atk = false;
+    private bool _spd = false;
+    private bool _def = false;
+    private bool _res = false;
     
     public bool Get(StatType stat)
     {
         return stat switch
         {
-            StatType.Atk => Atk,
-            StatType.Spd => Spd,
-            StatType.Def => Def,
-            StatType.Res => Res,
+            StatType.Atk => _atk,
+            StatType.Spd => _spd,
+            StatType.Def => _def,
+            StatType.Res => _res,
             _ => throw new ArgumentException("Stat unknown")
         };
     }
@@ -26,16 +26,16 @@ public class StatsNeutralizer
         switch (stat)
         {
             case StatType.Atk:
-                Atk = value;
+                _atk = true;
                 break;
             case StatType.Spd:
-                Spd = value;
+                _spd = true;
                 break;
             case StatType.Def:
-                Def = value;
+                _def = true;
                 break;
             case StatType.Res:
-                Res = value;
+                _res = true;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(stat), $"Invalid stat type: {stat}");
@@ -45,10 +45,10 @@ public class StatsNeutralizer
     public string[] GetLogs()
     {
         List<string> logs = new List<string>();
-        if (Atk) logs.Add($"Los $ de Atk de @ fueron neutralizados");
-        if (Spd) logs.Add($"Los $ de Spd de @ fueron neutralizados");
-        if (Def) logs.Add($"Los $ de Def de @ fueron neutralizados");
-        if (Res) logs.Add($"Los $ de Res de @ fueron neutralizados");
+        if (_atk) logs.Add($"Los $ de Atk de @ fueron neutralizados");
+        if (_spd) logs.Add($"Los $ de Spd de @ fueron neutralizados");
+        if (_def) logs.Add($"Los $ de Def de @ fueron neutralizados");
+        if (_res) logs.Add($"Los $ de Res de @ fueron neutralizados");
         return logs.ToArray();
     }
     
