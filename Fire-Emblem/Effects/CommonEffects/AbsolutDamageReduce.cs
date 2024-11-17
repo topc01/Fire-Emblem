@@ -1,6 +1,6 @@
 using Fire_Emblem.Characters;
 
-namespace Fire_Emblem.Effects;
+namespace Fire_Emblem.Effects.CommonEffects;
 
 public class AbsolutDamageReduce(int value) : CharacterEffect
 {

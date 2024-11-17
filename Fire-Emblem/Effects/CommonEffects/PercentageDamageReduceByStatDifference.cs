@@ -1,7 +1,7 @@
 using Fire_Emblem.Characters;
 using Fire_Emblem.Types;
 
-namespace Fire_Emblem.Effects;
+namespace Fire_Emblem.Effects.CommonEffects;
 
 public class PercentageDamageReduceByStatDifference(StatType stat, int factor = 4, int max = int.MaxValue) : Effect
 {
