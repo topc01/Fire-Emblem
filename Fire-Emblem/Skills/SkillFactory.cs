@@ -2,6 +2,7 @@ using Fire_Emblem.Conditions;
 using Fire_Emblem.Conditions.CharacterConditions;
 using Fire_Emblem.Conditions.LogicalConditions;
 using Fire_Emblem.Effects;
+using Fire_Emblem.Effects.CommonEffects;
 using Fire_Emblem.Effects.EffectImplementations;
 using Fire_Emblem.Types;
 
@@ -508,7 +509,7 @@ public class SkillFactory
                 new MultiEffect(new ExtraDamage(2), new AbsolutDamageReduce(2))),
             "Dragon's Wrath" => new MultiSkill(
                 new Skill(new PercentageDamageReduce(25)),
-                new Skill(new StatGreaterThanRival(Atk), new DragonsWrathEffect())),
+                new Skill(new StatGreaterThanRival(Atk, Res), new DragonsWrathEffect())),
             "Prescience" => new MultiSkill(
                 new Skill(new MultiEffect(new RivalEffect(new PenaltyEffect(Atk, 5)), new RivalEffect(new PenaltyEffect(Res, 5)))),
                 new Skill(new OrCondition(
