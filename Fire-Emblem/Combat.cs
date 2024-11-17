@@ -57,6 +57,9 @@ public class Combat
         {
             skill.ApplyIfDoesHold(_defendingPlayer.Controller, _attackingPlayer.Controller);
         }
+
+        _attackingPlayer.Controller.Callback(_defendingPlayer.Controller);
+        _defendingPlayer.Controller.Callback(_attackingPlayer.Controller);
     }
     
     public void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");

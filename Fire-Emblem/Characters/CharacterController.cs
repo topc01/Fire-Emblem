@@ -12,7 +12,19 @@ public class CharacterController
     public StatModificator Combat = new();
     public StatModificator FirstAttack = new();
     public StatModificator FollowUp = new();
-    
+    private readonly List<Action<CharacterController, CharacterController>> _callbacks = new();
+
+    public void Callback(CharacterController rivalController)
+    {
+        foreach (var callback in _callbacks)
+            callback(this, rivalController);
+    }
+
+    public void AddCallback(Action<CharacterController, CharacterController> callback)
+    {
+        _callbacks.Add(callback);
+    }
+
     public BattleStage Stage = BattleStage.FirstAttack;
 
     private StatModificator CurrentStage
@@ -21,7 +33,7 @@ public class CharacterController
         {
             return Stage switch
             {
-                BattleStage.Combat => Combat,
+                // BattleStage.Combat => Combat,
                 BattleStage.FirstAttack => FirstAttack,
                 BattleStage.FollowUp => FollowUp,
                 _ => throw new ArgumentException("Stage invalid")
@@ -144,5 +156,9 @@ public class CharacterController
 
     public bool HasAdvantage(CharacterController opponent)
         => Character.Armament.GetAdvantage(opponent.Character.Armament) != 0.0;
-    
+
+    /*public void SetSkillsAppliedCallback(Action callback)
+    {
+        SkillsAppliedCallback = callback;
+    }*/
 }
