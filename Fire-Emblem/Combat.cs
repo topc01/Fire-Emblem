@@ -58,28 +58,10 @@ public class Combat
             skill.ApplyIfDoesHold(_defendingPlayer.Controller, _attackingPlayer.Controller);
         }
     }
-
-    private void PrintMessages()
-    {
-        PrintRoundMessage();
-        PrintAdvantageMessage();
-        PrintSkillsLogs();
-    }
+    
     public void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");
     public void PrintAdvantageMessage() =>_view.WriteLine(_attackingPlayer.GetAdvantageMessage(_defendingPlayer));
-
-    private void PrintSkillsLogs()
-    {
-        
-        /*foreach (string log in _attackingPlayer.Controller.GetLogs())
-        {
-            _view.WriteLine(log);
-        }
-        foreach (string log in _defendingPlayer.Controller.GetLogs())
-        {
-            _view.WriteLine(log);
-        }*/
-    }
+    
     public void ExecuteAttackTurns()
     {
         CharacterController attacker = _attackingPlayer.Controller;
