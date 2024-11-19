@@ -18,12 +18,14 @@ public class Skill : BaseSkill
 
     public Skill(BaseEffect effect)
     {
-        _effect = effect;
         _condition = new TrueCondition();
+        _effect = effect;
     }
 
     public Skill()
     {
+        _condition = new NotCondition(new TrueCondition());
+        _effect = new EmptyEffect();
     }
     
     public override void ApplyIfDoesHold(CharacterController character, CharacterController rival)
