@@ -5,9 +5,9 @@ namespace Fire_Emblem.Effects;
 
 public abstract class BaseEffect
 {
-    protected virtual EffectType Type {
+    protected EffectType Type {
         get;
-        set;
+        init;
     } = EffectType.Stat;
     public abstract void Apply(CharacterController controller, CharacterController rival);
 
