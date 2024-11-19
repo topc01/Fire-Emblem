@@ -49,17 +49,8 @@ public class Combat
     
     public void ApplySkills()
     {
-        foreach (Skill skill in _attackingPlayer.Controller.Skills)
-        {
-            skill.ApplyIfDoesHold(_attackingPlayer.Controller, _defendingPlayer.Controller);
-        }
-        foreach (Skill skill in _defendingPlayer.Controller.Skills)
-        {
-            skill.ApplyIfDoesHold(_defendingPlayer.Controller, _attackingPlayer.Controller);
-        }
-
-        _attackingPlayer.Controller.Callback(_defendingPlayer.Controller);
-        _defendingPlayer.Controller.Callback(_attackingPlayer.Controller);
+        _attackingPlayer.Controller.ApplySkills(_defendingPlayer.Controller);
+        _defendingPlayer.Controller.ApplySkills(_attackingPlayer.Controller);
     }
     
     public void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");

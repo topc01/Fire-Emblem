@@ -8,7 +8,7 @@ namespace Fire_Emblem.Characters;
 public class CharacterController
 {
     private CharacterStats? _character;
-    public List<Skill> Skills = new();
+    private SkillSet? _skills;
     public StatModificator Combat = new();
     public StatModificator FirstAttack = new();
     public StatModificator FollowUp = new();
@@ -58,7 +58,7 @@ public class CharacterController
     public void SetCharacter(Character character)
     {
         Character = character.Stats;
-        Skills = character.Skills;
+        _skills = SkillSet.FromSkillList(character.Skills);
     }
     
     public string Attack(CharacterController opponent)
@@ -156,6 +156,12 @@ public class CharacterController
 
     public bool HasAdvantage(CharacterController opponent)
         => Character.Armament.GetAdvantage(opponent.Character.Armament) != 0.0;
+
+    public void ApplySkills(CharacterController opponent)
+    {
+        if (_skills == null) return;
+        _skills.ApplyIfDoesHold(this, opponent);
+    }
 
     /*public void SetSkillsAppliedCallback(Action callback)
     {
