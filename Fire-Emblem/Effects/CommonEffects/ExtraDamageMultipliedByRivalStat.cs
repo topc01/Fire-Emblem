@@ -3,7 +3,7 @@ using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Effects.CommonEffects;
 
-public class ExtraDamageMultipliedByRivalStat(StatType stat, int factor) : Effect
+public class ExtraDamageMultipliedByRivalStat(StatType stat, int factor) : BaseEffect
 {
     public override void Apply(CharacterController controller, CharacterController rival)
     {

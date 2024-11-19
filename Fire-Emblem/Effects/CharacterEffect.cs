@@ -2,7 +2,7 @@ using Fire_Emblem.Characters;
 
 namespace Fire_Emblem.Effects;
 
-public abstract class CharacterEffect : Effect
+public abstract class CharacterEffect : BaseEffect
 {
     public override void Apply(CharacterController character, CharacterController rival)
         => Apply(character);

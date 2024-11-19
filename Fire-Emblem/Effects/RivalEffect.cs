@@ -2,7 +2,7 @@ using Fire_Emblem.Characters;
 
 namespace Fire_Emblem.Effects;
 
-public class RivalEffect : Effect
+public class RivalEffect(CharacterEffect effect) : BaseEffect
 {
     private readonly CharacterEffect _effect;
 
