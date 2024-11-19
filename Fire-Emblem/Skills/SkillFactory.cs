@@ -421,7 +421,7 @@ public class SkillFactory
             "Golden Lotus"
                 => new Skill(
                     new NotCondition(new RivalCondition(new WeaponCondition(Armament.ArmamentType.Magic))),
-                    new FirstAttackDamageReduce(50)),
+                    new PercentageDamageReduce(50, BattleStage.FirstAttack)),
             "Gentility"
                 => new Skill(
                     new AbsolutDamageReduce(5)),
@@ -488,21 +488,21 @@ public class SkillFactory
                 => new Skill(new MultiEffect(
                     new CombatEffect(Def, 6),
                     new CombatEffect(Res, 3),
-                    new PercentageDamageReduce(BattleStage.FirstAttack, 50)
+                    new PercentageDamageReduce(50, BattleStage.FirstAttack)
                     )),
-            "Remote Sparrow"=> new Skill(new IsAttacker(), new MultiEffect(new CombatEffect(Atk, 7), new CombatEffect(Spd, 7), new PercentageDamageReduce(BattleStage.FirstAttack,30))),
-            "Remote Mirror" => new Skill(new IsAttacker(), new MultiEffect(new CombatEffect(Atk, 7), new CombatEffect(Res,10), new PercentageDamageReduce(BattleStage.FirstAttack,30))),
-            "Remote Sturdy" => new Skill(new IsAttacker(), new MultiEffect(new CombatEffect(Atk, 7), new CombatEffect(Def,10), new PercentageDamageReduce(BattleStage.FirstAttack,30))),
-            "Fierce Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Atk,8), new PercentageDamageReduce(BattleStage.FollowUp, 10))),
-            "Darting Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Spd,8), new PercentageDamageReduce(BattleStage.FollowUp, 10))),
-            "Steady Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Def,8), new PercentageDamageReduce(BattleStage.FollowUp, 10))),
-            "Warding Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Res,8), new PercentageDamageReduce(BattleStage.FollowUp, 10))),
-            "Kestrel Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Atk,6),new CombatEffect(Spd,6), new PercentageDamageReduce(BattleStage.FollowUp, 10))),
-            "Sturdy Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Atk,6),new CombatEffect(Def,6), new PercentageDamageReduce(BattleStage.FollowUp, 10))),
-            "Mirror Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Atk,6),new CombatEffect(Res,6), new PercentageDamageReduce(BattleStage.FollowUp, 10))),
-            "Steady Posture" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Spd,6), new CombatEffect(Def,6), new PercentageDamageReduce(BattleStage.FollowUp, 10))),
-            "Swift Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Spd,6), new CombatEffect(Res,6), new PercentageDamageReduce(BattleStage.FollowUp, 10))),
-            "Bracing Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Def,6), new CombatEffect(Res,6), new PercentageDamageReduce(BattleStage.FollowUp, 10))),
+            "Remote Sparrow"=> new Skill(new IsAttacker(), new MultiEffect(new CombatEffect(Atk, 7), new CombatEffect(Spd, 7), new PercentageDamageReduce(30, BattleStage.FirstAttack))),
+            "Remote Mirror" => new Skill(new IsAttacker(), new MultiEffect(new CombatEffect(Atk, 7), new CombatEffect(Res,10), new PercentageDamageReduce(30, BattleStage.FirstAttack))),
+            "Remote Sturdy" => new Skill(new IsAttacker(), new MultiEffect(new CombatEffect(Atk, 7), new CombatEffect(Def,10), new PercentageDamageReduce(30, BattleStage.FirstAttack))),
+            "Fierce Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Atk,8), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
+            "Darting Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Spd,8), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
+            "Steady Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Def,8), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
+            "Warding Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Res,8), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
+            "Kestrel Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Atk,6),new CombatEffect(Spd,6), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
+            "Sturdy Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Atk,6),new CombatEffect(Def,6), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
+            "Mirror Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Atk,6),new CombatEffect(Res,6), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
+            "Steady Posture" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Spd,6), new CombatEffect(Def,6), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
+            "Swift Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Spd,6), new CombatEffect(Res,6), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
+            "Bracing Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Def,6), new CombatEffect(Res,6), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
             "Poetic Justice" => new Skill(new MultiEffect(new PenaltyEffect(Spd, 4), new ExtraDamageMultipliedByRivalStat(Atk,15))),
             "Laguz Friend" => new Skill(new MultiEffect(new PercentageDamageReduce(50), new BonusNeutralizer(Def, Res), new PenaltyFromBaseStatPercentage(Def, 50), new PenaltyFromBaseStatPercentage(Res, 50))),
             "Chivalry" => new Skill(new AndCondition(new IsAttacker(), new RivalCondition(new HealthPercentageEquals(100))),
@@ -514,7 +514,7 @@ public class SkillFactory
                 new Skill(new MultiEffect(new RivalEffect(new PenaltyEffect(Atk, 5)), new RivalEffect(new PenaltyEffect(Res, 5)))),
                 new Skill(new OrCondition(
                     new IsAttacker(), new RivalCondition(new WeaponCondition(Armament.ArmamentType.Magic)), new RivalCondition(new WeaponCondition(Armament.ArmamentType.Bow))),
-                    new PercentageDamageReduce(BattleStage.FirstAttack, 30))),
+                    new PercentageDamageReduce(30, BattleStage.FirstAttack))),
             "Extra Chivalry" => new MultiSkill(
                 new Skill(new NotCondition(new RivalCondition(new HealthPercentageLessThan(50))),
                     new MultiEffect(new PenaltyEffect(Atk, 5), new PenaltyEffect(Spd, 5), new PenaltyEffect(Def, 5))),
@@ -525,8 +525,13 @@ public class SkillFactory
                 new Skill(new GuardBearing2Effect())
                 ),
             "Divine Recreation" => new Skill(
-                new NotCondition(new HealthPercentageLessThan(50)),
-                new DivineRecreationEffect()),
+                new NotCondition(new RivalCondition(new HealthPercentageLessThan(50))),
+                new MultiEffect(
+                    new PenaltyEffect(Atk, 4),
+                    new PenaltyEffect(Spd, 4),
+                    new PenaltyEffect(Def, 4),
+                    new PenaltyEffect(Res, 4)
+                    )),
             
             _ => new Skill()
         };
