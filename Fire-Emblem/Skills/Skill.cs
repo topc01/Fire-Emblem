@@ -9,14 +9,14 @@ namespace Fire_Emblem.Skills;
 public class Skill : BaseSkill
 {
     private readonly Condition _condition;
-    private readonly Effect _effect;
-    public Skill(Condition condition, Effect effect)
+    private readonly BaseEffect _effect;
+    public Skill(Condition condition, BaseEffect effect)
     {
         _condition = condition;
         _effect = effect;
     }
 
-    public Skill(Effect effect)
+    public Skill(BaseEffect effect)
     {
         _effect = effect;
         _condition = new TrueCondition();
