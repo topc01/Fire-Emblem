@@ -8,7 +8,6 @@ namespace Fire_Emblem.Skills;
 
 public class Skill : BaseSkill
 {
-    public string Description { get; set; }
     private readonly Condition _condition;
     private readonly Effect _effect;
     public Skill(Condition condition, Effect effect)
