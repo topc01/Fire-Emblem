@@ -3,15 +3,9 @@ using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Effects.CommonEffects;
 
-public class BonusNeutralizer : CharacterEffect
+public class BonusNeutralizer(params StatType[] stats) : CharacterEffect
 {
-    private readonly StatType[] _stats;
-
-    public BonusNeutralizer(params StatType[] stats)
-        => _stats = stats;
-
-    public BonusNeutralizer()
-        => _stats = new[] { StatType.Atk, StatType.Def, StatType.Res, StatType.Spd };
+    private readonly StatType[] _stats = stats.Length > 0 ? stats : new[] { StatType.Atk, StatType.Def, StatType.Res, StatType.Spd };
 
     public override void Apply(CharacterController controller)
     {
