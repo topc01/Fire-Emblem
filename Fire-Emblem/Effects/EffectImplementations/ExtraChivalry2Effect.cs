@@ -2,7 +2,7 @@ using Fire_Emblem.Characters;
 
 namespace Fire_Emblem.Effects.EffectImplementations;
 
-public class ExtraChivalry2Effect : Effect
+public class ExtraChivalry2Effect : BaseEffect
 {
     public override void Apply(CharacterController controller, CharacterController rival)
     {

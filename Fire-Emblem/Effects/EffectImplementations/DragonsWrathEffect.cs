@@ -3,7 +3,7 @@ using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Effects.EffectImplementations;
 
-public class DragonsWrathEffect : Effect
+public class DragonsWrathEffect : BaseEffect
 {
     public override void Apply(CharacterController controller, CharacterController rival)
     {

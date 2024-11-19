@@ -4,7 +4,7 @@ using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Effects.EffectImplementations;
 
-public class DivineRecreationEffect : Effect
+public class DivineRecreationEffect : BaseEffect
 {
     private BattleStage _currentStage;
     public override void Apply(CharacterController controller, CharacterController rival)
