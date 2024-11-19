@@ -5,7 +5,7 @@ namespace Fire_Emblem.Effects;
 
 public abstract class BaseEffect
 {
-    public virtual EffectType Type {
+    protected virtual EffectType Type {
         get;
         set;
     } = EffectType.Stat;

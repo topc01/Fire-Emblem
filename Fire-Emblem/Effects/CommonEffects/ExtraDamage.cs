@@ -3,8 +3,9 @@ using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Effects.CommonEffects;
 
-public class ExtraDamage(int value, BattleStage stage = BattleStage.Combat) : BaseEffect
+public class ExtraDamage(int value, BattleStage stage = BattleStage.Combat, EffectType type = EffectType.ExtraDamage) : BaseEffect
 {
+    protected override EffectType Type { get; set; } = type;
     public override void Apply(CharacterController controller, CharacterController rival)
     {
         int damage = CalculateDamage(controller, rival);

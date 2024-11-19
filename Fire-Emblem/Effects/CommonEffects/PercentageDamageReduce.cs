@@ -5,7 +5,7 @@ namespace Fire_Emblem.Effects.CommonEffects;
 
 public class PercentageDamageReduce(int reduction, BattleStage stage = BattleStage.Combat, EffectType type = EffectType.PercentageReduction) : CharacterEffect
 {
-    public override EffectType Type { get; set; } = type;
+    protected override EffectType Type { get; set; } = type;
 
     public override void Apply(CharacterController controller)
     {
