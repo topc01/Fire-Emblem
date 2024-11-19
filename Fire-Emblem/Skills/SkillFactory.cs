@@ -527,11 +527,13 @@ public class SkillFactory
             "Divine Recreation" => new Skill(
                 new NotCondition(new RivalCondition(new HealthPercentageLessThan(50))),
                 new MultiEffect(
-                    new PenaltyEffect(Atk, 4),
-                    new PenaltyEffect(Spd, 4),
-                    new PenaltyEffect(Def, 4),
-                    new PenaltyEffect(Res, 4)
-                    )),
+                    new RivalEffect(new PenaltyEffect(Atk, 4)),
+                    new RivalEffect(new PenaltyEffect(Spd, 4)),
+                    new RivalEffect(new PenaltyEffect(Def, 4)),
+                    new RivalEffect(new PenaltyEffect(Res, 4)),
+                    new RivalEffect(new PercentageDamageReduce(30))
+                    )
+                ),
             
             _ => new Skill()
         };
