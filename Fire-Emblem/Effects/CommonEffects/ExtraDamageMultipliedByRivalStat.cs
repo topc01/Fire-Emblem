@@ -3,11 +3,11 @@ using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Effects.CommonEffects;
 
-public class ExtraDamageMultipliedByRivalStat(StatType stat, int factor) : BaseEffect
+public class ExtraDamageMultipliedByRivalStat(StatType stat, int factor, BattleStage stage = BattleStage.Combat) : ExtraDamage(0, stage)
 {
-    public override void Apply(CharacterController controller, CharacterController rival)
+    protected override int CalculateDamage(CharacterController controller, CharacterController rival)
     {
         int rivalStat = rival.GetStatWithoutSpecificModificators(stat);
-        controller.Combat.ExtraDamage += Truncate(rivalStat * factor * 0.01);
+        return Truncate(rivalStat * factor * 0.01);
     }
 }
