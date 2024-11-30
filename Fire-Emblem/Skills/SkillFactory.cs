@@ -448,7 +448,7 @@ public class SkillFactory
             "Sympathetic"
                 => new Skill(
                     new AndCondition(
-                        new IsAttacker(),
+                        new RivalCondition(new IsAttacker()),
                         new OrCondition(
                             new HealthPercentageEquals(50), new HealthPercentageLessThan(50))),
                     new AbsolutDamageReduce(5)),
