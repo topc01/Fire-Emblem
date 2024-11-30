@@ -81,11 +81,26 @@ public class CharacterController
         return int.Max((int)(ponderedAtk - rivalDefense + extraDamage), 0);
     }
 
-    public int ReduceDamage(int damage)
+    public int GetOriginalDamage(CharacterController opponent)
     {
-        int reducedDamageByCombatDefenses = Combat.ReduceDamage(damage);
-        int reducedDamageBySpecificDefenses = CurrentStage.ReduceDamage(reducedDamageByCombatDefenses);
-        int total = int.Max(reducedDamageBySpecificDefenses, 0);
+        int atk = Character.Atk;
+        Armament armament = Character.Armament;
+        bool isMagic = armament.IsMagic();
+        CharacterStats rival = opponent.Character;
+        double rivalDefense = isMagic ? rival.Res : rival.Def;
+        double advantage = armament.GetAdvantage(opponent.Character.Armament);
+        double ponderedAtk = atk * advantage;
+        return int.Max((int)(ponderedAtk - rivalDefense), 0);
+
+    }
+
+    public int GetReducedDamage(int damage)
+    {
+        int damageAfterCombatPercentageReduction = Combat.ApplyPercentageDamageReduction(damage);
+        int damageAfterCurrentStagePercentageReduction = CurrentStage.ApplyPercentageDamageReduction(damageAfterCombatPercentageReduction);
+        int damageAfterCombatAbsolutReduction = Combat.ApplyAbsolutDamageReduction(damageAfterCurrentStagePercentageReduction);
+        int damageAfterCurrentStageAbsolutReduction = CurrentStage.ApplyAbsolutDamageReduction(damageAfterCombatAbsolutReduction);
+        int total = int.Max(damageAfterCurrentStageAbsolutReduction, 0);
         return total;
     }
     private void ReceiveDamage(int damage)
