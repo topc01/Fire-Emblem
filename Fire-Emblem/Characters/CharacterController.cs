@@ -173,7 +173,12 @@ public class CharacterController
         => Character.LastRival == opponent.Character;
 
     public bool HasAdvantage(CharacterController opponent)
-        => Character.Armament.GetAdvantage(opponent.Character.Armament) != 0.0;
+    {
+        double advantage = Character.Armament.GetAdvantage(opponent.Character.Armament);
+        double valueWithAdvantage = Armament.BaseFactor + Armament.AdvantageDifference;
+        double epsilon = 1e-3;
+        return Math.Abs(advantage - valueWithAdvantage) < epsilon;
+    }
 
     public void ApplySkills(CharacterController opponent, EffectType type)
     {
