@@ -11,7 +11,7 @@ public abstract class BaseEffect
     } = EffectType.Stat;
     public abstract void Apply(CharacterController controller, CharacterController rival);
 
-    public void Apply(CharacterController controller, CharacterController rival, EffectType effectType)
+    public virtual void Apply(CharacterController controller, CharacterController rival)
     {
         Console.WriteLine($"Type: {Type}");
         if (Type == effectType) Apply(controller, rival);
