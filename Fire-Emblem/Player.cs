@@ -1,5 +1,6 @@
 using Fire_Emblem_View;
 using Fire_Emblem.Characters;
+using Fire_Emblem.Types;
 
 namespace Fire_Emblem;
 
@@ -53,4 +54,9 @@ public class Player
     public override string ToString() => $"{Controller.Character.Name} (Player {PlayerNumber}) comienza";
     public string CharacterFinalStatus => $"{Controller}";
     public string GetAdvantageMessage(Player opponent) => Controller.GetAdvantageMessage(opponent.Controller);
+
+    public void ApplySkills(CharacterController rival, EffectType type)
+    {
+        Controller.ApplySkills(rival, type);
+    }
 }
