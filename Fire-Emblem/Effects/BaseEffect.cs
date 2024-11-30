@@ -13,8 +13,13 @@ public abstract class BaseEffect
 
     public virtual void Apply(CharacterController controller, CharacterController rival)
     {
-        Console.WriteLine($"Type: {Type}");
-        if (Type == effectType) Apply(controller, rival);
+        throw new Exception();
+    }
+
+    public virtual void Apply(CharacterController controller, CharacterController rival, EffectType effectType)
+    {
+        if (Type != effectType) return;
+        Apply(controller, rival);
     }
     protected int Truncate(double value)
         => Convert.ToInt32(Math.Floor(value));
