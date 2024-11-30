@@ -47,17 +47,15 @@ public class CharacterStats : Stats, ICloneable
         set
         {
             if (value)
-                _attackingTimes += 1;
+                AttackingTimes += 1;
             if (!value)
-                _defendingTimes += 1;
+                DefendingTimes += 1;
             _isAttacker = value;
         }
     }
 
-    private int _attackingTimes = 0;
-    private int _defendingTimes = 0;
-    public bool FirstTimeAttacking => !(_attackingTimes > 1);
-    public bool FirstTimeDefending => !(_defendingTimes > 1);
+    public int AttackingTimes = 0;
+    public int DefendingTimes = 0;
     public object Clone() => this.MemberwiseClone();
     public CharacterStats New() => (CharacterStats)Clone();
     private int _startingHealth;

@@ -56,6 +56,8 @@ public class CharacterController
         Console.WriteLine($"   >Daño reducido: {reducedDamage}");
         opponent.ReceiveDamage(reducedDamage);
         StoreFirstAttackDamage(reducedDamage);
+        IncreaseAttackingCounter();
+        opponent.IncreaseDefendingCounter();
         return $"{Character.Name} ataca a {opponent.Character.Name} con {reducedDamage} de daño";
     }
     public int GetDamageAgainst(CharacterController opponent)
@@ -102,6 +104,19 @@ public class CharacterController
         if (Stage == BattleStage.FirstAttack)
             Character.FirstAttackTotalDamage = damage;
     }
+
+    private void IncreaseAttackingCounter()
+    {
+        Character.AttackingTimes++;
+    }
+
+    private void IncreaseDefendingCounter()
+    {
+        Character.DefendingTimes++;
+    }
+    
+    public bool IsFirstTimeAttacking() => Character.AttackingTimes == 0;
+    public bool IsFirstTimeDefending() => Character.DefendingTimes == 0;
     public bool IsAlive() => Character.Hp > 0;
     public bool CanFollowUp(CharacterController opponent)
         => IsFaster(opponent);
