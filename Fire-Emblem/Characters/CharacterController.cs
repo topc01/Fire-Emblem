@@ -166,10 +166,10 @@ public class CharacterController
     public bool HasAdvantage(CharacterController opponent)
         => Character.Armament.GetAdvantage(opponent.Character.Armament) != 0.0;
 
-    public void ApplySkills(CharacterController opponent)
+    public void ApplySkills(CharacterController opponent, EffectType type)
     {
         if (_skills == null) return;
-        _skills.ApplyIfDoesHold(this, opponent);
+        _skills.ApplyEffectsType(this, opponent, type);
     }
 
     /*public void SetSkillsAppliedCallback(Action callback)
