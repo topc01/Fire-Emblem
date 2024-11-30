@@ -458,7 +458,9 @@ public class SkillFactory
                     new BackAtYouEffect()),
             "Lunar Brace"
                 => new Skill(
-                    new NotCondition(new RivalCondition(new WeaponCondition(Armament.ArmamentType.Magic))),
+                    new AndCondition(
+                        new IsAttacker(),
+                        new NotCondition(new RivalCondition(new WeaponCondition(Armament.ArmamentType.Magic)))),
                     new LunarBraceEffect()),
             "Bravery"
                 => new Skill(new ExtraDamage(5)),
