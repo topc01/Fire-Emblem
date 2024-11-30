@@ -23,7 +23,7 @@ public class SkillSet(Skill? firstSkill, Skill? secondSkill)
         ApplyEffectsType(controller, rival, EffectType.Callback);
     }
 
-    private void ApplyEffectsType(CharacterController controller, CharacterController rival, EffectType type)
+    public void ApplyEffectsType(CharacterController controller, CharacterController rival, EffectType type)
     {
         _firstSkill.ApplyIfDoesHold(controller, rival, type);
         _secondSkill.ApplyIfDoesHold(controller, rival, type);

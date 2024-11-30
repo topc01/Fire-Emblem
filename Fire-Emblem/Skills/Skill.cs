@@ -33,7 +33,7 @@ public class Skill : BaseSkill
         if (_condition.DoesHold(character, rival))
             _effect.Apply(character, rival);
     }
-    public void ApplyIfDoesHold(CharacterController character, CharacterController rival, EffectType type)
+    public virtual void ApplyIfDoesHold(CharacterController character, CharacterController rival, EffectType type)
     {
         if (_condition.DoesHold(character, rival))
             _effect.Apply(character, rival, type);
