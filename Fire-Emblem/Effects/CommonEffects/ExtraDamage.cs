@@ -29,6 +29,6 @@ public class ExtraDamage : BaseEffect
         rival.LogStat();
     }
 
-    protected virtual int CalculateDamage(CharacterController controller, CharacterController rival)
+    protected virtual int CalculateDamage(CharacterController _1, CharacterController _2)
         => _value;
 }
