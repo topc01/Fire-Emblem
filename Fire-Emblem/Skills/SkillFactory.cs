@@ -477,7 +477,9 @@ public class SkillFactory
                                 new RivalEffect(new PenaltyEffect(Spd, 5)))
                             ),
                         new Skill(
-                            new StatGreaterThanRival(Spd),
+                            new AndCondition(
+                                new StatGreaterThanRival(Spd),
+                                new NotCondition(new HealthPercentageLessThan(25))),
                             new PercentageDamageReduceByStatDifference(Spd, 4, 40))
                     ),
             "Blue Skies"
