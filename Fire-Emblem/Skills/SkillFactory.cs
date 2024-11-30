@@ -505,7 +505,7 @@ public class SkillFactory
             "Steady Posture" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Spd,6), new CombatEffect(Def,6), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
             "Swift Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Spd,6), new CombatEffect(Res,6), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
             "Bracing Stance" => new Skill(new RivalCondition(new IsAttacker()), new MultiEffect(new CombatEffect(Def,6), new CombatEffect(Res,6), new PercentageDamageReduce( 10, BattleStage.FollowUp))),
-            "Poetic Justice" => new Skill(new MultiEffect(new PenaltyEffect(Spd, 4), new ExtraDamageMultipliedByRivalStat(Atk,15))),
+            "Poetic Justice" => new Skill(new MultiEffect(new RivalEffect(new PenaltyEffect(Spd, 4)), new ExtraDamageMultipliedByRivalStat(Atk,15))),
             "Laguz Friend" => new Skill(new MultiEffect(new PercentageDamageReduce(50), new BonusNeutralizer(Def, Res), new PenaltyFromBaseStatPercentage(Def, 50), new PenaltyFromBaseStatPercentage(Res, 50))),
             "Chivalry" => new Skill(new AndCondition(new IsAttacker(), new RivalCondition(new HealthPercentageEquals(100))),
                 new MultiEffect(new ExtraDamage(2), new AbsolutDamageReduce(2))),
