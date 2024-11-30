@@ -458,7 +458,7 @@ public class SkillFactory
                     new BackAtYouEffect()),
             "Lunar Brace"
                 => new Skill(
-                    new NotCondition(new WeaponCondition(Armament.ArmamentType.Magic)),
+                    new NotCondition(new RivalCondition(new WeaponCondition(Armament.ArmamentType.Magic))),
                     new LunarBraceEffect()),
             "Bravery"
                 => new Skill(new ExtraDamage(5)),
@@ -531,7 +531,8 @@ public class SkillFactory
                     new RivalEffect(new PenaltyEffect(Spd, 4)),
                     new RivalEffect(new PenaltyEffect(Def, 4)),
                     new RivalEffect(new PenaltyEffect(Res, 4)),
-                    new RivalEffect(new PercentageDamageReduce(30))
+                    new PercentageDamageReduce(30, BattleStage.FirstAttack),
+                    new DivineRecreationEffect()
                     )
                 ),
             
