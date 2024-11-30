@@ -460,7 +460,7 @@ public class SkillFactory
                 => new Skill(
                     new AndCondition(
                         new IsAttacker(),
-                        new NotCondition(new RivalCondition(new WeaponCondition(Armament.ArmamentType.Magic)))),
+                        new NotCondition(new WeaponCondition(Armament.ArmamentType.Magic))),
                     new LunarBraceEffect()),
             "Bravery"
                 => new Skill(new ExtraDamage(5)),
