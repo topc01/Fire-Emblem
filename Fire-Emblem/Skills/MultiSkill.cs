@@ -8,7 +8,7 @@ public class MultiSkill(params Skill[] skills) : Skill
     {
         foreach (Skill skill in skills)
         {
-            skill.ApplyIfDoesHold(character, rival);
+            skill.ApplyIfDoesHold(character, rival, type);
         }
     }
 }
