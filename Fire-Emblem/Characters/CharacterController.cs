@@ -197,9 +197,9 @@ public class CharacterController
     public void LogStat(char ico=' ')
     {
         Console.WriteLine($"{ico}{Character.Name}:");
-        Console.WriteLine($"  STATS Atk:{GetModifiersStat(StatType.Atk)},Def:{GetModifiersStat(StatType.Def)},Res:{GetModifiersStat(StatType.Res)},Spd:{GetModifiersStat(StatType.Spd)}");
-        Console.WriteLine($"  Damage % reduce Combat:{Combat.PercentageDamageReduction},FirstAttack:{FirstAttack.PercentageDamageReduction},FollowUp:{FollowUp.PercentageDamageReduction}");
-        Console.WriteLine($"  Absolut reduce Combat:{Combat.AbsoluteDamageReduction},FirstAttack:{FirstAttack.AbsoluteDamageReduction},FollowUp:{FollowUp.AbsoluteDamageReduction}");
-        Console.WriteLine($"  Extra damage Combat:{Combat.ExtraDamage},FirstAttack:{FirstAttack.ExtraDamage},FollowUp:{FollowUp.ExtraDamage}");
+        Console.WriteLine($"  Atk:{GetModifiersStat(StatType.Atk)},Def:{GetModifiersStat(StatType.Def)},Res:{GetModifiersStat(StatType.Res)},Spd:{GetModifiersStat(StatType.Spd)}");
+        Console.WriteLine($"  %=Combat:{Combat.PercentageDamageReduction},First:{FirstAttack.PercentageDamageReduction},FU:{FollowUp.PercentageDamageReduction}");
+        Console.WriteLine($"  ABS=Combat:{Combat.AbsoluteDamageReduction},First:{FirstAttack.AbsoluteDamageReduction},FU:{FollowUp.AbsoluteDamageReduction}");
+        Console.WriteLine($"  EXTRA=Combat:{Combat.ExtraDamage},First:{FirstAttack.ExtraDamage},FU:{FollowUp.ExtraDamage}");
     }
 }
