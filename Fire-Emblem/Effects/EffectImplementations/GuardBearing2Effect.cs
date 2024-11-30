@@ -2,9 +2,9 @@ using Fire_Emblem.Characters;
 
 namespace Fire_Emblem.Effects.EffectImplementations;
 
-public class GuardBearing2Effect : CharacterEffect
+public class GuardBearing2Effect : BaseEffect
 {
-    public override void Apply(CharacterController controller)
+    public override void Apply(CharacterController controller, CharacterController rival)
     {
         bool isFirstTimeAttacking = controller.Character.FirstTimeAttacking;
         bool isFirstTimeDefending = controller.Character.FirstTimeDefending;
