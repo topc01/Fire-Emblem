@@ -30,14 +30,17 @@ public class StatModificator()
     
     public int AbsoluteDamageReduction { get; set; }
 
-    public int ReduceDamage(int damage)
+    public int ApplyPercentageDamageReduction(int damage)
     {
         double newDamage = damage * _percentageDamage * 0.01;
         newDamage = Math.Round(newDamage, 9);
         int afterPercentageDamageReduction = Convert.ToInt32(Math.Floor(newDamage));
-        int afterAbsoluteDamageReduction = afterPercentageDamageReduction - AbsoluteDamageReduction;
-        return afterAbsoluteDamageReduction;
+        return afterPercentageDamageReduction;
     }
+
+    public int ApplyAbsolutDamageReduction(int damage)
+        => damage - AbsoluteDamageReduction;
+    
     public int GetStatValue(StatType stat)
     {
         bool bonusNeutralized = BonusNeutralizer.IsStatNeutralized(stat);
