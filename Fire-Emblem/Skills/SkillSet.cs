@@ -16,6 +16,8 @@ public class SkillSet(Skill? firstSkill, Skill? secondSkill)
     }
     public void ApplyIfDoesHold(CharacterController controller, CharacterController rival)
     {
+        Console.WriteLine($"skill1: {_firstSkill.Name}");
+        Console.WriteLine($"skill2: {_secondSkill.Name}");
         ApplyEffectsType(controller, rival, EffectType.Stat);
         ApplyEffectsType(controller, rival, EffectType.ExtraDamage);
         ApplyEffectsType(controller, rival, EffectType.PercentageReduction);

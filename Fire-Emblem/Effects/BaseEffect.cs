@@ -9,7 +9,8 @@ public abstract class BaseEffect
         get;
         init;
     } = EffectType.Stat;
-    public abstract void Apply(CharacterController controller, CharacterController rival);
+
+    protected static int EffectNumber = 0;
 
     public virtual void Apply(CharacterController controller, CharacterController rival)
     {
@@ -20,6 +21,8 @@ public abstract class BaseEffect
     {
         if (Type != effectType) return;
         Apply(controller, rival);
+        Console.WriteLine($">>> Order {EffectNumber}, Type: {Type}");
+        EffectNumber++;
     }
     protected int Truncate(double value)
         => Convert.ToInt32(Math.Floor(value));

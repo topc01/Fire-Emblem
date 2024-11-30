@@ -18,12 +18,16 @@ public class PercentageDamageReduce : BaseEffect
 
     public override void Apply(CharacterController controller, CharacterController rival)
     {
+        controller.LogStat('>');
+        rival.LogStat('*');
         int reduction = CalculateReduction(controller, rival);
         if (_stage == BattleStage.Combat)
             controller.Combat.PercentageDamageReduction = reduction;
         else if (_stage == BattleStage.FirstAttack)
             controller.FirstAttack.PercentageDamageReduction = reduction;
         else controller.FollowUp.PercentageDamageReduction = reduction;
+        controller.LogStat('>');
+        rival.LogStat('*');
     }
     
     protected virtual int CalculateReduction(CharacterController controller, CharacterController rival)

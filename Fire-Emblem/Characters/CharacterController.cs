@@ -51,7 +51,9 @@ public class CharacterController
     public string Attack(CharacterController opponent)
     {
         int damage = GetDamageAgainst(opponent);
-        int reducedDamage = opponent.ReduceDamage(damage);
+        Console.WriteLine($"   >Daño original: {damage}");
+        int reducedDamage = opponent.GetReducedDamage(damage);
+        Console.WriteLine($"   >Daño reducido: {reducedDamage}");
         opponent.ReceiveDamage(reducedDamage);
         StoreFirstAttackDamage(reducedDamage);
         return $"{Character.Name} ataca a {opponent.Character.Name} con {reducedDamage} de daño";
@@ -176,4 +178,13 @@ public class CharacterController
     {
         SkillsAppliedCallback = callback;
     }*/
+
+    public void LogStat(char ico=' ')
+    {
+        Console.WriteLine($"{ico}{Character.Name}:");
+        Console.WriteLine($"  STATS Atk:{GetModifiersStat(StatType.Atk)},Def:{GetModifiersStat(StatType.Def)},Res:{GetModifiersStat(StatType.Res)},Spd:{GetModifiersStat(StatType.Spd)}");
+        Console.WriteLine($"  Damage % reduce Combat:{Combat.PercentageDamageReduction},FirstAttack:{FirstAttack.PercentageDamageReduction},FollowUp:{FollowUp.PercentageDamageReduction}");
+        Console.WriteLine($"  Absolut reduce Combat:{Combat.AbsoluteDamageReduction},FirstAttack:{FirstAttack.AbsoluteDamageReduction},FollowUp:{FollowUp.AbsoluteDamageReduction}");
+        Console.WriteLine($"  Extra damage Combat:{Combat.ExtraDamage},FirstAttack:{FirstAttack.ExtraDamage},FollowUp:{FollowUp.ExtraDamage}");
+    }
 }

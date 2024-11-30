@@ -35,6 +35,7 @@ public class Skill : BaseSkill
     }
     public virtual void ApplyIfDoesHold(CharacterController character, CharacterController rival, EffectType type)
     {
+        //Console.WriteLine($"Applying with type check skill {Name}");
         if (_condition.DoesHold(character, rival))
             _effect.Apply(character, rival, type);
     }
