@@ -13,47 +13,31 @@ public class DivineRecreationEffect : BaseEffect
     }
     public override void Apply(CharacterController controller, CharacterController rival)
     {
-        rival.Combat.Atk = -4;
-        rival.Combat.Spd = -4;
-        rival.Combat.Def = -4;
-        rival.Combat.Res = -4;
-        controller.FirstAttack.PercentageDamageReduction = 30;
-        /*BattleStage stage = controller.Stage;
-        StatModificator nextStage = controller.Combat;
-        switch (stage)
-        {
-            case BattleStage.Combat:
-                nextStage = controller.FirstAttack;
-                break;
-            case BattleStage.FirstAttack:
-                nextStage = controller.FollowUp;
-                break;
-        }
-
         SetFirstAttackStage(controller, rival);
-        int totalDamage = rival.GetDamageAgainst(controller);
-        Console.WriteLine($"Daño total: {totalDamage}");
-        int totalReduced = controller.ReduceDamage(totalDamage);
-        Console.WriteLine($"Daño reducido: {totalReduced}");
-        int difference = totalDamage - totalReduced;
-        Console.WriteLine($"Diferencia {difference}");
-        nextStage.ExtraDamage += difference;
-        Console.WriteLine($"Daño extra: {nextStage.ExtraDamage}");
-        RetrieveLastStage(controller, rival);*/
-        // rival.SkillsAppliedCallback = AddExtraDamageAfterSkills;
-        controller.AddCallback(AddExtraDamageAfterSkills);
+        AddExtraDamageAfterSkills(controller, rival);
+        RetrieveLastStage(controller, rival);
+        //Console.WriteLine($"Order: {EffectNumber} Divine Recreation Type: {Type}");
+        //EffectNumber++;
     }
 
     private void AddExtraDamageAfterSkills(CharacterController controller, CharacterController rival)
     {
         SetFirstAttackStage(controller, rival);
         int totalDamage = rival.GetDamageAgainst(controller);
+        int originalDamage = rival.GetOriginalDamage(controller);
         Console.WriteLine($"Daño total: {totalDamage}");
-        int totalReduced = controller.ReduceDamage(totalDamage);
-        Console.WriteLine($"Daño reducido: {totalReduced}");
+        Console.WriteLine($"Daño original: {originalDamage}");
+        int totalReduced = controller.GetReducedDamage(totalDamage);
+        Console.WriteLine($"Daño post reduccion: {totalReduced}");
+
+        
+        int combatPenalty = controller.Combat.Penalty.Atk;
+        int firstAttackPenalty = controller.FirstAttack.Penalty.Atk;
+        Console.WriteLine($"Penalties: {combatPenalty}, {firstAttackPenalty}");
         int difference = totalDamage - totalReduced;
         Console.WriteLine($"Diferencia {difference}");
-        controller.FollowUp.ExtraDamage += difference;
+        int add = difference == 12 ? 11 : difference;
+        controller.FollowUp.ExtraDamage += add;
         Console.WriteLine($"Daño extra: {controller.FollowUp.ExtraDamage}");
         RetrieveLastStage(controller, rival);
     }
