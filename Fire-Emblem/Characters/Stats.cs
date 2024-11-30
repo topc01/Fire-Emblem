@@ -45,16 +45,16 @@ public class Stats
         switch (stat)
         {
             case StatType.Atk:
-                Atk = value;
+                Atk += value;
                 break;
             case StatType.Spd:
-                Spd = value;
+                Spd += value;
                 break;
             case StatType.Def:
-                Def = value;
+                Def += value;
                 break;
             case StatType.Res:
-                Res = value;
+                Res += value;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(stat), $"Invalid stat type: {stat}");
