@@ -508,7 +508,7 @@ public class SkillFactory
             "Chivalry" => new Skill(new AndCondition(new IsAttacker(), new RivalCondition(new HealthPercentageEquals(100))),
                 new MultiEffect(new ExtraDamage(2), new AbsolutDamageReduce(2))),
             "Dragon's Wrath" => new MultiSkill(
-                new Skill(new PercentageDamageReduce(25)),
+                new Skill(new PercentageDamageReduce(25, BattleStage.FirstAttack)),
                 new Skill(new StatGreaterThanRival(Atk, Res), new DragonsWrathEffect())),
             "Prescience" => new MultiSkill(
                 new Skill(new MultiEffect(new RivalEffect(new PenaltyEffect(Atk, 5)), new RivalEffect(new PenaltyEffect(Res, 5)))),
@@ -517,7 +517,7 @@ public class SkillFactory
                     new PercentageDamageReduce(30, BattleStage.FirstAttack))),
             "Extra Chivalry" => new MultiSkill(
                 new Skill(new NotCondition(new RivalCondition(new HealthPercentageLessThan(50))),
-                    new MultiEffect(new PenaltyEffect(Atk, 5), new PenaltyEffect(Spd, 5), new PenaltyEffect(Def, 5))),
+                    new MultiEffect(new RivalEffect(new PenaltyEffect(Atk, 5)), new RivalEffect(new PenaltyEffect(Spd, 5)), new RivalEffect(new PenaltyEffect(Def, 5)))),
                 new Skill(new ExtraChivalry2Effect())
                 ),
             "Guard Bearing" => new MultiSkill(
