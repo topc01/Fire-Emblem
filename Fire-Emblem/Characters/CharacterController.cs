@@ -135,6 +135,13 @@ public class CharacterController
         return baseStat + combatStat + currentStageStat;
     }
 
+    private int GetModifiersStat(StatType stat)
+    {
+        int totalStat = GetTotalStat(stat);
+        int baseStat = Character.GetStat(stat);
+        return totalStat - baseStat;
+    }
+
     public int GetStatWithoutSpecificModificators(StatType stat)
         => GetTotalStat(stat) - CurrentStage.GetStatValue(stat);
     
