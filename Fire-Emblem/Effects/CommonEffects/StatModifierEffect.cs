@@ -3,30 +3,23 @@ using Fire_Emblem.Types;
 
 namespace Fire_Emblem.Effects.CommonEffects;
 
-public abstract class StatModifierEffect : CharacterEffect
+public abstract class StatModifierEffect(StatType targetStat, int value) : CharacterEffect
 {
-    private readonly StatType TargetStat;
-    private readonly int Bonus;
-    protected StatModifierEffect(StatType targetStat, int bonus)
-    {
-        TargetStat = targetStat;
-        Bonus = bonus;
-    }
     protected void Apply(StatModificator statModificator)
     {
-        switch (TargetStat)
+        switch (targetStat)
         {
             case StatType.Atk:
-                statModificator.Atk = Bonus;
+                statModificator.Atk = value;
                 break;
             case StatType.Def:
-                statModificator.Def = Bonus;
+                statModificator.Def = value;
                 break;
             case StatType.Res:
-                statModificator.Res = Bonus;
+                statModificator.Res = value;
                 break;
             case StatType.Spd:
-                statModificator.Spd = Bonus;
+                statModificator.Spd = value;
                 break;
         }
     }
