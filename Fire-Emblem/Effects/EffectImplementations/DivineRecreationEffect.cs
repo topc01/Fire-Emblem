@@ -7,6 +7,10 @@ namespace Fire_Emblem.Effects.EffectImplementations;
 public class DivineRecreationEffect : BaseEffect
 {
     private BattleStage _currentStage;
+    public DivineRecreationEffect()
+    {
+        Type = EffectType.Callback;
+    }
     public override void Apply(CharacterController controller, CharacterController rival)
     {
         rival.Combat.Atk = -4;
