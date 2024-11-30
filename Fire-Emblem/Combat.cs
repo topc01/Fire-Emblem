@@ -49,8 +49,17 @@ public class Combat
     
     public void ApplySkills()
     {
-        _attackingPlayer.Controller.ApplySkills(_defendingPlayer.Controller);
-        _defendingPlayer.Controller.ApplySkills(_attackingPlayer.Controller);
+        _attackingPlayer.ApplySkills(_defendingPlayer.Controller, EffectType.Stat);
+        _defendingPlayer.ApplySkills(_attackingPlayer.Controller, EffectType.Stat);
+        _attackingPlayer.ApplySkills(_defendingPlayer.Controller, EffectType.ExtraDamage);
+        _defendingPlayer.ApplySkills(_attackingPlayer.Controller, EffectType.ExtraDamage);
+        _attackingPlayer.ApplySkills(_defendingPlayer.Controller, EffectType.PercentageReduction);
+        _defendingPlayer.ApplySkills(_attackingPlayer.Controller, EffectType.PercentageReduction);
+        _attackingPlayer.ApplySkills(_defendingPlayer.Controller, EffectType.AbsolutReduction);
+        _defendingPlayer.ApplySkills(_attackingPlayer.Controller, EffectType.AbsolutReduction);
+        _attackingPlayer.ApplySkills(_defendingPlayer.Controller, EffectType.Callback);
+        _defendingPlayer.ApplySkills(_attackingPlayer.Controller, EffectType.Callback);
+        
     }
     
     public void PrintRoundMessage() => _view.WriteLine($"Round {_round}: {_attackingPlayer}");
