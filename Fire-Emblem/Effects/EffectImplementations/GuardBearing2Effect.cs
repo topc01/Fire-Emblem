@@ -8,6 +8,8 @@ public class GuardBearing2Effect : BaseEffect
     {
         bool isFirstTimeAttacking = controller.IsFirstTimeAttacking();
         bool isFirstTimeDefending = controller.IsFirstTimeDefending();
+        Console.WriteLine($" Attacking: {isFirstTimeAttacking}, {controller.Character.AttackingTimes}");
+        Console.WriteLine($" Defending: {isFirstTimeDefending}, {controller.Character.DefendingTimes}");
         int reduction = isFirstTimeAttacking || isFirstTimeDefending ? 60 : 30;
         controller.Combat.PercentageDamageReduction = reduction;
     }
