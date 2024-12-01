@@ -6,5 +6,7 @@ public enum EffectType
     ExtraDamage,
     PercentageReduction,
     AbsolutReduction,
-    Callback
+    Callback,
+    AfterEachAttack,
+    AfterCombat
 }
