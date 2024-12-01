@@ -8,8 +8,9 @@ public class ExtraChivalry2Effect : BaseEffect
     {
         int health = rival.Character.Hp;
         int maxHealth = rival.Character.MaxHp;
-        int percentage = Truncate((double)health / maxHealth * 100);
-        int reduction = Truncate(percentage * 0.5);
+        double healthRatio = (double)health / maxHealth;
+        double healthPercentage = Round(healthRatio * 100);
+        int reduction = Truncate(healthPercentage * 0.5);
         controller.Combat.PercentageDamageReduction = reduction;
     }
 }
