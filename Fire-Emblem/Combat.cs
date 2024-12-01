@@ -1,6 +1,5 @@
 using Fire_Emblem_View;
 using Fire_Emblem.Characters;
-using Fire_Emblem.Skills;
 using Fire_Emblem.Types;
 
 namespace Fire_Emblem;
@@ -69,30 +68,35 @@ public class Combat
     {
         CharacterController attacker = _attackingPlayer.Controller;
         CharacterController defender = _defendingPlayer.Controller;
-        FirstAttack(attacker, defender);
+        SetStage(BattleStage.FirstAttack);
+        Attack(attacker, defender);
         if (!defender.IsAlive()) return;
-        FirstAttack(defender,attacker);
+        Attack(defender,attacker);
         if (!attacker.IsAlive()) return;
+        SetStage(BattleStage.FollowUp);
         if (attacker.CanFollowUp(defender))
-            FollowUp(attacker, defender);
+            Attack(attacker, defender);
         else if (defender.CanFollowUp(attacker))
-            FollowUp(defender,attacker);
+            Attack(defender,attacker);
         else _view.WriteLine("Ninguna unidad puede hacer un follow up");
     }
 
-    private void FirstAttack(CharacterController attacker, CharacterController defender)
+    private void SetStage(BattleStage stage)
     {
-        attacker.Stage = BattleStage.FirstAttack;
-        defender.Stage = BattleStage.FirstAttack;
-        _view.WriteLine(attacker.Attack(defender));
+        _attackingPlayer.Controller.Stage = stage;
+        _defendingPlayer.Controller.Stage = stage;
     }
-
-    private void FollowUp(CharacterController attacker, CharacterController defender)
+    
+    private void Attack(CharacterController attacker, CharacterController defender)
     {
-        attacker.Stage = BattleStage.FollowUp;
-        defender.Stage = BattleStage.FollowUp;
-        _view.WriteLine(attacker.Attack(defender));
+        int attackingDamage = attacker.GetDamage(defender);
+        string attackingLog = attacker.Attack(defender, attackingDamage);
+        string? healingLog = attacker.Heal(attackingDamage);
+        _view.WriteLine(attackingLog);
+        if (healingLog != null)
+            _view.WriteLine(healingLog);
     }
+    
     public void PrintFinalState()
         => _view.WriteLine($"{_attackingPlayer.CharacterFinalStatus} : {_defendingPlayer.CharacterFinalStatus}");
     public void SetLastRivals()
