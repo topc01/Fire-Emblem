@@ -66,7 +66,8 @@ public class CharacterController
         double rivalDefense = opponent.GetTotalStat(rivalDefenseType);
         double ponderedAtk = atk * advantage;
         int extraDamage = Combat.ExtraDamage + CurrentStage.ExtraDamage;
-        return int.Max((int)(ponderedAtk - rivalDefense + extraDamage), 0);
+        int finalDamage = int.Max((int)(ponderedAtk - rivalDefense), 0) + extraDamage;
+        return finalDamage;
     }
 
     public int GetOriginalDamage(CharacterController opponent)
