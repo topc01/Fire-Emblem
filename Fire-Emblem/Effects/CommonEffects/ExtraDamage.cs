@@ -16,8 +16,8 @@ public class ExtraDamage : BaseEffect
     }
     public override void Apply(CharacterController controller, CharacterController rival)
     {
-        controller.LogStat();
-        rival.LogStat();
+        controller.LogStatus();
+        rival.LogStatus();
         int damage = CalculateDamage(controller, rival);
         if (_stage == BattleStage.Combat)
             controller.Combat.ExtraDamage += damage;
@@ -25,8 +25,8 @@ public class ExtraDamage : BaseEffect
             controller.FirstAttack.ExtraDamage += damage;
         else
             controller.FollowUp.ExtraDamage += damage;
-        controller.LogStat();
-        rival.LogStat();
+        controller.LogStatus();
+        rival.LogStatus();
     }
 
     protected virtual int CalculateDamage(CharacterController _1, CharacterController _2)

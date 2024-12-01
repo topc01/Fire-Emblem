@@ -35,6 +35,7 @@ public class StatModificator()
         double newDamage = damage * _percentageDamage * 0.01;
         newDamage = Math.Round(newDamage, 9);
         int afterPercentageDamageReduction = Convert.ToInt32(Math.Floor(newDamage));
+        Console.WriteLine($"  > %red: {damage} -> {newDamage} -> {afterPercentageDamageReduction}");
         return afterPercentageDamageReduction;
     }
 
