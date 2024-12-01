@@ -51,9 +51,8 @@ public class CharacterController
     public string Attack(CharacterController opponent)
     {
         int damage = GetDamageAgainst(opponent);
-        Console.WriteLine($"   >Daño original: {damage}");
         int reducedDamage = opponent.GetReducedDamage(damage);
-        Console.WriteLine($"   >Daño reducido: {reducedDamage}");
+        Console.WriteLine($" > {Character.Name}: {damage} {reducedDamage}");
         opponent.ReceiveDamage(reducedDamage);
         StoreFirstAttackDamage(reducedDamage);
         return $"{Character.Name} ataca a {opponent.Character.Name} con {reducedDamage} de daño";
@@ -99,11 +98,11 @@ public class CharacterController
         int combatPercentageDamageReductionFactor = Combat.PercentageDamage;
         int stagePercentageDamageReductionFactor = CurrentStage.PercentageDamage;
         int newFactor = (int)(combatPercentageDamageReductionFactor * stagePercentageDamageReductionFactor * 0.01);
-        //Console.WriteLine($" >> NEW FACTOR: {newFactor}");
+        Console.WriteLine($" >> NEW FACTOR: {newFactor}");
         double newDamage = damage * newFactor * 0.01;
         newDamage = Math.Round(newDamage, 9);
         int afterPercentageDamageReduction = Convert.ToInt32(Math.Floor(newDamage));
-        //Console.WriteLine($"  > %red on controller: {damage} -> {newDamage} -> {afterPercentageDamageReduction}");
+        Console.WriteLine($"  > %red on controller: {damage} -> {newDamage} -> {afterPercentageDamageReduction}");
         return afterPercentageDamageReduction;
 
     }
