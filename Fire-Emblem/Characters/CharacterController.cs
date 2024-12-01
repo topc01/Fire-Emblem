@@ -42,21 +42,28 @@ public class CharacterController
     }
     
     public bool IsAttacker() => Character.IsAttacker;
+    
     public void SetCharacter(Character character)
     {
         Character = character.Stats;
         _skills = SkillSet.FromSkillList(character.Skills);
     }
-    
-    public string Attack(CharacterController opponent)
+
+    public int GetDamage(CharacterController opponent)
     {
         int damage = GetDamageAgainst(opponent);
         int reducedDamage = opponent.GetReducedDamage(damage);
-        Console.WriteLine($" > {Character.Name}: {damage} {reducedDamage}");
-        opponent.ReceiveDamage(reducedDamage);
-        StoreFirstAttackDamage(reducedDamage);
-        return $"{Character.Name} ataca a {opponent.Character.Name} con {reducedDamage} de daño";
+        return reducedDamage;
     }
+    
+    public string Attack(CharacterController opponent, int damage)
+    {
+        opponent.ReceiveDamage(damage);
+        StoreFirstAttackDamage(damage);
+        string log = $"{Character.Name} ataca a {opponent.Character.Name} con {damage} de daño";
+        return log;
+    }
+    
     public int GetDamageAgainst(CharacterController opponent)
     {
         int atk = GetTotalStat(StatType.Atk);
@@ -107,6 +114,7 @@ public class CharacterController
         return afterPercentageDamageReduction;
 
     }
+    
     private void ReceiveDamage(int damage)
     {
         Character.Hp -= damage;
@@ -118,6 +126,24 @@ public class CharacterController
             Character.FirstAttackTotalDamage = damage;
     }
 
+    public string? Heal(int damage)
+    {
+        int healingFactor = GetHealingFactor(damage);
+        if (healingFactor == 0) return null;
+        string name = Character.Name;
+        Character.Hp += healingFactor;
+        int newHp = Character.Hp;
+        string log = $"{name} recupera {healingFactor} HP luego de atacar y queda con {newHp} HP.";
+        return log;
+    }
+
+    private int GetHealingFactor(int damage)
+    {
+        int factor = CurrentStage.HealingFactor;
+        int value = int.Max((int)(damage * factor * 0.01), 0);
+        return value;
+    }
+
     private void IncreaseDefendingCounter()
     {
         Character.DefendingTimes++;
@@ -126,7 +152,7 @@ public class CharacterController
     public bool IsFirstTimeAttacking() => Character is { AttackingTimes: 1, IsAttacker: true };
     public bool IsFirstTimeDefending() => Character is { DefendingTimes: 1, IsAttacker: false };
     public bool IsAlive() => Character.Hp > 0;
-    public bool CanFollowUp(CharacterController opponent) => IsFasterThan(opponent);
+    public bool CanFollowUp(CharacterController opponent) => (IsFasterThan(opponent) && !FollowUp.IsNegated()) || FollowUp.IsGuaranteed();
     private bool IsFasterThan(CharacterController opponent) => GetTotalStat(StatType.Spd) - opponent.GetTotalStat(StatType.Spd) >= SpeedDifferenceRequired;
     public string GetAdvantageMessage(CharacterController opponent)
     {
