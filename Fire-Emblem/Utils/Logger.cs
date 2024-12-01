@@ -13,8 +13,11 @@ public class Logger(View view, Player attacker, Player defender)
         LogExtraDamage(controller);
         LogPercentageDamageReduction(controller);
         LogAbsolutDamageReduction(controller);
+        LogHealingFactor(controller);
+        LogCounterAttack(controller);
+        LogFollowUp(controller);
     }
-    public void LogStatModifications(CharacterController controller)
+    private void LogStatModifications(CharacterController controller)
     {
         string name = controller.Character.Name;
         string firstAttackMessage = " en su primer ataque";
@@ -47,7 +50,7 @@ public class Logger(View view, Player attacker, Player defender)
         if (stats.Res > 0) view.WriteLine($"{name} obtiene Res{sign}{stats.Res}{message}");
     }
 
-    public void LogStatsNeutralizers(CharacterController controller)
+    private void LogStatsNeutralizers(CharacterController controller)
     {
         string name = controller.Character.Name;
         string bonusName = "bonus";
@@ -68,7 +71,7 @@ public class Logger(View view, Player attacker, Player defender)
         if (neutralizer.Res) view.WriteLine($"Los {neutralizerName} de Res de {name} fueron neutralizados");
     }
 
-    public void LogExtraDamage(CharacterController controller)
+    private void LogExtraDamage(CharacterController controller)
     {
         string name = controller.Character.Name;
         string combatMessage = "en cada ataque";
@@ -84,7 +87,7 @@ public class Logger(View view, Player attacker, Player defender)
         if (followUpExtraDamage > 0) view.WriteLine($"{name} realizará +{followUpExtraDamage} daño extra {followUpMessage}");
     }
     
-    public void LogPercentageDamageReduction(CharacterController controller)
+    private void LogPercentageDamageReduction(CharacterController controller)
     {
         string name = controller.Character.Name;
         string combatMessage = "de los ataques";
@@ -100,13 +103,45 @@ public class Logger(View view, Player attacker, Player defender)
         if (followUpPercentageDamageReduce > 0) view.WriteLine($"{name} reducirá el daño {followUpMessage} del rival en un {followUpPercentageDamageReduce}%");
     }
 
-    public void LogAbsolutDamageReduction(CharacterController controller)
+    private void LogAbsolutDamageReduction(CharacterController controller)
     {
         string name = controller.Character.Name;
         int absolutDamageReduction = controller.Combat.AbsoluteDamageReduction;
         if (absolutDamageReduction > 0) view.WriteLine($"{name} recibirá -{absolutDamageReduction} daño en cada ataque");
     }
-    
-    
-    
+
+    private void LogHealingFactor(CharacterController controller)
+    {
+        string name = controller.Character.Name;
+        int healingFactor = controller.Combat.HealingFactor;
+        if (healingFactor > 0) view.WriteLine($"{name} recuperará HP igual al {healingFactor}% del daño realizado en cada ataque");
+    }
+
+    private void LogCounterAttack(CharacterController controller)
+    {
+        string name = controller.Character.Name;
+        bool counterAttackNegation = controller.Combat.NegationsNumber > 0;
+        bool counterAttackNegationNegated = controller.Combat.NegationNegated;
+        if (counterAttackNegation && !counterAttackNegationNegated)
+        {
+            view.WriteLine($"{name} no podrá contraatacar");
+            return;
+        }
+        if (counterAttackNegation && counterAttackNegationNegated) 
+            view.WriteLine($"{name} neutraliza los efectos que previenen sus contraataques");
+    }
+
+    private void LogFollowUp(CharacterController controller)
+    {
+        string name = controller.Character.Name;
+        int followUpGuarantees = controller.FollowUp.GuaranteesNumber;
+        if (followUpGuarantees > 0) view.WriteLine($"{name} tiene {followUpGuarantees} efecto(s) que garantiza(n) su follow up activo(s)");
+        int followUpNegations = controller.FollowUp.NegationsNumber;
+        if (followUpNegations > 0) view.WriteLine($"{name} tiene {followUpNegations} efecto(s) que neutraliza(n) su follow up activo(s)");
+
+        bool followUpGuaranteedNegated = controller.FollowUp.GuaranteeNegated;
+        if (followUpGuaranteedNegated) view.WriteLine($"{name} es inmune a los efectos que garantizan su follow up");
+        bool followUpNegationNegated = controller.FollowUp.GuaranteeNegated;
+        if (followUpNegationNegated) view.WriteLine($"{name} es inmune a los efectos que neutralizan su follow up");
+    }
 }
