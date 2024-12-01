@@ -481,7 +481,7 @@ public class SkillFactory
                         new Skill(
                             new AndCondition(
                                 new StatGreaterThanRival(Spd),
-                                new NotCondition(new HealthPercentageLessThan(25))),
+                                new HealthPercentageRoundedGreaterThan(25)),
                             new PercentageDamageReduceByStatDifference(Spd, 4, 40))
                     ),
             "Blue Skies"
