@@ -29,6 +29,20 @@ public class StatModificator()
     }
     
     public int AbsoluteDamageReduction { get; set; }
+    
+    public int HealingFactor { get; set; }
+    
+    public int DamageBefore { get; set; }
+    
+    public int DamageAfter { get; set; }
+
+    public int GuaranteesNumber { get; set; }
+    public bool GuaranteeNegated { get; set; } = false;
+    public bool IsGuaranteed() => GuaranteesNumber > 0 && !GuaranteeNegated;
+
+    public int NegationsNumber { get; set; }
+    public bool NegationNegated { get; set; } = false;
+    public bool IsNegated() => NegationsNumber > 0 && !NegationNegated;
 
     public int ApplyPercentageDamageReduction(int damage)
     {
