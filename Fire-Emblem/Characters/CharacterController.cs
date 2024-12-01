@@ -125,9 +125,8 @@ public class CharacterController
     public bool IsFirstTimeAttacking() => Character is { AttackingTimes: 1, IsAttacker: true };
     public bool IsFirstTimeDefending() => Character is { DefendingTimes: 1, IsAttacker: false };
     public bool IsAlive() => Character.Hp > 0;
-    public bool CanFollowUp(CharacterController opponent)
-        => IsFaster(opponent);
-    private bool IsFaster(CharacterController opponent) => GetTotalStat(StatType.Spd) - opponent.GetTotalStat(StatType.Spd) >= SpeedDifferenceRequired;
+    public bool CanFollowUp(CharacterController opponent) => IsFasterThan(opponent);
+    private bool IsFasterThan(CharacterController opponent) => GetTotalStat(StatType.Spd) - opponent.GetTotalStat(StatType.Spd) >= SpeedDifferenceRequired;
     public string GetAdvantageMessage(CharacterController opponent)
     {
         Armament armament = Character.Armament;
