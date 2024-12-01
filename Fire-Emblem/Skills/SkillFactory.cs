@@ -540,6 +540,38 @@ public class SkillFactory
                     )
                 ),
             "Sol" => new Skill(new HealingEffect(25)),
+            "Nosferatu" => new Skill(
+                new WeaponCondition(Armament.ArmamentType.Magic),
+                new HealingEffect(50)),
+            "Solar Brace" => new Skill(
+                new IsAttacker(),
+                new HealingEffect(50)),
+            "Windsweep" => new Skill(
+                new AndCondition(
+                    new IsAttacker(), new WeaponCondition(Armament.ArmamentType.Sword), new RivalCondition(new WeaponCondition(Armament.ArmamentType.Sword))),
+                new RivalEffect(new NegateCounterAttackEffect())),
+            "Surprise Attack" => new Skill(
+                new AndCondition(
+                    new IsAttacker(), new WeaponCondition(Armament.ArmamentType.Bow), new RivalCondition(new WeaponCondition(Armament.ArmamentType.Bow))),
+                new RivalEffect(new NegateCounterAttackEffect())),
+            "Hliðskjálf" => new Skill(
+                new AndCondition(
+                    new IsAttacker(), new WeaponCondition(Armament.ArmamentType.Magic), new RivalCondition(new WeaponCondition(Armament.ArmamentType.Magic))),
+                new RivalEffect(new NegateCounterAttackEffect())),
+            "Null C-Disrupt" => new Skill(new NeutralizeCounterAttackNegation()),
+            "Laws of Sacae" => new MultiSkill(
+                new Skill(new IsAttacker(), EffectBuilder.BuildBonusToAllStats(6)),
+                new Skill(
+                    new AndCondition(
+                    new IsAttacker(), 
+                        new OrCondition(
+                            new WeaponCondition(Armament.ArmamentType.Sword),
+                            new WeaponCondition(Armament.ArmamentType.Lance),
+                            new WeaponCondition(Armament.ArmamentType.Axe)),
+                        new StatGreaterThanRival(Spd, 5)),
+                    new RivalEffect(new NegateCounterAttackEffect())
+                )
+                ),
             _ => new Skill()
         };
         
