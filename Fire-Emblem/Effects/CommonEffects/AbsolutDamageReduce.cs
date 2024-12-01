@@ -6,6 +6,6 @@ public class AbsolutDamageReduce(int value) : CharacterEffect
 {
     public override void Apply(CharacterController controller)
     {
-        controller.Combat.AbsoluteDamageReduction = value;
+        controller.Combat.AbsoluteDamageReduction += value;
     }
 }
