@@ -37,8 +37,11 @@ public class DivineRecreationEffect : BaseEffect
         int difference = totalDamage - totalReduced;
         Console.WriteLine($"Diferencia {difference}");
         int add = difference == 12 ? 11 : difference;
-        controller.FollowUp.ExtraDamage += add;
-        Console.WriteLine($"Daño extra: {controller.FollowUp.ExtraDamage}");
+        StatModificator nextStage =
+            controller.IsAttacker() ? controller.FollowUp : controller.FirstAttack;
+        Console.WriteLine($"Current stage: {controller.Stage}");
+        nextStage.ExtraDamage += add;
+        Console.WriteLine($"Daño extra: {nextStage.ExtraDamage}");
         RetrieveLastStage(controller, rival);
     }
 

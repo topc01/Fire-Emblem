@@ -2,7 +2,8 @@ namespace Fire_Emblem;
 
 public class Armament
 {
-    private const double AdvantageDifference = 0.2;
+    public const double AdvantageDifference = 0.2;
+    public const double BaseFactor = 1.0;
     private Armament(ArmamentType armamentType)
     {
         Type = armamentType;
@@ -35,11 +36,11 @@ public class Armament
     {
         try
         {
-            return 1.0 + ResultMatrix[(int)Type, (int)opponentArmament.Type];
+            return BaseFactor + ResultMatrix[(int)Type, (int)opponentArmament.Type];
         }
         catch (IndexOutOfRangeException)
         {
-            return 1.0;
+            return BaseFactor;
         }
     }
     public static Armament GetArmamentFromName(string armamentName) =>

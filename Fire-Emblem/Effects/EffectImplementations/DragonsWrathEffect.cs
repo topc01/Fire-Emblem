@@ -5,6 +5,10 @@ namespace Fire_Emblem.Effects.EffectImplementations;
 
 public class DragonsWrathEffect : BaseEffect
 {
+    public DragonsWrathEffect()
+    {
+        Type = EffectType.Callback;
+    }
     public override void Apply(CharacterController controller, CharacterController rival)
     {
         int rivalRes = rival.GetStatWithoutSpecificModificators(StatType.Res);

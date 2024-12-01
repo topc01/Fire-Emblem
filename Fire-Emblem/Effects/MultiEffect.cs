@@ -13,13 +13,13 @@ public class MultiEffect(params BaseEffect[] effects) : BaseEffect
     
     public override void Apply(CharacterController character, CharacterController rival, EffectType type)
     {
-        character.LogStat('*');
-        rival.LogStat('>');
+        character.LogStatus('*');
+        rival.LogStatus('>');
         foreach (var effect in effects)
         {
             effect.Apply(character, rival, type);
-            character.LogStat('*');
-            rival.LogStat('>');
+            character.LogStatus('*');
+            rival.LogStatus('>');
         }
     }
 }

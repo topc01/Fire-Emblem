@@ -26,4 +26,7 @@ public abstract class BaseEffect
     }
     protected int Truncate(double value)
         => Convert.ToInt32(Math.Floor(value));
+    
+    protected double Round(double value)
+        => Math.Round(value, 2);
 }

@@ -12,7 +12,7 @@ public class CharacterController
     public StatModificator Combat = new();
     public StatModificator FirstAttack = new();
     public StatModificator FollowUp = new();
-    public BattleStage Stage = BattleStage.FirstAttack;
+    public BattleStage Stage { get; set; } = BattleStage.FirstAttack;
 
     private StatModificator CurrentStage
     {
@@ -51,13 +51,10 @@ public class CharacterController
     public string Attack(CharacterController opponent)
     {
         int damage = GetDamageAgainst(opponent);
-        Console.WriteLine($"   >Daño original: {damage}");
         int reducedDamage = opponent.GetReducedDamage(damage);
-        Console.WriteLine($"   >Daño reducido: {reducedDamage}");
+        Console.WriteLine($" > {Character.Name}: {damage} {reducedDamage}");
         opponent.ReceiveDamage(reducedDamage);
         StoreFirstAttackDamage(reducedDamage);
-        IncreaseAttackingCounter();
-        opponent.IncreaseDefendingCounter();
         return $"{Character.Name} ataca a {opponent.Character.Name} con {reducedDamage} de daño";
     }
     public int GetDamageAgainst(CharacterController opponent)
@@ -69,7 +66,8 @@ public class CharacterController
         double rivalDefense = opponent.GetTotalStat(rivalDefenseType);
         double ponderedAtk = atk * advantage;
         int extraDamage = Combat.ExtraDamage + CurrentStage.ExtraDamage;
-        return int.Max((int)(ponderedAtk - rivalDefense + extraDamage), 0);
+        int finalDamage = int.Max((int)(ponderedAtk - rivalDefense), 0) + extraDamage;
+        return finalDamage;
     }
 
     public int GetOriginalDamage(CharacterController opponent)
@@ -87,12 +85,27 @@ public class CharacterController
 
     public int GetReducedDamage(int damage)
     {
-        int damageAfterCombatPercentageReduction = Combat.ApplyPercentageDamageReduction(damage);
-        int damageAfterCurrentStagePercentageReduction = CurrentStage.ApplyPercentageDamageReduction(damageAfterCombatPercentageReduction);
-        int damageAfterCombatAbsolutReduction = Combat.ApplyAbsolutDamageReduction(damageAfterCurrentStagePercentageReduction);
+        // int damageAfterCombatPercentageReduction = Combat.ApplyPercentageDamageReduction(damage);
+        // int damageAfterCurrentStagePercentageReduction = CurrentStage.ApplyPercentageDamageReduction(damageAfterCombatPercentageReduction);
+        int damageAfterPercentageReduction = ApplyPercentageDamageReduction(damage);
+        int damageAfterCombatAbsolutReduction = Combat.ApplyAbsolutDamageReduction(damageAfterPercentageReduction);
         int damageAfterCurrentStageAbsolutReduction = CurrentStage.ApplyAbsolutDamageReduction(damageAfterCombatAbsolutReduction);
         int total = int.Max(damageAfterCurrentStageAbsolutReduction, 0);
         return total;
+    }
+
+    private int ApplyPercentageDamageReduction(int damage)
+    {
+        int combatPercentageDamageReductionFactor = Combat.PercentageDamage;
+        int stagePercentageDamageReductionFactor = CurrentStage.PercentageDamage;
+        int newFactor = (int)(combatPercentageDamageReductionFactor * stagePercentageDamageReductionFactor * 0.01);
+        Console.WriteLine($" >> NEW FACTOR: {newFactor}");
+        double newDamage = damage * newFactor * 0.01;
+        newDamage = Math.Round(newDamage, 9);
+        int afterPercentageDamageReduction = Convert.ToInt32(Math.Floor(newDamage));
+        Console.WriteLine($"  > %red on controller: {damage} -> {newDamage} -> {afterPercentageDamageReduction}");
+        return afterPercentageDamageReduction;
+
     }
     private void ReceiveDamage(int damage)
     {
@@ -105,22 +118,16 @@ public class CharacterController
             Character.FirstAttackTotalDamage = damage;
     }
 
-    private void IncreaseAttackingCounter()
-    {
-        Character.AttackingTimes++;
-    }
-
     private void IncreaseDefendingCounter()
     {
         Character.DefendingTimes++;
     }
     
-    public bool IsFirstTimeAttacking() => Character.AttackingTimes == 0;
-    public bool IsFirstTimeDefending() => Character.DefendingTimes == 0;
+    public bool IsFirstTimeAttacking() => Character is { AttackingTimes: 1, IsAttacker: true };
+    public bool IsFirstTimeDefending() => Character is { DefendingTimes: 1, IsAttacker: false };
     public bool IsAlive() => Character.Hp > 0;
-    public bool CanFollowUp(CharacterController opponent)
-        => IsFaster(opponent);
-    private bool IsFaster(CharacterController opponent) => GetTotalStat(StatType.Spd) - opponent.GetTotalStat(StatType.Spd) >= SpeedDifferenceRequired;
+    public bool CanFollowUp(CharacterController opponent) => IsFasterThan(opponent);
+    private bool IsFasterThan(CharacterController opponent) => GetTotalStat(StatType.Spd) - opponent.GetTotalStat(StatType.Spd) >= SpeedDifferenceRequired;
     public string GetAdvantageMessage(CharacterController opponent)
     {
         Armament armament = Character.Armament;
@@ -141,7 +148,6 @@ public class CharacterController
         FollowUp = new();
         BonusNeutralizer = new();
         PenaltyNeutralizer = new();
-        Character.IsAttacker = false;
     }
     
     private int GetTotalStat(StatType stat)
@@ -181,7 +187,12 @@ public class CharacterController
         => Character.LastRival == opponent.Character;
 
     public bool HasAdvantage(CharacterController opponent)
-        => Character.Armament.GetAdvantage(opponent.Character.Armament) != 0.0;
+    {
+        double advantage = Character.Armament.GetAdvantage(opponent.Character.Armament);
+        double valueWithAdvantage = Armament.BaseFactor + Armament.AdvantageDifference;
+        double epsilon = 1e-3;
+        return Math.Abs(advantage - valueWithAdvantage) < epsilon;
+    }
 
     public void ApplySkills(CharacterController opponent, EffectType type)
     {
@@ -194,8 +205,9 @@ public class CharacterController
         SkillsAppliedCallback = callback;
     }*/
 
-    public void LogStat(char ico=' ')
+    public void LogStatus(char ico=' ')
     {
+        return;
         Console.WriteLine($"{ico}{Character.Name}:");
         Console.WriteLine($"  Atk:{GetModifiersStat(StatType.Atk)},Def:{GetModifiersStat(StatType.Def)},Res:{GetModifiersStat(StatType.Res)},Spd:{GetModifiersStat(StatType.Spd)}");
         Console.WriteLine($"  %=Combat:{Combat.PercentageDamageReduction},First:{FirstAttack.PercentageDamageReduction},FU:{FollowUp.PercentageDamageReduction}");

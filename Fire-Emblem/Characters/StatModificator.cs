@@ -13,18 +13,18 @@ public class StatModificator()
     public readonly StatsNeutralizer PenaltyNeutralizer = new();
     public int ExtraDamage { get; set; }
 
-    private int _percentageDamage = 100;
+    public int PercentageDamage = 100;
     public int PercentageDamageReduction
     {
         get
         {
-            int val = Convert.ToInt32(_percentageDamage * 100);
-            return 100 - _percentageDamage;
+            int val = Convert.ToInt32(PercentageDamage * 100);
+            return 100 - PercentageDamage;
         }
         set
         {
             int newReduction = (100 - value);
-            this._percentageDamage = (int)(_percentageDamage * newReduction * 0.01);
+            PercentageDamage = (int)(PercentageDamage * newReduction * 0.01);
         }
     }
     
@@ -32,9 +32,10 @@ public class StatModificator()
 
     public int ApplyPercentageDamageReduction(int damage)
     {
-        double newDamage = damage * _percentageDamage * 0.01;
+        double newDamage = damage * PercentageDamage * 0.01;
         newDamage = Math.Round(newDamage, 9);
         int afterPercentageDamageReduction = Convert.ToInt32(Math.Floor(newDamage));
+        Console.WriteLine($"  > %red: {damage} -> {newDamage} -> {afterPercentageDamageReduction}");
         return afterPercentageDamageReduction;
     }
 
