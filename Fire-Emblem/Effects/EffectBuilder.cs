@@ -5,11 +5,11 @@ namespace Fire_Emblem.Effects;
 
 public static class EffectBuilder
 {
-    public static BaseEffect BuildPenaltyToStats(int value, params StatType?[] targetStats)
-    {
-        BaseEffect? atkPenalty = targetStats.Contains(StatType.Atk) ? new PenaltyEffect(StatType.Atk, value) : null;
-        return new MultiEffect(
-                targetStats.Contains(StatType.Atk) ? new PenaltyEffect(StatType.Atk, value) : null
+    public static BaseEffect BuildBonusToAllStats(int value)
+        => new MultiEffect(
+            new CombatEffect(StatType.Atk, value),
+            new CombatEffect(StatType.Spd, value),
+            new CombatEffect(StatType.Def, value),
+            new CombatEffect(StatType.Res, value)
             );
-    }
 }
