@@ -206,7 +206,7 @@ public class CharacterController
 
     public void LogStatus(char ico=' ')
     {
-        // return;
+        return;
         Console.WriteLine($"{ico}{Character.Name}:");
         Console.WriteLine($"  Atk:{GetModifiersStat(StatType.Atk)},Def:{GetModifiersStat(StatType.Def)},Res:{GetModifiersStat(StatType.Res)},Spd:{GetModifiersStat(StatType.Spd)}");
         Console.WriteLine($"  %=Combat:{Combat.PercentageDamageReduction},First:{FirstAttack.PercentageDamageReduction},FU:{FollowUp.PercentageDamageReduction}");
