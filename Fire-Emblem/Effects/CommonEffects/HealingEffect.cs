@@ -15,11 +15,14 @@ public class HealingEffect: CharacterEffect
     }
     public HealingEffect(int factor)
     {
-        _stages = new[] { BattleStage.FirstAttack, BattleStage.FollowUp };
+        _stages = new[] { BattleStage.Combat, BattleStage.FirstAttack, BattleStage.FollowUp };
         _factor = factor;
     }
     public override void Apply(CharacterController controller)
     {
+        Console.WriteLine($"ACAAAAA");
+        if (_stages.Contains(BattleStage.Combat))
+            controller.Combat.HealingFactor += _factor;
         if (_stages.Contains(BattleStage.FirstAttack))
             controller.FirstAttack.HealingFactor += _factor;
         if (_stages.Contains(BattleStage.FollowUp))
