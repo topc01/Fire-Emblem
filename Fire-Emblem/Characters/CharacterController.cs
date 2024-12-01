@@ -12,7 +12,7 @@ public class CharacterController
     public StatModificator Combat = new();
     public StatModificator FirstAttack = new();
     public StatModificator FollowUp = new();
-    public BattleStage Stage = BattleStage.FirstAttack;
+    public BattleStage Stage { get; set; } = BattleStage.FirstAttack;
 
     private StatModificator CurrentStage
     {
