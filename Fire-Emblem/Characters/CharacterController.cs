@@ -85,12 +85,27 @@ public class CharacterController
 
     public int GetReducedDamage(int damage)
     {
-        int damageAfterCombatPercentageReduction = Combat.ApplyPercentageDamageReduction(damage);
-        int damageAfterCurrentStagePercentageReduction = CurrentStage.ApplyPercentageDamageReduction(damageAfterCombatPercentageReduction);
-        int damageAfterCombatAbsolutReduction = Combat.ApplyAbsolutDamageReduction(damageAfterCurrentStagePercentageReduction);
+        // int damageAfterCombatPercentageReduction = Combat.ApplyPercentageDamageReduction(damage);
+        // int damageAfterCurrentStagePercentageReduction = CurrentStage.ApplyPercentageDamageReduction(damageAfterCombatPercentageReduction);
+        int damageAfterPercentageReduction = ApplyPercentageDamageReduction(damage);
+        int damageAfterCombatAbsolutReduction = Combat.ApplyAbsolutDamageReduction(damageAfterPercentageReduction);
         int damageAfterCurrentStageAbsolutReduction = CurrentStage.ApplyAbsolutDamageReduction(damageAfterCombatAbsolutReduction);
         int total = int.Max(damageAfterCurrentStageAbsolutReduction, 0);
         return total;
+    }
+
+    private int ApplyPercentageDamageReduction(int damage)
+    {
+        int combatPercentageDamageReductionFactor = Combat.PercentageDamage;
+        int stagePercentageDamageReductionFactor = CurrentStage.PercentageDamage;
+        int newFactor = (int)(combatPercentageDamageReductionFactor * stagePercentageDamageReductionFactor * 0.01);
+        //Console.WriteLine($" >> NEW FACTOR: {newFactor}");
+        double newDamage = damage * newFactor * 0.01;
+        newDamage = Math.Round(newDamage, 9);
+        int afterPercentageDamageReduction = Convert.ToInt32(Math.Floor(newDamage));
+        //Console.WriteLine($"  > %red on controller: {damage} -> {newDamage} -> {afterPercentageDamageReduction}");
+        return afterPercentageDamageReduction;
+
     }
     private void ReceiveDamage(int damage)
     {
