@@ -539,7 +539,7 @@ public class SkillFactory
                     new DivineRecreationEffect()
                     )
                 ),
-            
+            "Sol" => new Skill(new HealingEffect(25)),
             _ => new Skill()
         };
         
